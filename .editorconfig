@@ -1,0 +1,10 @@
+[*]
+end_of_line = lf
+tab_width = 4
+indent_style = tab
+quote_type = double
+semicolon = true
+
+[*.yaml]
+indent_style = space
+semicolon = false

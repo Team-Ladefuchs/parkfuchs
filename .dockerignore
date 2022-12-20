@@ -1,0 +1,16 @@
+Dockerfile
+.dockerignore
+node_modules
+npm-debug.log
+README.md
+.next
+.git
+.yarn
+.DS_Store
+pocketbase-data
+.vs_code
+
+public/sw.js
+public/*.map
+public/workbox*.js
+public/worker*.js
