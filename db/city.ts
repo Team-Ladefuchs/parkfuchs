@@ -6,11 +6,13 @@ const pocketBase = new PocketBase(
 	process.env.DB_HOST ?? "http://127.0.0.1:8090"
 );
 
-export async function getNewestEnabledInboxCities(): Promise<InboxCity[]> {
+export async function getNewestEnabledInboxCities(
+	maxResults: number
+): Promise<InboxCity[]> {
 	try {
 		const resultList = await pocketBase
 			.collection("cityInbox")
-			.getList(1, 40, {
+			.getList(1, maxResults, {
 				filter: "approved = true",
 				expand: "cityID",
 				sort: "-updated,city",
@@ -28,13 +30,16 @@ export async function getNewestEnabledInboxCities(): Promise<InboxCity[]> {
 	return [];
 }
 
-export async function search(query: string): Promise<InboxCity[]> {
+export async function search(
+	query: string,
+	maxResults: number
+): Promise<InboxCity[]> {
 	try {
 		const searchQuery = query ?? "";
 
 		const resultList = await pocketBase
 			.collection("cityInbox")
-			.getList(1, 25, {
+			.getList(1, maxResults, {
 				filter: `approved = true && (cityID.name ~ '${searchQuery}%' || cityID.postcodes ~ '${searchQuery}')`,
 				expand: "cityID",
 				sort: "-updated,+city",
@@ -52,13 +57,18 @@ export async function search(query: string): Promise<InboxCity[]> {
 	return [];
 }
 
-export async function autocomplete(query: string): Promise<ResultCity[]> {
+export async function autocomplete(
+	query: string,
+	maxResults: number
+): Promise<ResultCity[]> {
 	try {
 		const searchQuery = query ?? "";
-		const results = await pocketBase.collection("cityRepo").getList(1, 10, {
-			filter: `name ~ '${searchQuery}%' || postcodes ~ '${searchQuery}'`,
-			sort: "+name",
-		});
+		const results = await pocketBase
+			.collection("cityRepo")
+			.getList(1, maxResults, {
+				filter: `name ~ '${searchQuery}%' || postcodes ~ '${searchQuery}'`,
+				sort: "+name",
+			});
 
 		return results.items.map((row) => {
 			return {

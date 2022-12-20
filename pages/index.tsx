@@ -17,7 +17,7 @@ interface Properties {
 }
 
 export async function getServerSideProps(_context: GetServerSidePropsContext) {
-	const cities = await getNewestEnabledInboxCities();
+	const cities = await getNewestEnabledInboxCities(10);
 	return {
 		props: {
 			cities,
@@ -59,14 +59,16 @@ export default function Contribute({ cities = [] }: Properties) {
 	};
 
 	return (
-		<div className="justify-center w-[750px] max-md:w-w-11/12" role="main">
+		<div
+			className="justify-center w-[750px] max-md:w-w-11/12 min-h-[28rem]"
+			role="main"
+		>
 			<Dialog
 				isOpen={openForm}
 				onClose={handleOnClose}
 				initQuery={searchQuery}
 			/>
-			<LandingBox />
-			<section className="pb-12 mt-4">
+			<section className="pb-12 mt-4 flex flex-col space-y-6">
 				<div className="flex gap-5 max-md:gap-2 items-center justify-between max-md:flex-col">
 					<SearchInput
 						initQuery=""
@@ -87,8 +89,9 @@ export default function Contribute({ cities = [] }: Properties) {
 						Ort hinzufügen
 					</button>
 				</div>
+				<LandingBox />
 				<CityList
-					className="my-8 min-h-[22rem]"
+					className="mt-6"
 					items={getItems()}
 					isEmpty={
 						!isLoading &&

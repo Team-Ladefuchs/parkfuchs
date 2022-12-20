@@ -18,7 +18,7 @@ export default async function handler(
 		});
 	}
 
-	const results = await autocomplete(filter as string);
+	const results = await autocomplete(filter as string, 10);
 
 	response.status(200).json(results);
 }
