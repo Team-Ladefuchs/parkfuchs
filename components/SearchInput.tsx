@@ -1,6 +1,6 @@
 import { faMagnifyingGlass, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useState } from "react";
+import { LegacyRef, MutableRefObject, useRef, useState } from "react";
 
 export interface Properties {
 	className?: string;
@@ -14,9 +14,12 @@ export default function SearchInput({
 	className = "",
 }: Properties): JSX.Element {
 	const [value, setValue] = useState(initQuery);
+
+	const inputRef = useRef<HTMLInputElement | null>(null);
 	return (
 		<div className={`relative ${className}`}>
 			<input
+				ref={inputRef}
 				type="text"
 				autoComplete="off"
 				autoCorrect="off"
@@ -44,6 +47,7 @@ export default function SearchInput({
 					onClick={(_e) => {
 						onChange("");
 						setValue("");
+						inputRef.current?.focus();
 					}}
 				/>
 			)}

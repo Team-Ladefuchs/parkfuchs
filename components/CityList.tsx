@@ -106,7 +106,7 @@ export default function CityList({
 	return (
 		<div className={`accordion ${className}`} id="accordionList">
 			{isEmpty && (
-				<div className="text-center px-4 text-lg mt-12">
+				<div className="text-center px-4 text-lg my-6">
 					Es wurde keine Stadt gefunden. Vielleicht möchtest du eine
 					neue anlegen?
 				</div>

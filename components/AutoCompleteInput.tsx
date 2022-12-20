@@ -24,7 +24,7 @@ export default function AutoCompleteInput({
 	}, [initQuery]);
 
 	const autoCompleteCities = async (searchTerm: string) => {
-		if (searchTerm.length < 3) {
+		if (searchTerm.length < 2) {
 			setResults([]);
 			return;
 		}
@@ -34,7 +34,7 @@ export default function AutoCompleteInput({
 		setResults(response.data);
 	};
 
-	const debouncedAutoCompleteCities = useDebounce(autoCompleteCities, 100);
+	const debouncedAutoCompleteCities = useDebounce(autoCompleteCities, 110);
 
 	return (
 		<>
