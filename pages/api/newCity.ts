@@ -10,20 +10,23 @@ interface Error {
 	msg: string;
 }
 
-const cityFields = [
-	"useBusLane",
-	"untilMaxMarkingHour",
-	"freeParking",
-	"withEMark",
-	"cityID",
-	"city",
-	"information",
-	"website",
-	"parkingDisk",
-	"parkingHours",
-	"nonePrivileges",
-	"websiteExtras",
-];
+const cityTemplate: NewCity = {
+	useBusLane: false,
+	untilMaxMarkingHour: false,
+	freeParking: false,
+	withEMark: false,
+	cityID: "",
+	city: "",
+	information: "",
+	website: null,
+	parkingDisk: false,
+	parkingHours: 2,
+	nonePrivileges: false,
+	whileCharging: false,
+	websiteExtras: [],
+};
+
+const cityFields = Object.keys(cityTemplate);
 
 export default async function handler(
 	request: NextApiRequest,

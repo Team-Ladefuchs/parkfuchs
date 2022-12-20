@@ -5,6 +5,19 @@ export interface Properties {
 	className?: string;
 }
 
+function checkField(): JSX.Element {
+	return <span className="mr-1">✅</span>;
+}
+
+function showSpecificPrivileges(item: InboxCity): boolean {
+	return (
+		item.freeParking ||
+		item.parkingDisk ||
+		item.useBusLane ||
+		item.whileCharging
+	);
+}
+
 export default function InfoSection({
 	item,
 	className = "",
@@ -19,41 +32,47 @@ export default function InfoSection({
 			)}
 			{!item.nonePrivileges && (
 				<>
-					<section>
-						<p>
-							<span className="mr-1">✅</span> Du darfst{" "}
-							{item.parkingHours > 0 && (
-								<span className="bold">
-									{item.parkingHours} Std.
-								</span>
-							)}
-							{!item.parkingHours && item.untilMaxMarkingHour && (
-								<>bis zur angegeb. Höchstparkdauer</>
-							)}{" "}
-							kostenlos parken
-						</p>
-						{item.useBusLane && (
-							<p>
-								<span className="mr-1">✅</span> Du darfst die
-								Busspuren befahren
-							</p>
-						)}
-					</section>
+					{showSpecificPrivileges(item) && (
+						<section>
+							<div>Du darfst kostenlos parken</div>
+							<ul>
+								<li>
+									{checkField()} bist zu{" "}
+									{item.parkingHours > 0 && (
+										<span className="bold">
+											{item.parkingHours} Std.
+										</span>
+									)}
+									{!item.parkingHours &&
+										item.untilMaxMarkingHour && (
+											<>
+												bis zur angegeb. Höchstparkdauer
+											</>
+										)}
+								</li>
+								{item.useBusLane && (
+									<li>
+										{checkField()} Du darfst die Busspuren
+										befahren
+									</li>
+								)}
+								{item.whileCharging && (
+									<li>
+										{checkField()} während des Ladevorgangs
+									</li>
+								)}
+							</ul>
+						</section>
+					)}
 					{(item.withEMark || item.parkingDisk) && (
 						<section>
 							<div>Du brauchst dafür</div>
 							<ul>
 								{item.withEMark && (
-									<li>
-										<span className="mr-1">✅</span> ein
-										E-Kennzeichen
-									</li>
+									<li>{checkField()} ein E-Kennzeichen</li>
 								)}
 								{item.parkingDisk && (
-									<li>
-										<span className="mr-1">✅</span> eine
-										Parkscheibe
-									</li>
+									<li>{checkField()} eine Parkscheibe</li>
 								)}
 							</ul>
 						</section>

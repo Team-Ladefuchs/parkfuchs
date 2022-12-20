@@ -1,6 +1,6 @@
 import { faMagnifyingGlass, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { LegacyRef, MutableRefObject, useRef, useState } from "react";
+import { useRef, useState } from "react";
 
 export interface Properties {
 	className?: string;
