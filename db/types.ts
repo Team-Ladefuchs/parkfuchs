@@ -32,31 +32,16 @@ export interface HttpError {
 	status: number;
 }
 
-export interface InboxCity {
+export interface InboxCity extends NewCity {
 	id: string;
 	created: string;
 	updated: string;
-	freeParking: boolean;
-	useBusLane: boolean;
-	parkingHours: number;
-	website: string;
-	untilMaxMarkingHour: boolean;
-	information: string;
-	withEMark: boolean;
 	approved: boolean;
-	parkingDisk: boolean;
 	expand: Expand;
-	nonePrivileges: boolean;
-	websiteExtras: Array<Website>;
-}
-
-export interface Website {
-	label?: string;
-	url?: string;
 }
 
 export interface NewCity {
-	city: string;
+	city?: string;
 	useBusLane: boolean;
 	untilMaxMarkingHour: boolean;
 	freeParking: boolean;
@@ -66,8 +51,14 @@ export interface NewCity {
 	website: string | null;
 	parkingDisk: boolean;
 	nonePrivileges: boolean;
-	parkingHours: number | null;
+	parkingHours: number;
+	whileCharging: boolean;
 	websiteExtras: Array<Website>;
+}
+
+export interface Website {
+	label?: string;
+	url?: string;
 }
 
 export interface ResultCity {

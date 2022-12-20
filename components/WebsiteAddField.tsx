@@ -26,7 +26,7 @@ export default function WebsiteAddField({
 				className={`bg-neutral-100 border border-green text-gray-900 rounded-lg block w-full p-2.5 focus:bg-white focus:border-green focus:outline-none focus:ring-2 focus:ring-green  focus:border-transparent ${
 					showPlus ? "pr-12" : ""
 				}`}
-				placeholder="Website des Amt o.ä"
+				placeholder="https://strassenverkehrsamt.de"
 				id="website"
 				type="url"
 				{...registerFn(fieldName)}

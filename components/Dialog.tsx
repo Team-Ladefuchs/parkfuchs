@@ -52,6 +52,7 @@ export default function Dialog({
 			withEMark: formData.withEMark,
 			parkingDisk: formData.parkingDisk,
 			nonePrivileges: formData.nonePrivileges,
+			whileCharging: formData.whileCharging,
 		};
 		console.log("saving new City", { newCity });
 		handleOnClose();
@@ -62,7 +63,7 @@ export default function Dialog({
 				success: `Danke, ${selectedCity.name} wird geprüft und bald freigegeben.`,
 				error: "Ouch! Es ist ein Fehler aufgetreten. Techniker ist informiert.",
 			},
-			{ duration: 3500 }
+			{ duration: 3200 }
 		);
 	};
 
