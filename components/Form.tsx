@@ -237,7 +237,7 @@ export default function Form({
 											htmlFor="whileCharging"
 											className="form-check-label text-md inline-block text-gray-800 mt-[2px]"
 										>
-											Während des Ladevorgangs
+											während des Ladevorgangs
 										</label>
 									</div>
 								</section>
