@@ -37,11 +37,13 @@ export default function InfoSection({
 							<div>Du darfst kostenlos parken</div>
 							<ul>
 								<li>
-									{checkField()} bist zu{" "}
 									{item.parkingHours > 0 && (
-										<span className="bold">
-											{item.parkingHours} Std.
-										</span>
+										<>
+											{checkField()} bist zu{" "}
+											<span className="bold">
+												{item.parkingHours} Std.
+											</span>
+										</>
 									)}
 									{!item.parkingHours &&
 										item.untilMaxMarkingHour && (
