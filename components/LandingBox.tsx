@@ -33,7 +33,7 @@ export default function LandingBox({
 				<Link
 					href="https://parkfuchs.app/slack"
 					target="_blank"
-					className="ml-2 underline"
+					className="ml-1 underline"
 				>
 					hier entlang!
 				</Link>
