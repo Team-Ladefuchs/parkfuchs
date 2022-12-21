@@ -48,7 +48,8 @@ export default function InfoSection({
 									{!item.parkingHours &&
 										item.untilMaxMarkingHour && (
 											<>
-												bis zur angegeb. Höchstparkdauer
+												{checkField()} bis zur angegeb.
+												Höchstparkdauer
 											</>
 										)}
 								</li>
