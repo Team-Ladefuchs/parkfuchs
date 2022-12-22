@@ -49,7 +49,7 @@ export default function Contribute({ cities = [] }: Properties) {
 		setIsLoading(false);
 	};
 
-	const debouncedOnCitySearch = useDebounce(onCitySearch, 100);
+	const debouncedOnCitySearch = useDebounce(onCitySearch, 130);
 
 	const getItems = (): InboxCity[] => {
 		if (searchQuery.length > 0 && results.length === 0) {
