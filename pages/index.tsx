@@ -39,7 +39,7 @@ export default function Contribute({ cities = [] }: Properties) {
 
 	const onCitySearch = async (searchTerm: string) => {
 		setSearchQuery(searchTerm);
-		if (searchTerm.length < 2) {
+		if (searchTerm.length === 0) {
 			setResults([]);
 			return;
 		}
