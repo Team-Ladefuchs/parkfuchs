@@ -39,7 +39,7 @@ export default function InfoSection({
 								<li>
 									{item.parkingHours > 0 && (
 										<>
-											{checkField()} bist zu{" "}
+											{checkField()} bis zu{" "}
 											<span className="bold">
 												{item.parkingHours} Std.
 											</span>
@@ -53,15 +53,15 @@ export default function InfoSection({
 											</>
 										)}
 								</li>
+								{item.whileCharging && (
+									<li>
+										{checkField()} während des Ladevorgangs
+									</li>
+								)}
 								{item.useBusLane && (
 									<li>
 										{checkField()} Du darfst die Busspuren
 										befahren
-									</li>
-								)}
-								{item.whileCharging && (
-									<li>
-										{checkField()} während des Ladevorgangs
 									</li>
 								)}
 							</ul>
