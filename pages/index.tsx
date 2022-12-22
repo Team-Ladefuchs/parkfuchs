@@ -96,7 +96,7 @@ export default function Contribute({ cities = [] }: Properties) {
 					isEmpty={
 						!isLoading &&
 						getItems().length === 0 &&
-						searchQuery.length > 2
+						searchQuery.length > 0
 					}
 				/>
 			</section>

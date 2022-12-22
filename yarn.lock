@@ -5283,7 +5283,6 @@ __metadata:
     react-dom: 18.2.0
     react-hook-form: ^7.41.0
     react-hot-toast: ^2.4.0
-    react-list: ^0.8.17
     sanitize-html: ^2.8.1
     tailwindcss: ^3.2.4
     tw-elements: 1.0.0-alpha13
@@ -5582,7 +5581,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prop-types@npm:15, prop-types@npm:^15.8.1":
+"prop-types@npm:^15.8.1":
   version: 15.8.1
   resolution: "prop-types@npm:15.8.1"
   dependencies:
@@ -5667,17 +5666,6 @@ __metadata:
   version: 16.13.1
   resolution: "react-is@npm:16.13.1"
   checksum: f7a19ac3496de32ca9ae12aa030f00f14a3d45374f1ceca0af707c831b2a6098ef0d6bdae51bd437b0a306d7f01d4677fcc8de7c0d331eb47ad0f46130e53c5f
-  languageName: node
-  linkType: hard
-
-"react-list@npm:^0.8.17":
-  version: 0.8.17
-  resolution: "react-list@npm:0.8.17"
-  dependencies:
-    prop-types: 15
-  peerDependencies:
-    react: 0.14 || 15 - 18
-  checksum: ab73693e36e33046e0fbf4aa8046433bc5dd146f06ec9ee273c78149f8f9c093d85f65705c42779d927fc8b5b8826eb3ddb21171830d34197c4f690313eb89d7
   languageName: node
   linkType: hard
 

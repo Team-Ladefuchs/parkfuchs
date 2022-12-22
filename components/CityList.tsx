@@ -1,5 +1,4 @@
 import { InboxCity } from "../db/types";
-import ReactList from "react-list";
 import InfoSection from "./InfoSection";
 import Url from "./Link";
 import Linkify from "linkify-react";
@@ -28,13 +27,8 @@ const options = {
 		"font-sans w-fill max-w-xl max-sm:w-[290px] break-words whitespace-pre-wrap",
 };
 
-export default function CityList({
-	items,
-	className = "",
-	isEmpty = false,
-}: Properties): JSX.Element {
-	const renderItem = (index: number, _key: any) => {
-		const item: InboxCity = items[index]!;
+function renderList(items: InboxCity[]): JSX.Element[] {
+	const list = items.map((item) => {
 		return (
 			<div
 				key={item.id}
@@ -101,8 +95,16 @@ export default function CityList({
 				</div>
 			</div>
 		);
-	};
+	});
 
+	return list;
+}
+
+export default function CityList({
+	items,
+	className = "",
+	isEmpty = false,
+}: Properties): JSX.Element {
 	return (
 		<div className={`accordion ${className}`} id="accordionList">
 			{isEmpty && (
@@ -111,14 +113,7 @@ export default function CityList({
 					neue anlegen?
 				</div>
 			)}
-			{items.length > 0 && (
-				<ReactList
-					itemRenderer={renderItem}
-					length={items.length}
-					pageSize={items.length}
-					// type="uniform"
-				/>
-			)}
+			{renderList(items)}
 		</div>
 	);
 }
