@@ -10,10 +10,10 @@ export const bunqLink = "https://bunq.me/parkfuchs";
 export default function AppNav() {
 	return (
 		<nav
-			className="p-5 w-device sticky top-0 left-0 right-0 bg-green w-full z-10 max-md:py-3 max-md:px-4"
+			className="p-5 w-device sticky top-0 left-0 right-0 bg-green w-full z-20 max-md:py-3 max-md:px-4"
 			role="banner"
 		>
-			<div className="flex items-center justify-between mx-auto w-[750px] max-md:w-full">
+			<div className="flex items-center justify-between mx-auto w-[750px] max-md:w-full select-none">
 				<Link className="flex gap-3" href="/">
 					<Image
 						src={parkfuchsLogo}

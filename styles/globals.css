@@ -48,6 +48,11 @@ nav {
 	box-shadow: 0 3px 6px rgb(0 0 0 / 16%), 0 3px 6px rgb(0 0 0 / 23%);
 }
 
+.banner-shadow {
+	box-shadow: 0px -3px 6px 0px rgb(0 0 0 / 22%),
+		0 3px 6px rgb(183 183 183 / 0%);
+}
+
 .bitter-500 {
 	font-family: "Bitter";
 	font-weight: 500;

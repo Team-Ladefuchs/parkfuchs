@@ -11,6 +11,7 @@ import axios from "axios";
 import { useDebounce } from "../functions/debounce";
 import Link from "next/link";
 import LandingBox from "../components/LandingBox";
+import Banner from "../components/Banner";
 
 interface Properties {
 	cities: Array<InboxCity>;
@@ -100,6 +101,7 @@ export default function Contribute({ cities = [] }: Properties) {
 					}
 				/>
 			</section>
+			<Banner></Banner>
 			<footer className="left-1/2 text-center text-neutral-700 opacity-60 uppercase tracking-wide font-semibold text-xs pb-5">
 				<p className="mb-1 mt-2">
 					Alle Angaben ohne Gewähr

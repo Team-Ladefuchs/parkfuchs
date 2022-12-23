@@ -52,7 +52,7 @@ export default function AutoCompleteInput({
 									setResults([]);
 									onSelectedCity(item);
 								}}
-								className="pl-6 group pt-3 pb-3 hover:z-10 first:rounded-t-lg cursor-pointer hover:bg-lightGreen border-b border-gray-200 last:border-0"
+								className="pl-6 group pt-3 pb-3 first:rounded-t-lg cursor-pointer hover:bg-lightGreen border-b border-gray-200 last:border-0"
 							>
 								<div className="flex gap-2 items-baseline">
 									<div>{item.name}</div>
