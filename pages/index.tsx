@@ -12,6 +12,7 @@ import { useDebounce } from "../functions/debounce";
 import Link from "next/link";
 import LandingBox from "../components/LandingBox";
 import Banner from "../components/Banner";
+import { it } from "node:test";
 
 interface Properties {
 	cities: Array<InboxCity>;
@@ -58,7 +59,8 @@ export default function Contribute({ cities = [] }: Properties) {
 		}
 		return results.length > 0 ? results : cities;
 	};
-
+	const listIsEmpty =
+		!isLoading && getItems().length === 0 && searchQuery.length > 0;
 	return (
 		<div
 			className="justify-center w-[750px] max-md:w-w-11/12 min-h-[28rem]"
@@ -90,15 +92,13 @@ export default function Contribute({ cities = [] }: Properties) {
 						Ort hinzufügen
 					</button>
 				</div>
-				<LandingBox />
+				<LandingBox
+					hidden={getItems().length > 0 && searchQuery.length > 0}
+				/>
 				<CityList
 					className="mt-6"
 					items={getItems()}
-					isEmpty={
-						!isLoading &&
-						getItems().length === 0 &&
-						searchQuery.length > 0
-					}
+					isEmpty={listIsEmpty}
 				/>
 			</section>
 			<Banner />
