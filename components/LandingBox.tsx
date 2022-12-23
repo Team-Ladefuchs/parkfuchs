@@ -6,11 +6,16 @@ import { bunqLink } from "./AppNav";
 
 interface Properties {
 	className?: string;
+	hidden: boolean;
 }
 
 export default function LandingBox({
 	className = "",
+	hidden = false,
 }: Properties): JSX.Element {
+	if (hidden) {
+		return <></>;
+	}
 	return (
 		<section
 			className={`bg-green rounded-lg p-6 h-fit opacity-75 grid grid-cols-[28px_1fr] gap-2 max-md:gap-3 max-md:p-5 ${className}`}
