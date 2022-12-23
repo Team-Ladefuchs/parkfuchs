@@ -101,7 +101,7 @@ export default function Contribute({ cities = [] }: Properties) {
 					}
 				/>
 			</section>
-			<Banner></Banner>
+			<Banner />
 			<footer className="left-1/2 text-center text-neutral-700 opacity-60 uppercase tracking-wide font-semibold text-xs pb-5 mb-16">
 				<p className="mb-1 mt-2">
 					Alle Angaben ohne Gewähr
