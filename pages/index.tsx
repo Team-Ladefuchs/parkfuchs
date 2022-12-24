@@ -91,9 +91,7 @@ export default function Contribute({ cities = [] }: Properties) {
 						Ort hinzufügen
 					</button>
 				</div>
-				<LandingBox
-					hidden={getItems().length > 0 && searchQuery.length > 0}
-				/>
+				<LandingBox hidden={searchQuery.length > 0} />
 				<CityList
 					className="mt-6"
 					items={getItems()}
