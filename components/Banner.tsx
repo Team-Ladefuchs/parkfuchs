@@ -12,14 +12,14 @@ function getBannerImg(): StaticImageData {
 
 export default function Banner(): JSX.Element {
 	return (
-		<div className="fixed left-0 right-0 bottom-0 bg-green z-10 w-full h-[4rem] banner-shadow max-md:h-[4.8rem] ">
+		<div className="fixed left-0 right-0 bottom-0 bg-green z-10 w-full h-[3.85rem] banner-shadow max-md:h-[4.5rem] ">
 			<Link
 				href="https://xn--geld-fr-eauto-1ob.de/ref/Parkfuchs"
 				target="_blank"
 			>
 				<Image
 					src={getBannerImg()}
-					height={102}
+					height={99}
 					alt={"thg Banner"}
 					className="mx-auto relative bottom-2 max-md:bottom-[10px]"
 				/>
