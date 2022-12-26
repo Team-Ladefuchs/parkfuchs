@@ -12,8 +12,7 @@ function getBannerImg(): StaticImageData {
 }
 
 function runningStandalone(): boolean {
-	const isInWebAppiOS = window.navigator["standalone"] === true;
-	if (isInWebAppiOS) {
+	if (window.navigator["standalone"] === true) {
 		return true;
 	}
 

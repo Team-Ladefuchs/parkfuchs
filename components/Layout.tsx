@@ -8,7 +8,7 @@ const Layout: FC<Props> = ({ children }: Props) => {
 	return (
 		<>
 			<AppNav />
-			<main className="w-full flex justify-center max-md:px-4 py-6 max-md:pt-1rem">
+			<main className="w-full flex justify-center max-md:px-4 py-6 max-md:pt-1rem max-md:pt-3">
 				{children}
 			</main>
 
