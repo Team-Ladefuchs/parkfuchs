@@ -70,7 +70,7 @@ export default function Contribute({ cities = [] }: Properties) {
 				onClose={handleOnClose}
 				initQuery={searchQuery}
 			/>
-			<section className="pb-12 mt-4 flex flex-col space-y-6">
+			<section className="pb-12 flex flex-col space-y-6 max-md:space-y-4">
 				<div className="flex gap-5 max-md:gap-2 items-center justify-between max-md:flex-col">
 					<SearchInput
 						initQuery=""
