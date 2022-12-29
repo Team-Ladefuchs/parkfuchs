@@ -30,7 +30,7 @@
 		"react-hook-form": "^7.41.2",
 		"react-hot-toast": "^2.4.0",
 		"sanitize-html": "^2.8.1",
-		"tw-elements": "1.0.0-alpha9"
+		"tw-elements": "1.0.0-alpha13"
 	},
 	"devDependencies": {
 		"@types/react-list": "^0.8.7",
