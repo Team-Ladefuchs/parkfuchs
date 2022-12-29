@@ -16,7 +16,6 @@ export interface CityRepo {
 	id: string;
 	name: string;
 	community: string;
-	created: string;
 	latitude: string;
 	longitude: string;
 	postcodes: String[];
@@ -34,10 +33,9 @@ export interface HttpError {
 
 export interface InboxCity extends NewCity {
 	id: string;
-	created: string;
-	updated: string;
 	approved: boolean;
-	expand: Expand;
+	cityRef: CityRepo;
+	expand?: any;
 }
 
 export interface NewCity {
@@ -46,7 +44,7 @@ export interface NewCity {
 	untilMaxMarkingHour: boolean;
 	freeParking: boolean;
 	withEMark: boolean;
-	cityID: string;
+	cityID?: string;
 	information: string;
 	website: string | null;
 	parkingDisk: boolean;

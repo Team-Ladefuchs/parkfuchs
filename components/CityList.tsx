@@ -48,11 +48,9 @@ function renderList(items: InboxCity[]): JSX.Element[] {
 						aria-expanded="true"
 					>
 						<p className="text-black card-title">
-							{item.expand.cityID.name}
+							{item.cityRef.name}
 						</p>
-						<p className="text-neutral-500">
-							{item.expand.cityID.state}
-						</p>
+						<p className="text-neutral-500">{item.cityRef.state}</p>
 					</button>
 				</h2>
 				<div

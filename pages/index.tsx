@@ -18,7 +18,7 @@ interface Properties {
 }
 
 export async function getServerSideProps(_context: GetServerSidePropsContext) {
-	const cities = await getNewestEnabledInboxCities(10);
+	const cities = await getNewestEnabledInboxCities(12);
 	return {
 		props: {
 			cities,
