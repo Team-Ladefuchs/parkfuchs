@@ -18,10 +18,22 @@ function showSpecificPrivileges(item: InboxCity): boolean {
 	);
 }
 
+function whileChargingSuffix(item: InboxCity): null | string {
+	if (!item.whileCharging) {
+		return null;
+	}
+	if (!item.freeParking && !item.untilMaxMarkingHour) {
+		return null;
+	}
+
+	return " oder während des Ladevorgangs";
+}
+
 export default function InfoSection({
 	item,
 	className = "",
 }: Properties): JSX.Element {
+	const chargingIsSuffix = whileChargingSuffix(item);
 	return (
 		<div className={className}>
 			{item.nonePrivileges && (
@@ -41,8 +53,9 @@ export default function InfoSection({
 										<>
 											{checkField()} bis zu{" "}
 											<span className="bold">
-												{item.parkingHours} Std.
+												{item.parkingHours} Stunden
 											</span>
+											{chargingIsSuffix}
 										</>
 									)}
 									{!item.parkingHours &&
@@ -50,14 +63,17 @@ export default function InfoSection({
 											<>
 												{checkField()} bis zur
 												angegebenen Höchstparkdauer
+												{chargingIsSuffix}
 											</>
 										)}
 								</li>
-								{item.whileCharging && (
-									<li>
-										{checkField()} während des Ladevorgangs
-									</li>
-								)}
+								{item.whileCharging &&
+									!chargingIsSuffix && (
+										<li>
+											{checkField()}
+											während des Ladevorgangs
+										</li>
+									)}
 								{item.useBusLane && (
 									<li>
 										{checkField()} Du darfst die Busspuren

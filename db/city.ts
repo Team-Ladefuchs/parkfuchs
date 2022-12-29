@@ -1,10 +1,40 @@
 import PocketBase from "pocketbase";
-import type { InboxCity, NewCity, ResultCity } from "./types";
+import type { CityRepo, InboxCity, NewCity, ResultCity } from "./types";
 import h2p from "html2plaintext";
 
 const pocketBase = new PocketBase(
 	process.env.DB_HOST ?? "http://127.0.0.1:8090"
 );
+
+function toRecordToInboxCity(row: InboxCity): InboxCity {
+	const cityItem: CityRepo = row.expand.cityID as unknown as CityRepo;
+	const ret: InboxCity = {
+		cityRef: {
+			id: cityItem.id,
+			name: cityItem.name,
+			postcodes: cityItem.postcodes,
+			community: cityItem.community,
+			latitude: cityItem.latitude,
+			longitude: cityItem.longitude,
+			state: cityItem.state,
+		},
+		id: row.id,
+		approved: row.approved,
+		useBusLane: row.useBusLane,
+		untilMaxMarkingHour: row.untilMaxMarkingHour,
+		freeParking: row.freeParking,
+		withEMark: row.withEMark,
+		information: row.information,
+		website: row.website,
+		parkingDisk: row.parkingDisk,
+		nonePrivileges: row.nonePrivileges,
+		parkingHours: row.parkingHours,
+		whileCharging: row.whileCharging,
+		websiteExtras: row.websiteExtras,
+	};
+
+	return ret;
+}
 
 export async function getNewestEnabledInboxCities(
 	maxResults: number
@@ -12,17 +42,12 @@ export async function getNewestEnabledInboxCities(
 	try {
 		const resultList = await pocketBase
 			.collection("cityInbox")
-			.getList(1, maxResults, {
+			.getList<InboxCity>(1, maxResults, {
 				filter: "approved = true",
 				expand: "cityID",
 				sort: "-updated,city",
 			});
-
-		return resultList.items.map((row) => {
-			return {
-				...row,
-			} as unknown as InboxCity;
-		});
+		return resultList.items.map(toRecordToInboxCity);
 	} catch (error) {
 		console.error(error);
 	}
@@ -39,17 +64,13 @@ export async function search(
 
 		const resultList = await pocketBase
 			.collection("cityInbox")
-			.getList(1, maxResults, {
+			.getList<InboxCity>(1, maxResults, {
 				filter: `approved = true && (cityID.name ~ '${searchQuery}%' || cityID.postcodes ~ '${searchQuery}')`,
 				expand: "cityID",
 				sort: "-updated,+city",
 			});
 
-		return resultList.items.map((row) => {
-			return {
-				...row,
-			} as unknown as InboxCity;
-		});
+		return resultList.items.map(toRecordToInboxCity);
 	} catch (error) {
 		console.error(error);
 	}
