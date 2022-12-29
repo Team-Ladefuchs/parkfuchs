@@ -40,10 +40,6 @@
 	}
 }
 
-.show {
-	visibility: visible !important;
-}
-
 .mirror {
 	transform: scaleX(-1);
 }
