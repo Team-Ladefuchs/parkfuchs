@@ -130,17 +130,21 @@ export default function Impressum() {
 					</ul>
 				</section>
 				<section className="mt-6">
-					<h2 id="m3">Verantwortlicher</h2>
+					<h2 id="m3" className="font-bold mb-2">
+						Verantwortlicher
+					</h2>
 					<p>
-						Malik Aziz
-						<span className="font-bold">Stephanstraße 43-45</span>
+						Malik Aziz<br></br>
+						Stephanstraße 43-45<br></br>
 						52064 Aachen
 					</p>
-					E-Mail-Adresse:{" "}
-					<p>
-						<Link href="mailto:malik@ladefuchs.app">
-							malik@ladefuchs.app
-						</Link>
+					<p className="mt-1">
+						E-Mail-Adresse:{" "}
+						<p className="mb-1">
+							<Link href="mailto:malik@ladefuchs.app">
+								malik@ladefuchs.app
+							</Link>
+						</p>
 					</p>
 					Impressum:{" "}
 					<p>
