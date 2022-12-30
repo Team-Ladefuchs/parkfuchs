@@ -93,7 +93,7 @@ export default function Contribute({ cities = [] }: Properties) {
 				</div>
 				<LandingBox hidden={searchQuery.length > 0} />
 				<CityList
-					className="mt-6"
+					className="mt-6 min-h-[22rem]"
 					items={getItems()}
 					isEmpty={listIsEmpty}
 				/>
