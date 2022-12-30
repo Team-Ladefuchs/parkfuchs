@@ -19,10 +19,14 @@ function showSpecificPrivileges(item: InboxCity): boolean {
 }
 
 function whileChargingSuffix(item: InboxCity): null | string {
-	if (!item.whileCharging) {
+	if (!item.whileCharging || item.nonePrivileges) {
 		return null;
 	}
-	if (!item.freeParking && !item.untilMaxMarkingHour) {
+	if (
+		!item.freeParking &&
+		!item.untilMaxMarkingHour &&
+		item.parkingHours === 0
+	) {
 		return null;
 	}
 
@@ -34,6 +38,7 @@ export default function InfoSection({
 	className = "",
 }: Properties): JSX.Element {
 	const chargingIsSuffix = whileChargingSuffix(item);
+
 	return (
 		<div className={className}>
 			{item.nonePrivileges && (
@@ -67,13 +72,12 @@ export default function InfoSection({
 											</>
 										)}
 								</li>
-								{item.whileCharging &&
-									!chargingIsSuffix && (
-										<li>
-											{checkField()}
-											während des Ladevorgangs
-										</li>
-									)}
+								{item.whileCharging && !chargingIsSuffix && (
+									<li>
+										{checkField()}
+										während des Ladevorgangs
+									</li>
+								)}
 								{item.useBusLane && (
 									<li>
 										{checkField()} Du darfst die Busspuren
