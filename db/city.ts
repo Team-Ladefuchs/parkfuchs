@@ -47,6 +47,7 @@ export async function getNewestEnabledInboxCities(
 				expand: "cityID",
 				sort: "-updated,city",
 			});
+
 		return resultList.items.map(toRecordToInboxCity);
 	} catch (error) {
 		console.error(error);
