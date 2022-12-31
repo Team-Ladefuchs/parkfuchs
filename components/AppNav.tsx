@@ -18,10 +18,9 @@ export default function AppNav() {
 					<Lottie
 						animationData={parkfuchsLottie}
 						loop={true}
-						width={64}
 						draggable={false}
 						alt="Parkfuchs Logo"
-						className="w-16 mt-[-8px]"
+						className="w-[64px] mt-[-8px]"
 					/>
 					<div>
 						<h1
