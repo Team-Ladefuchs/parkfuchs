@@ -5,7 +5,6 @@ import banner400eu from "../public/banner/400eu_Footer_1400x500.png";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { link } from "fs";
 
 function getBannerImg(): StaticImageData {
 	const date = new Date().getFullYear();
