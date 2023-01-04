@@ -65,7 +65,7 @@ export default function Form({
 			setDisableCanAddMoreWebsite(true);
 			setFormValid(false);
 		}
-	}, [reset]);
+	}, [reset, doReset]);
 
 	const doValidate = (): boolean => {
 		if (!selectedCity) {
