@@ -5,6 +5,7 @@ import banner400eu from "../public/banner/400eu_Footer_1400x500.png";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { link } from "fs";
 
 function getBannerImg(): StaticImageData {
 	const date = new Date().getFullYear();
@@ -19,7 +20,11 @@ function runningStandalone(): boolean {
 	return window.matchMedia("(display-mode: standalone)").matches;
 }
 
-export default function Banner(): JSX.Element {
+interface Props {
+	link: string;
+}
+
+export default function Banner({ link }: Props): JSX.Element {
 	const [mobileWrapperHeight, setMobileWrapperHeight] =
 		useState("max-md:h-[4.5rem]");
 
@@ -35,10 +40,7 @@ export default function Banner(): JSX.Element {
 		<div
 			className={`fixed left-0 right-0 bottom-0 bg-green z-10 w-full h-[3.85rem] banner-shadow ${mobileWrapperHeight}`}
 		>
-			<Link
-				href="https://xn--geld-fr-eauto-1ob.de/ref/Parkfuchs"
-				target="_blank"
-			>
+			<Link href={link} target="_blank">
 				<Image
 					src={getBannerImg()}
 					height={99}

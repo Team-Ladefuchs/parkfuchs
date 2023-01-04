@@ -18,7 +18,7 @@ export default async function handler(
 		});
 	}
 
-	const results = await search(query as string, 12);
+	const results = await search(query as string, 14);
 
 	response.status(200).json(results);
 }

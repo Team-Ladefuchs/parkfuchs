@@ -12,21 +12,28 @@ import { useDebounce } from "../functions/debounce";
 import Link from "next/link";
 import LandingBox from "../components/LandingBox";
 import Banner from "../components/Banner";
+import { getTGHLink } from "../db/config";
 
 interface Properties {
 	cities: Array<InboxCity>;
+	thgLink: string;
 }
 
 export async function getServerSideProps(_context: GetServerSidePropsContext) {
-	const cities = await getNewestEnabledInboxCities(12);
+	const [cities, thgLink] = await Promise.all([
+		getNewestEnabledInboxCities(14),
+		getTGHLink(),
+	]);
+
 	return {
 		props: {
 			cities,
+			thgLink,
 		},
 	};
 }
 
-export default function Contribute({ cities = [] }: Properties) {
+export default function Contribute({ cities = [], thgLink }: Properties) {
 	const [openForm, setOpenForm] = useState(false);
 
 	const [results, setResults] = useState<Array<InboxCity>>(cities);
@@ -98,7 +105,7 @@ export default function Contribute({ cities = [] }: Properties) {
 					isEmpty={listIsEmpty}
 				/>
 			</section>
-			<Banner />
+			<Banner link={thgLink} />
 			<footer className="left-1/2 text-center text-neutral-700 opacity-60 uppercase tracking-wide font-semibold text-xs pb-5 mb-16">
 				<p className="mb-1 mt-2">
 					Alle Angaben ohne Gewähr
