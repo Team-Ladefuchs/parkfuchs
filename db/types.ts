@@ -65,6 +65,7 @@ export interface ResultCity {
 	stateCode: string;
 	state: string;
 	postcode: number[];
+	exists: boolean;
 }
 
 export interface Config {

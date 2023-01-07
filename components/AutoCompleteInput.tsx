@@ -31,10 +31,12 @@ export default function AutoCompleteInput({
 		const response = await axios.get(
 			`/api/autocomplete?filter=${searchTerm}`
 		);
+		console.log(response.data);
 		setResults(response.data);
 	};
 
 	const debouncedAutoCompleteCities = useDebounce(autoCompleteCities, 110);
+	console.log(results.length);
 
 	return (
 		<>
@@ -52,18 +54,23 @@ export default function AutoCompleteInput({
 									setResults([]);
 									onSelectedCity(item);
 								}}
-								className="pl-6 group pt-3 pb-3 first:rounded-t-lg cursor-pointer hover:bg-lightGreen border-b border-gray-200 last:border-0"
+								className="pl-6 group pt-3 pb-3 first:rounded-t-lg cursor-pointer hover:bg-lightGreen border-b border-gray-200 last:border-0 flex items-center gap-4"
 							>
-								<div className="flex gap-2 items-baseline">
-									<div>{item.name}</div>
-									<div className="text-neutral-500">
-										({item.stateCode})
-									</div>
+								<div className="select-none">
+									{item.exists ? "🦊" : "　"}
 								</div>
+								<div>
+									<div className="flex gap-2 items-baseline">
+										<div>{item.name}</div>
+										<div className="text-neutral-500">
+											({item.stateCode})
+										</div>
+									</div>
 
-								<p className="p-0 text-neutral-500">
-									{item.postcode.slice(0, 10).join(", ")}
-								</p>
+									<p className="p-0 text-neutral-500">
+										{item.postcode.slice(0, 10).join(", ")}
+									</p>
+								</div>
 							</li>
 						);
 					})}

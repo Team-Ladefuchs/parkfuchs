@@ -122,20 +122,18 @@ export default function Dialog({
 							/>
 						</button>
 					</div>
-					<div className="p-6 max-h-[76vh] overflow-y-auto space-y-6 flex flex-col">
-						<>
-							<AutoCompleteInput
-								initQuery={initQuery}
-								onSelectedCity={handleSelectedCity}
-							/>
+					<div className="p-6 max-h-[76vh] overflow-y-auto space-y-6">
+						<AutoCompleteInput
+							initQuery={initQuery}
+							onSelectedCity={handleSelectedCity}
+						/>
 
-							<Form
-								selectedCity={selectedCity}
-								doReset={isResetForm}
-								onSubmit={onSubmit}
-								onClose={handleOnClose}
-							/>
-						</>
+						<Form
+							selectedCity={selectedCity}
+							doReset={isResetForm}
+							onSubmit={onSubmit}
+							onClose={handleOnClose}
+						/>
 					</div>
 				</div>
 			</div>
