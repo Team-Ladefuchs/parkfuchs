@@ -1,4 +1,4 @@
-import PocketBase from "pocketbase";
+import PocketBase, { RecordSubscription } from "pocketbase";
 import type { CityRepo, InboxCity, NewCity, ResultCity } from "./types";
 import h2p from "html2plaintext";
 
@@ -92,20 +92,36 @@ export async function autocomplete(
 				sort: "+name",
 			});
 
-		return results.items.map((row) => {
+		const cityInbox = pocketBase.collection("cityInbox");
+
+		const promises = results.items.map(async (row) => {
 			return {
 				id: row.id,
 				name: row.name,
 				postcode: row.postcodes,
 				stateCode: row.stateCode,
 				state: row.state,
+				exists: await citAlreadyExists(cityInbox, row.id),
 			};
 		});
+		return await Promise.all(promises);
 	} catch (error) {
 		console.log(error);
 	}
 
 	return [];
+}
+
+async function citAlreadyExists(
+	cityInbox: any,
+	cityId: string
+): Promise<boolean> {
+	try {
+		await cityInbox.getFirstListItem(`cityID.id="${cityId}"`, {});
+		return true;
+	} catch (error) {}
+
+	return false;
 }
 
 export async function saveCity(newCity: NewCity): Promise<InboxCity> {
