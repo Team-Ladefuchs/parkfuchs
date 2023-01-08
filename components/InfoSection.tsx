@@ -1,4 +1,3 @@
-import { it } from "node:test";
 import { InboxCity } from "../db/types";
 
 export interface Properties {
