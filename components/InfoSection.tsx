@@ -1,3 +1,4 @@
+import { it } from "node:test";
 import { InboxCity } from "../db/types";
 
 export interface Properties {
@@ -27,6 +28,10 @@ function whileChargingSuffix(item: InboxCity): null | string {
 		!item.untilMaxMarkingHour &&
 		item.parkingHours === 0
 	) {
+		return null;
+	}
+
+	if (item.freeParking && item.untilMaxMarkingHour && item.parkingHours) {
 		return null;
 	}
 
@@ -63,6 +68,8 @@ export default function InfoSection({
 											{chargingIsSuffix}
 										</>
 									)}
+								</li>
+								<li>
 									{item.untilMaxMarkingHour && (
 										<>
 											{checkField()} bis zur angegebenen
@@ -73,8 +80,7 @@ export default function InfoSection({
 								</li>
 								{item.whileCharging && !chargingIsSuffix && (
 									<li>
-										{checkField()}
-										während des Ladevorgangs
+										{checkField()} während des Ladevorgangs
 									</li>
 								)}
 								{item.useBusLane && (
