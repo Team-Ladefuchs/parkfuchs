@@ -63,14 +63,13 @@ export default function InfoSection({
 											{chargingIsSuffix}
 										</>
 									)}
-									{!item.parkingHours &&
-										item.untilMaxMarkingHour && (
-											<>
-												{checkField()} bis zur
-												angegebenen Höchstparkdauer
-												{chargingIsSuffix}
-											</>
-										)}
+									{item.untilMaxMarkingHour && (
+										<>
+											{checkField()} bis zur angegebenen
+											Höchstparkdauer
+											{chargingIsSuffix}
+										</>
+									)}
 								</li>
 								{item.whileCharging && !chargingIsSuffix && (
 									<li>
