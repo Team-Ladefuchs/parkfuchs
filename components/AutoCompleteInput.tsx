@@ -31,12 +31,10 @@ export default function AutoCompleteInput({
 		const response = await axios.get(
 			`/api/autocomplete?filter=${searchTerm}`
 		);
-		console.log(response.data);
 		setResults(response.data);
 	};
 
 	const debouncedAutoCompleteCities = useDebounce(autoCompleteCities, 110);
-	console.log(results.length);
 
 	return (
 		<>
