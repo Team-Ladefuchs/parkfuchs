@@ -1,5 +1,5 @@
-import parkfuchsLogo from "../public/parkfuchs.gif";
-import Image from "next/image";
+import parkfuchsLogo from "../public/parkfuchs-lottie.json";
+import Lottie from "lottie-react";
 import Link from "next/link";
 
 import { faMugHot } from "@fortawesome/free-solid-svg-icons";
@@ -15,8 +15,9 @@ export default function AppNav() {
 		>
 			<div className="flex items-center justify-between mx-auto w-[750px] max-md:w-full select-none">
 				<Link className="flex gap-2" href="/">
-					<Image
-						src={parkfuchsLogo}
+					<Lottie
+						animationData={parkfuchsLogo}
+						loop={true}
 						width={64}
 						draggable={false}
 						alt="Parkfuchs Logo"
