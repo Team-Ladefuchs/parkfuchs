@@ -58,7 +58,7 @@ export default function AutoCompleteInput({
 									<div>{item.name}</div>
 									<div className="text-neutral-500">
 										({item.stateCode}){" "}
-										{item.exists ? "Im 🅿️🦊" : ""}
+										{item.exists ? "🅿️🦊" : ""}
 									</div>
 								</div>
 
