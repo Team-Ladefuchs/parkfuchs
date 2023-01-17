@@ -42,3 +42,6 @@ public/sw.js
 public/*.map
 public/workbox*.js
 public/worker*.js
+
+android
+*.keystore
