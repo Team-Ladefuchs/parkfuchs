@@ -34,7 +34,7 @@ function whileChargingSuffix(item: InboxCity): null | string {
 		return null;
 	}
 
-	return " oder während des Ladevorgangs";
+	return " während des Ladevorgangs";
 }
 
 export default function InfoSection({
