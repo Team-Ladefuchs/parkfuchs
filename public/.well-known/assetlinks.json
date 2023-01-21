@@ -1,0 +1,14 @@
+[
+	{
+		"relation": [
+			"delegate_permission/common.handle_all_urls"
+		],
+		"target": {
+			"namespace": "android_app",
+			"package_name": "app.parkfuchs.twa",
+			"sha256_cert_fingerprints": [
+				"17:31:00:3E:E7:B0:4D:33:4C:76:48:6A:05:5B:7F:EF:67:34:92:F8:33:A9:E7:F6:F5:9E:E1:0B:B9:AF:D3:64"
+			]
+		}
+	}
+]
