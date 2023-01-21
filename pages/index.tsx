@@ -2,7 +2,7 @@ import { GetServerSidePropsContext } from "next";
 import { getNewestEnabledInboxCities } from "../db/city";
 import type { InboxCity } from "../db/types";
 import Dialog from "../components/Dialog";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CityList from "../components/CityList";
 import SearchInput from "../components/SearchInput";
 import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
@@ -21,7 +21,7 @@ interface Properties {
 
 export async function getServerSideProps(_context: GetServerSidePropsContext) {
 	const [cities, thgLink] = await Promise.all([
-		getNewestEnabledInboxCities(14),
+		getNewestEnabledInboxCities(10),
 		getTGHLink(),
 	]);
 
@@ -33,7 +33,7 @@ export async function getServerSideProps(_context: GetServerSidePropsContext) {
 	};
 }
 
-export default function Contribute({ cities = [], thgLink }: Properties) {
+export default function Index({ cities = [], thgLink }: Properties) {
 	const [openForm, setOpenForm] = useState(false);
 
 	const [results, setResults] = useState<Array<InboxCity>>(cities);
@@ -56,6 +56,8 @@ export default function Contribute({ cities = [], thgLink }: Properties) {
 		setResults(response.data);
 		setIsLoading(false);
 	};
+
+	useEffect(() => {}, []);
 
 	const debouncedOnCitySearch = useDebounce(onCitySearch, 350);
 
