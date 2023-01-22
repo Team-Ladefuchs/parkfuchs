@@ -124,7 +124,22 @@ async function citAlreadyExists(
 	return false;
 }
 
-export async function saveCity(newCity: NewCity): Promise<InboxCity> {
+function parseInput(newCity: NewCity): NewCity {
+	const information = h2p(newCity.information.trim());
+
+	if (newCity.nonePrivileges) {
+		return {
+			...newCity,
+			information,
+			parkingHours: 0,
+			freeParking: false,
+			withEMark: false,
+			useBusLane: false,
+			whileCharging: false,
+			untilMaxMarkingHour: false,
+		};
+	}
+
 	const parkingHours =
 		newCity.nonePrivileges ||
 		newCity.untilMaxMarkingHour ||
@@ -136,17 +151,22 @@ export async function saveCity(newCity: NewCity): Promise<InboxCity> {
 		newCity.freeParking && newCity.whileCharging && parkingHours === 0
 			? true
 			: newCity.untilMaxMarkingHour;
-	const city = {
+
+	return {
 		...newCity,
-		information: h2p(newCity.information.trim()),
+		information,
 		approved: false,
 		parkingHours,
 		untilMaxMarkingHour,
 	};
-	console.log("saveCity", { ...city });
+}
+
+export async function saveCity(newCity: NewCity): Promise<InboxCity> {
+	const cityToSave = { ...parseInput(newCity), approved: false };
+	console.log("saveCity", cityToSave);
 
 	const record = await pocketBase
 		.collection("cityInbox")
-		.create<InboxCity>(city);
+		.create<InboxCity>(cityToSave);
 	return record;
 }
