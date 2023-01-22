@@ -76,14 +76,12 @@ export default function InfoSection({
 									</li>
 								)}
 
-								{item.whileCharging &&
-									!chargingIsSuffix &&
-									item.untilMaxMarkingHour && (
-										<li>
-											{checkField()} während des
-											Ladevorgangs
-										</li>
-									)}
+								{item.whileCharging && !chargingIsSuffix && (
+									<li>
+										{checkField()} nur während des
+										Ladevorgangs
+									</li>
+								)}
 								{item.useBusLane && (
 									<li>
 										{checkField()} Du darfst die Busspuren
