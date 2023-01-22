@@ -155,7 +155,6 @@ function parseInput(newCity: NewCity): NewCity {
 	return {
 		...newCity,
 		information,
-		approved: false,
 		parkingHours,
 		untilMaxMarkingHour,
 	};
