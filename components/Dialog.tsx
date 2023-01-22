@@ -122,7 +122,7 @@ export default function Dialog({
 							/>
 						</button>
 					</div>
-					<div className="p-6 max-h-[76vh] overflow-y-auto space-y-6">
+					<div className="p-6 max-md:px-3 max-h-[76vh] overflow-y-auto space-y-6">
 						<AutoCompleteInput
 							initQuery={initQuery}
 							onSelectedCity={handleSelectedCity}

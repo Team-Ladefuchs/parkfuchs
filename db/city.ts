@@ -125,14 +125,23 @@ async function citAlreadyExists(
 }
 
 export async function saveCity(newCity: NewCity): Promise<InboxCity> {
+	const parkingHours =
+		newCity.nonePrivileges ||
+		newCity.untilMaxMarkingHour ||
+		!newCity.freeParking
+			? 0
+			: newCity.parkingHours;
+
+	const untilMaxMarkingHour =
+		newCity.freeParking && newCity.whileCharging && parkingHours === 0
+			? true
+			: newCity.untilMaxMarkingHour;
 	const city = {
 		...newCity,
 		information: h2p(newCity.information.trim()),
 		approved: false,
-		parkingHours:
-			newCity.untilMaxMarkingHour || !newCity.freeParking
-				? 0
-				: newCity.parkingHours,
+		parkingHours,
+		untilMaxMarkingHour,
 	};
 	console.log("saveCity", { ...city });
 
