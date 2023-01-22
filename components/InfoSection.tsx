@@ -22,8 +22,9 @@ function whileChargingSuffix(item: InboxCity): null | string {
 	if (!item.whileCharging || item.nonePrivileges) {
 		return null;
 	}
+
 	if (
-		!item.freeParking &&
+		item.whileCharging &&
 		!item.untilMaxMarkingHour &&
 		item.parkingHours === 0
 	) {
@@ -57,29 +58,36 @@ export default function InfoSection({
 						<section>
 							<div>Du darfst kostenlos parken</div>
 							<ul>
-								<li>
-									{item.parkingHours > 0 && (
-										<>
-											{checkField()} bis zu{" "}
-											<span className="bold">
-												{item.parkingHours} Stunden
-											</span>
-											{chargingIsSuffix}
-										</>
+								{item.parkingHours > 0 && (
+									<li>
+										{checkField()} bis zu{" "}
+										<span className="bold">
+											{item.parkingHours} Stunden
+										</span>
+										{chargingIsSuffix}
+									</li>
+								)}
+
+								{item.untilMaxMarkingHour && (
+									<li>
+										{checkField()} bis zur angegebenen
+										Höchstparkdauer
+										{chargingIsSuffix}
+									</li>
+								)}
+
+								{item.whileCharging &&
+									!chargingIsSuffix &&
+									item.untilMaxMarkingHour && (
+										<li>
+											{checkField()} während des
+											Ladevorgangs
+										</li>
 									)}
-								</li>
-								<li>
-									{item.untilMaxMarkingHour && (
-										<>
-											{checkField()} bis zur angegebenen
-											Höchstparkdauer
-											{chargingIsSuffix}
-										</>
-									)}
-								</li>
 								{item.whileCharging && !chargingIsSuffix && (
 									<li>
-										{checkField()} während des Ladevorgangs
+										{checkField()} nur während des
+										Ladevorgangs
 									</li>
 								)}
 								{item.useBusLane && (
