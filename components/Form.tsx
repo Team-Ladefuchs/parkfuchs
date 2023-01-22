@@ -81,24 +81,19 @@ export default function Form({
 	}, [selectedCity]);
 
 	const validateForm = () => {
-		let { website, untilMaxMarkingHour, nonePrivileges, whileCharging } =
-			getValues();
+		let {
+			website,
+			untilMaxMarkingHour,
+			nonePrivileges,
+			whileCharging,
+			freeParking,
+		} = getValues();
 
 		setDisableCanAddMoreWebsite(canAddMoreWebsite(website));
 
 		if (!selectedCity) {
 			setFormValid(false);
 			return;
-		}
-
-		if (whileCharging) {
-			setValue("freeParking", true);
-			setValue("parkingHours", 2);
-		}
-
-		if (untilMaxMarkingHour) {
-			setValue("freeParking", true);
-			setValue("parkingHours", 0);
 		}
 
 		if (nonePrivileges) {
@@ -111,6 +106,22 @@ export default function Form({
 			setValue("parkingHours", 0);
 			setFormValid(true);
 			return;
+		}
+
+		if (freeParking) {
+			if (whileCharging) {
+				setValue("freeParking", true);
+				setValue("parkingHours", 2);
+			}
+
+			if (untilMaxMarkingHour) {
+				setValue("freeParking", true);
+				setValue("parkingHours", 0);
+			}
+		} else {
+			setValue("parkingHours", 0);
+			setValue("untilMaxMarkingHour", false);
+			setValue("whileCharging", false);
 		}
 
 		setFormValid(doValidate());
