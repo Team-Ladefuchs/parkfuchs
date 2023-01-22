@@ -140,12 +140,7 @@ function parseInput(newCity: NewCity): NewCity {
 		};
 	}
 
-	const parkingHours =
-		newCity.nonePrivileges ||
-		newCity.untilMaxMarkingHour ||
-		!newCity.freeParking
-			? 0
-			: newCity.parkingHours;
+	const parkingHours = newCity.untilMaxMarkingHour ? 0 : newCity.parkingHours;
 
 	const untilMaxMarkingHour =
 		newCity.freeParking && newCity.whileCharging && parkingHours === 0
