@@ -81,17 +81,26 @@ export default function Form({
 	}, [selectedCity]);
 
 	const validateForm = () => {
-		let { website, untilMaxMarkingHour, nonePrivileges } = getValues();
+		let { website, untilMaxMarkingHour, nonePrivileges, whileCharging } =
+			getValues();
 
 		setDisableCanAddMoreWebsite(canAddMoreWebsite(website));
-		if (untilMaxMarkingHour) {
-			setValue("freeParking", true);
-		}
 
 		if (!selectedCity) {
 			setFormValid(false);
 			return;
 		}
+
+		if (whileCharging) {
+			setValue("freeParking", true);
+			setValue("parkingHours", 2);
+		}
+
+		if (untilMaxMarkingHour) {
+			setValue("freeParking", true);
+			setValue("parkingHours", 0);
+		}
+
 		if (nonePrivileges) {
 			setValue("freeParking", false);
 			setValue("withEMark", false);
@@ -99,6 +108,7 @@ export default function Form({
 			setValue("untilMaxMarkingHour", false);
 			setValue("useBusLane", false);
 			setValue("whileCharging", false);
+			setValue("parkingHours", 0);
 			setFormValid(true);
 			return;
 		}
@@ -121,7 +131,7 @@ export default function Form({
 			{selectedCity && (
 				<>
 					<div>
-						<div className="break-normal bg-lightGreen rounded-t-lg mb-[1px] p-4 px-8 max-md:p-2 max-md:px-6">
+						<div className="break-normal bg-lightGreen rounded-t-lg mb-[1px] p-4 px-8 max-md:p-2 max-md:px-4">
 							<p className="font-bold mt-[3px]">
 								{selectedCity?.name}
 							</p>
@@ -130,7 +140,7 @@ export default function Form({
 							</p>
 						</div>
 
-						<div className="bg-lightGreen rounded-b-lg p-6 px-8 max-md:px-5">
+						<div className="bg-lightGreen rounded-b-lg p-6 px-8 max-md:px-4">
 							<section>
 								<div className="mb-4 form-check flex content-center">
 									<input
@@ -192,7 +202,7 @@ export default function Form({
 											Std.
 										</span>
 									</div>
-									<div className="mt-1 ml-7 form-check flex content-center">
+									<div className="mt-1 ml-5 form-check flex content-center">
 										<input
 											className="form-check-input appearance-none h-5 w-5 border border-gray-300 rounded-md bg-neutral-100 checked:bg-darkGreen checked:border-green  focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
 											{...register("untilMaxMarkingHour")}
@@ -208,6 +218,23 @@ export default function Form({
 											bis zur angegeb. Höchstparkdauer
 										</label>
 									</div>
+									<div className="mt-1 ml-5 form-check flex content-center">
+										<input
+											className="form-check-input appearance-none h-5 w-5 border border-gray-300 rounded-md bg-neutral-100 checked:bg-darkGreen checked:border-green  focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
+											{...register("whileCharging")}
+											disabled={formValue.nonePrivileges}
+											aria-label="während des Ladevorgangs Checkbox"
+											type="checkbox"
+											id="c"
+										/>
+										<label
+											htmlFor="whileCharging"
+											className="form-check-label text-md inline-block text-gray-800 mt-[2px]"
+										>
+											während des Ladevorgangs
+										</label>
+									</div>
+
 									<div className="mt-1 form-check flex content-center">
 										<input
 											className="form-check-input appearance-none h-5 w-5 border border-gray-300 rounded-md bg-neutral-100 checked:bg-darkGreen checked:border-green  focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
@@ -222,22 +249,6 @@ export default function Form({
 											className="form-check-label text-md inline-block text-gray-800 mt-[2px]"
 										>
 											Nutzung der Busspur erlaubt
-										</label>
-									</div>
-									<div className="mt-1 form-check flex content-center">
-										<input
-											className="form-check-input appearance-none h-5 w-5 border border-gray-300 rounded-md bg-neutral-100 checked:bg-darkGreen checked:border-green  focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
-											{...register("whileCharging")}
-											disabled={formValue.nonePrivileges}
-											aria-label="während des Ladevorgangs Checkbox"
-											type="checkbox"
-											id="c"
-										/>
-										<label
-											htmlFor="whileCharging"
-											className="form-check-label text-md inline-block text-gray-800 mt-[2px]"
-										>
-											während des Ladevorgangs
 										</label>
 									</div>
 								</section>
