@@ -2,7 +2,7 @@ version: "3.7"
 
 services:
     pocketbase:
-        image: spectado/pocketbase:0.11.2
+        image: spectado/pocketbase:latest
         restart: unless-stopped
         ports:
             - 8090:80
