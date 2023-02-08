@@ -15,15 +15,15 @@ export default function Url({ link, label }: Properties): JSX.Element {
 	}
 
 	return (
-		<div className="grid grid-cols-[14px_1fr] gap-2 items-center text-red break-words w-full max-md:mb-2 last:mb-0">
-			<FontAwesomeIcon className="h-4 w-4" icon={faLink} />
-			<Link
-				className="underline break-words max-w-xl max-sm:w-[275px] max-xs:[280px]"
-				target="_blank"
-				href={link}
-			>
+		<Link
+			className="underline max-w-xl max-sm:w-[275px] max-xs:[280px] text-red break-words max-md:mb-2 last:mb-0 w-full"
+			target="_blank"
+			href={link}
+		>
+			<div className="grid grid-cols-[14px_1fr] gap-2 items-center">
+				<FontAwesomeIcon className="h-4 w-4" icon={faLink} />
 				{label ? label : formatLink(link)}
-			</Link>
-		</div>
+			</div>
+		</Link>
 	);
 }
