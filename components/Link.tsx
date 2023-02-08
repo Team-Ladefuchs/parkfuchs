@@ -22,7 +22,7 @@ export default function Url({ link, label }: Properties): JSX.Element {
 		>
 			<div className="grid grid-cols-[14px_1fr] gap-2 items-center">
 				<FontAwesomeIcon className="h-4 w-4" icon={faLink} />
-				{label ? label : formatLink(link)}
+				<div>{label ? label : formatLink(link)}</div>
 			</div>
 		</Link>
 	);
