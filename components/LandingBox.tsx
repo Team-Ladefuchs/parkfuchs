@@ -7,11 +7,13 @@ import { bunqLink } from "./AppNav";
 interface Properties {
 	className?: string;
 	hidden: boolean;
+	cityCount: number;
 }
 
 export default function LandingBox({
 	className = "",
 	hidden = false,
+	cityCount = 0,
 }: Properties): JSX.Element {
 	if (hidden) {
 		return <></>;
@@ -25,8 +27,8 @@ export default function LandingBox({
 				className="w-5 h-5 max-md:h-7 max-md:w-7 mt-[2px] ml-[-3px]"
 			/>
 			<p>
-				Für E-Autos gibt’s Privilegien in vielen Städten. Aber welche
-				und wo?<br></br>
+				Für E-Autos gibt’s Privilegien in {cityCount} Städten. Aber
+				welche und wo?<br></br>
 				Füttere den Fuchs mit Infos aus deiner Stadt.
 			</p>
 			<FontAwesomeIcon

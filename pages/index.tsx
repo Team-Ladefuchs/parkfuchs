@@ -1,5 +1,5 @@
 import { GetServerSidePropsContext } from "next";
-import { getNewestEnabledInboxCities } from "../db/city";
+import { getCityCount, getNewestEnabledInboxCities } from "../db/city";
 import type { InboxCity } from "../db/types";
 import Dialog from "../components/Dialog";
 import { useEffect, useState } from "react";
@@ -17,6 +17,7 @@ import { getTGHLink } from "../db/config";
 interface Properties {
 	cities: Array<InboxCity>;
 	thgLink: string;
+	cityCount: number;
 }
 
 export async function getServerSideProps(_context: GetServerSidePropsContext) {
@@ -25,15 +26,22 @@ export async function getServerSideProps(_context: GetServerSidePropsContext) {
 		getTGHLink(),
 	]);
 
+	const cityCount = await getCityCount();
+
 	return {
 		props: {
 			cities,
+			cityCount,
 			thgLink,
 		},
 	};
 }
 
-export default function Index({ cities = [], thgLink }: Properties) {
+export default function Index({
+	cities = [],
+	thgLink,
+	cityCount = 0,
+}: Properties) {
 	const [openForm, setOpenForm] = useState(false);
 
 	const [results, setResults] = useState<Array<InboxCity>>(cities);
@@ -100,7 +108,10 @@ export default function Index({ cities = [], thgLink }: Properties) {
 						Ort hinzufügen
 					</button>
 				</div>
-				<LandingBox hidden={searchQuery.length > 0} />
+				<LandingBox
+					cityCount={cityCount}
+					hidden={searchQuery.length > 0}
+				/>
 				<CityList
 					className="mt-6 min-h-[21rem]"
 					items={getItems()}
