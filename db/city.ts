@@ -1,5 +1,11 @@
 import PocketBase, { RecordSubscription } from "pocketbase";
-import type { CityRepo, InboxCity, NewCity, ResultCity } from "./types";
+import type {
+	CityRepo,
+	CityStats,
+	InboxCity,
+	NewCity,
+	ResultCity,
+} from "./types";
 import h2p from "html2plaintext";
 
 export const pocketBase = new PocketBase(
@@ -79,11 +85,20 @@ export async function search(
 	return [];
 }
 
-export async function getCityCount(): Promise<number> {
-	const result = await pocketBase
-		.collection("cityInbox")
-		.getList(1, 1, { filter: "approved = true" });
-	return result.totalItems;
+export async function getCityCount(): Promise<CityStats> {
+	const cityInbox = pocketBase.collection("cityInbox");
+
+	const citiesAll = await cityInbox.getList(1, 1, {
+		filter: "approved = true",
+	});
+
+	const citiesWithPrivileges = await cityInbox.getList(1, 1, {
+		filter: "approved = true && nonePrivileges = false",
+	});
+	return {
+		count: citiesAll.totalItems,
+		countWithPrivileges: citiesWithPrivileges.totalItems,
+	};
 }
 
 export async function autocomplete(
