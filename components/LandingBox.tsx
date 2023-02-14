@@ -30,9 +30,8 @@ export default function LandingBox({
 			<p>
 				Für E-Autos gibt’s Privilegien in{" "}
 				{cityStats.countWithPrivileges} von insgesamt {cityStats.count}{" "}
-				eingetragenen Städten. Aber welche und wo?
-				<br></br>
-				Füttere den Fuchs mit Infos aus deiner Stadt.
+				eingetragenen Städten.<br></br>Füttere den Fuchs mit Infos aus
+				deiner Stadt.
 			</p>
 			<FontAwesomeIcon
 				icon={faSlack}
