@@ -1,6 +1,6 @@
 import { GetServerSidePropsContext } from "next";
 import { getCityCount, getNewestEnabledInboxCities } from "../db/city";
-import type { InboxCity } from "../db/types";
+import type { CityStats, InboxCity } from "../db/types";
 import Dialog from "../components/Dialog";
 import { useEffect, useState } from "react";
 import CityList from "../components/CityList";
@@ -17,7 +17,7 @@ import { getTGHLink } from "../db/config";
 interface Properties {
 	cities: Array<InboxCity>;
 	thgLink: string;
-	cityCount: number;
+	cityStates: CityStats;
 }
 
 export async function getServerSideProps(_context: GetServerSidePropsContext) {
@@ -26,12 +26,12 @@ export async function getServerSideProps(_context: GetServerSidePropsContext) {
 		getTGHLink(),
 	]);
 
-	const cityCount = await getCityCount();
+	const cityStates = await getCityCount();
 
 	return {
 		props: {
 			cities,
-			cityCount,
+			cityStates,
 			thgLink,
 		},
 	};
@@ -40,7 +40,7 @@ export async function getServerSideProps(_context: GetServerSidePropsContext) {
 export default function Index({
 	cities = [],
 	thgLink,
-	cityCount = 0,
+	cityStates,
 }: Properties) {
 	const [openForm, setOpenForm] = useState(false);
 
@@ -109,7 +109,7 @@ export default function Index({
 					</button>
 				</div>
 				<LandingBox
-					cityCount={cityCount}
+					cityStats={cityStates}
 					hidden={searchQuery.length > 0}
 				/>
 				<CityList

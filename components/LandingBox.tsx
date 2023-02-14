@@ -2,18 +2,19 @@ import { faSlack } from "@fortawesome/free-brands-svg-icons";
 import { faMugHot, faTreeCity } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
+import { CityStats } from "../db/types";
 import { bunqLink } from "./AppNav";
 
 interface Properties {
 	className?: string;
 	hidden: boolean;
-	cityCount: number;
+	cityStats: CityStats;
 }
 
 export default function LandingBox({
 	className = "",
 	hidden = false,
-	cityCount = 0,
+	cityStats,
 }: Properties): JSX.Element {
 	if (hidden) {
 		return <></>;
@@ -27,8 +28,10 @@ export default function LandingBox({
 				className="w-5 h-5 max-md:h-7 max-md:w-7 mt-[2px] ml-[-3px]"
 			/>
 			<p>
-				Für E-Autos gibt’s Privilegien in {cityCount} Städten. Aber
-				welche und wo?<br></br>
+				Für E-Autos gibt’s Privilegien in{" "}
+				{cityStats.countWithPrivileges} von insgesamt {cityStats.count}{" "}
+				eingetragenen Städten. Aber welche und wo?
+				<br></br>
 				Füttere den Fuchs mit Infos aus deiner Stadt.
 			</p>
 			<FontAwesomeIcon

@@ -38,6 +38,11 @@ export interface InboxCity extends NewCity {
 	expand?: any;
 }
 
+export interface CityStats {
+	count: number;
+	countWithPrivileges: number;
+}
+
 export interface NewCity {
 	city?: string;
 	useBusLane: boolean;
