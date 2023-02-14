@@ -79,6 +79,13 @@ export async function search(
 	return [];
 }
 
+export async function getCityCount(): Promise<number> {
+	const result = await pocketBase
+		.collection("cityInbox")
+		.getList(1, 1, { filter: "approved = true" });
+	return result.totalItems;
+}
+
 export async function autocomplete(
 	query: string,
 	maxResults: number
