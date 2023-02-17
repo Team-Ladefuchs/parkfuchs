@@ -1,4 +1,4 @@
-import PocketBase, { RecordSubscription } from "pocketbase";
+import PocketBase from "pocketbase";
 import type {
 	CityRepo,
 	CityStats,
