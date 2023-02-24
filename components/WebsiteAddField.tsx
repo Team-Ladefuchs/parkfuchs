@@ -29,8 +29,7 @@ export default function WebsiteAddField({
 				placeholder="https://strassenverkehrsamt.de"
 				id="website"
 				type="url"
-				required
-				{...registerFn(fieldName, { required: true })}
+				{...registerFn(fieldName)}
 			/>
 			{showPlus && (
 				<button
