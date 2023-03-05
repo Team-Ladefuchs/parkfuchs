@@ -78,7 +78,7 @@ export default function Form({
 
 	useEffect(() => {
 		setFormValid(doValidate());
-	}, [selectedCity]);
+	}, [selectedCity, doValidate]);
 
 	const validateForm = () => {
 		let {
@@ -111,7 +111,6 @@ export default function Form({
 		if (freeParking) {
 			if (whileCharging) {
 				setValue("freeParking", true);
-				setValue("parkingHours", 2);
 			}
 
 			if (untilMaxMarkingHour) {
