@@ -71,14 +71,20 @@ export default function Form({
 		if (!selectedCity) {
 			return false;
 		}
-		let { useBusLane, freeParking, whileCharging } = getValues();
+
+		let { useBusLane, freeParking, whileCharging, nonePrivileges } =
+			getValues();
+
+		if (nonePrivileges) {
+			return true;
+		}
 
 		return freeParking || useBusLane || whileCharging;
 	};
 
 	useEffect(() => {
 		setFormValid(doValidate());
-	}, [selectedCity, doValidate]);
+	}, [selectedCity]);
 
 	const validateForm = () => {
 		let {
