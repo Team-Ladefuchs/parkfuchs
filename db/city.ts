@@ -113,7 +113,6 @@ export async function autocomplete(
 			.collection("cityRepo")
 			.getList(1, maxResults, {
 				filter: `name ~ '${searchQuery}%' || postcodes ~ '${searchQuery}'`,
-				sort: "+name",
 			});
 
 		const cityInbox = pocketBase.collection("cityInbox");
@@ -128,7 +127,18 @@ export async function autocomplete(
 				exists: await citAlreadyExists(cityInbox, row.id),
 			};
 		});
-		return await Promise.all(promises);
+		const list = await Promise.all(promises);
+		list.sort((a, b) => {
+			if (a.exists && !b.exists) {
+				return -1;
+			}
+			if (!a.exists && b.exists) {
+				return 1;
+			}
+			return 0;
+		});
+
+		return list;
 	} catch (error) {
 		console.log(error);
 	}
