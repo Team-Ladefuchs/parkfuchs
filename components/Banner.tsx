@@ -7,8 +7,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 
 function getBannerImg(): StaticImageData {
-	const date = new Date().getFullYear();
-	return date === 2022 ? banner400eu : banner250eu;
+	return banner250eu;
 }
 
 function runningStandalone(): boolean {
@@ -25,7 +24,7 @@ interface Props {
 
 export default function Banner({ link }: Props): JSX.Element {
 	const [mobileWrapperHeight, setMobileWrapperHeight] =
-		useState("max-md:h-[4.5rem]");
+		useState("max-md:h-[5.0rem]");
 
 	useEffect(() => {
 		if (!window) {
@@ -37,14 +36,14 @@ export default function Banner({ link }: Props): JSX.Element {
 	}, []);
 	return (
 		<div
-			className={`fixed left-0 right-0 bottom-0 bg-green z-10 w-full h-[3.85rem] banner-shadow ${mobileWrapperHeight}`}
+			className={`fixed left-0 right-0 bottom-0 bg-green z-10 w-full h-[4.5rem] banner-shadow ${mobileWrapperHeight}`}
 		>
 			<Link href={link} target="_blank">
 				<Image
 					src={getBannerImg()}
-					height={99}
+					height={120}
 					alt={"thg Banner"}
-					className="mx-auto relative bottom-2 max-md:bottom-[10px]"
+					className="mx-auto relative bottom-3 max-md:bottom-[12px]"
 				/>
 			</Link>
 		</div>
