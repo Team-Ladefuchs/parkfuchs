@@ -1,6 +1,5 @@
 import { StaticImageData } from "next/image";
 import banner250eu from "../public/banner/250eu_Footer_1400x500.png";
-import banner400eu from "../public/banner/400eu_Footer_1400x500.png";
 
 import Image from "next/image";
 import Link from "next/link";
