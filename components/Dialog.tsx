@@ -41,9 +41,8 @@ export default function Dialog({
 
 		const newCity: NewCity = {
 			parkingHours: parseFloat(formData.parkingHours?.toString() ?? "0"),
-			city: selectedCity.name,
 			website: formData.website,
-			cityID: selectedCity.id,
+			city: selectedCity.id,
 			websiteExtras: websiteExtras,
 			information: formData.information.trim(),
 			useBusLane: formData.useBusLane,

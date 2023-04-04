@@ -1,25 +1,11 @@
-export interface City {
-	approved: boolean;
-	collectionId: string;
-	notes: string;
-	collectionName: string;
-	created: string;
-	id: string;
-	isSpam: boolean;
-	name: string;
-	postcode: number;
-	postcodes: Array<number>;
-	updated: string;
-}
-
 export interface CityRepo {
-	id: string;
-	name: string;
-	community: string;
-	latitude: string;
-	longitude: string;
-	postcodes: String[];
-	state: string;
+	readonly id: string;
+	readonly name: string;
+	readonly community: string;
+	readonly latitude: string;
+	readonly longitude: string;
+	readonly postcodes: String[];
+	readonly state: string;
 }
 
 export interface Expand {
@@ -44,36 +30,35 @@ export interface CityStats {
 }
 
 export interface NewCity {
-	city?: string;
-	useBusLane: boolean;
-	untilMaxMarkingHour: boolean;
-	freeParking: boolean;
-	withEMark: boolean;
-	cityID?: string;
-	information: string;
-	website: string | null;
-	parkingDisk: boolean;
-	nonePrivileges: boolean;
-	parkingHours: number;
-	whileCharging: boolean;
-	websiteExtras: Array<Website>;
+	readonly useBusLane: boolean;
+	readonly untilMaxMarkingHour: boolean;
+	readonly freeParking: boolean;
+	readonly withEMark: boolean;
+	readonly city: string;
+	readonly information: string;
+	readonly website: string | null;
+	readonly parkingDisk: boolean;
+	readonly nonePrivileges: boolean;
+	readonly parkingHours: number;
+	readonly whileCharging: boolean;
+	readonly websiteExtras: Array<Website>;
 }
 
 export interface Website {
-	label?: string;
-	url?: string;
+	readonly label?: string;
+	readonly url?: string;
 }
 
 export interface ResultCity {
-	id: string;
-	name: string;
-	stateCode: string;
-	state: string;
-	postcode: number[];
-	exists: boolean;
+	readonly id: string;
+	readonly name: string;
+	readonly stateCode: string;
+	readonly state: string;
+	readonly postcode: number[];
+	readonly exists: boolean;
 }
 
 export interface Config {
-	field: string;
-	value: string;
+	readonly field: string;
+	readonly value: string;
 }
