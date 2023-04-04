@@ -15,7 +15,6 @@ const cityTemplate: NewCity = {
 	untilMaxMarkingHour: false,
 	freeParking: false,
 	withEMark: false,
-	cityID: "",
 	city: "",
 	information: "",
 	website: null,

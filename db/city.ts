@@ -1,4 +1,4 @@
-import PocketBase from "pocketbase";
+import PocketBase, { RecordService } from "pocketbase";
 import type {
 	CityRepo,
 	CityStats,
@@ -27,6 +27,7 @@ function toRecordToInboxCity(row: InboxCity): InboxCity {
 			state: cityItem.state,
 		},
 		id: row.id,
+		city: cityItem.id,
 		approved: row.approved,
 		useBusLane: row.useBusLane,
 		untilMaxMarkingHour: row.untilMaxMarkingHour,
@@ -147,7 +148,7 @@ export async function autocomplete(
 }
 
 async function citAlreadyExists(
-	cityInbox: any,
+	cityInbox: RecordService,
 	cityId: string
 ): Promise<boolean> {
 	try {
