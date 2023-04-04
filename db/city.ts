@@ -15,7 +15,7 @@ export const pocketBase = new PocketBase(
 pocketBase.autoCancellation(false);
 
 function toRecordToInboxCity(row: InboxCity): InboxCity {
-	const cityItem: CityRepo = row.expand.cityID as unknown as CityRepo;
+	const cityItem: CityRepo = row.expand.city as unknown as CityRepo;
 	const ret: InboxCity = {
 		cityRef: {
 			id: cityItem.id,
@@ -53,7 +53,7 @@ export async function getNewestEnabledInboxCities(
 			.collection("cityInbox")
 			.getList<InboxCity>(1, maxResults, {
 				filter: "approved = true",
-				expand: "cityID",
+				expand: "city",
 				sort: "-updated,city",
 			});
 
@@ -75,8 +75,8 @@ export async function search(
 		const resultList = await pocketBase
 			.collection("cityInbox")
 			.getList<InboxCity>(1, maxResults, {
-				filter: `approved = true && (cityID.name ~ '${searchQuery}%' || cityID.postcodes ~ '${searchQuery}')`,
-				expand: "cityID",
+				filter: `approved = true && (city.name ~ '${searchQuery}%' || city.postcodes ~ '${searchQuery}')`,
+				expand: "city",
 				sort: "-updated,+city",
 			});
 
@@ -152,7 +152,7 @@ async function citAlreadyExists(
 	cityId: string
 ): Promise<boolean> {
 	try {
-		await cityInbox.getFirstListItem(`cityID.id="${cityId}"`, {});
+		await cityInbox.getFirstListItem(`city.id="${cityId}"`, {});
 		return true;
 	} catch (error) {}
 
