@@ -63,9 +63,9 @@ export default function InfoSection({
 										{checkField()} bis zu{" "}
 										<span className="bold">
 											{item.parkingHours}{" "}
-											{item.parkingHours > 0
-												? "Stunde"
-												: "Stunden"}
+											{item.parkingHours > 1
+												? "Stunden"
+												: "Stunde"}
 										</span>
 										{chargingIsSuffix}
 									</li>
