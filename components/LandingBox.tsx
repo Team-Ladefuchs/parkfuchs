@@ -34,9 +34,9 @@ export default function LandingBox({
 			</p>
 			<FontAwesomeIcon
 				icon={faSlack}
-				className="w-5 h-5 max-md:mt-[-3px] max-md:h-6 max-md:w-6"
+				className="w-5 h-5 max-md:h-6 max-md:w-6"
 			/>
-			<p className="lg:ml-[-2px] max-md:block">
+			<p className="lg:ml-[-2px] max-md:block pb-1">
 				Feedback und Ideen:
 				<Link
 					href="https://parkfuchs.app/slack"
@@ -48,7 +48,7 @@ export default function LandingBox({
 			</p>
 			<FontAwesomeIcon
 				icon={faMugHot}
-				className="w-[22px] h-[22px] ml-1 mt-[-1px] md:hidden"
+				className="w-[22px] h-[22px] ml-1 max-md:mt-[-1px] md:hidden"
 			/>
 			<Link className="leading-5 underline md:hidden" href={bunqLink}>
 				Danke sagen.
