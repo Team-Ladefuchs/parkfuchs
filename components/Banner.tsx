@@ -1,13 +1,8 @@
-import { StaticImageData } from "next/image";
 import banner250eu from "../public/banner/250eu_Footer_1400x500.png";
 
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-
-function getBannerImg(): StaticImageData {
-	return banner250eu;
-}
 
 function runningStandalone(): boolean {
 	if (window.navigator["standalone"] === true) {
@@ -39,7 +34,7 @@ export default function Banner({ link }: Props): JSX.Element {
 		>
 			<Link href={link} target="_blank">
 				<Image
-					src={getBannerImg()}
+					src={banner250eu}
 					height={120}
 					alt={"thg Banner"}
 					className="mx-auto relative bottom-3 max-md:bottom-[12px]"
