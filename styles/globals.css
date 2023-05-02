@@ -78,8 +78,8 @@ nav {
 	src: url(/fonts/bitter-v25-latin-ext_latin-500italic.woff2) format("woff2");
 }
 
-button.accordion-button {
-	background-color: #d1d9c0 !important;
+/* button.accordion-button {
+	
 }
 
 button.accordion-button > p {
@@ -92,4 +92,22 @@ button.accordion-button.collapsed > p {
 
 button.accordion-button.collapsed {
 	background-color: white !important;
+} */
+
+.accordion-content {
+	display: grid;
+	grid-template-rows: 0fr;
+	transition: grid-template-rows 250ms;
+}
+
+.accordion-content > div {
+	overflow: hidden !important;
+}
+
+.accordion-content-open {
+	grid-template-rows: 1fr;
+}
+
+.accordion-button-open {
+	background-color: #d1d9c0 !important;
 }

@@ -22,6 +22,8 @@ COPY . .
 
 RUN echo "nodeLinker: node-modules" > .yarnrc.yml
 
+RUN yarn set version latest
+
 RUN yarn build
 
 # If using npm comment out above and use below instead
