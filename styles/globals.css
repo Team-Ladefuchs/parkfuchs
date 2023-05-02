@@ -78,22 +78,6 @@ nav {
 	src: url(/fonts/bitter-v25-latin-ext_latin-500italic.woff2) format("woff2");
 }
 
-/* button.accordion-button {
-	
-}
-
-button.accordion-button > p {
-	font-size: 110%;
-}
-
-button.accordion-button.collapsed > p {
-	font-size: unset;
-}
-
-button.accordion-button.collapsed {
-	background-color: white !important;
-} */
-
 .accordion-content {
 	display: grid;
 	grid-template-rows: 0fr;
