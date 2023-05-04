@@ -8,7 +8,7 @@ COPY package.json yarn.lock ./
 
 RUN echo "nodeLinker: node-modules" > .yarnrc.yml
 
-RUN yarn set version latest
+RUN yarn set version berry 
 
 RUN yarn install --frozen-lockfile
 
