@@ -4,7 +4,7 @@ import type { AppProps } from "next/app";
 import Layout from "../components/Layout";
 import Head from "next/head";
 
-export default function App({ Component, pageProps }: AppProps) {
+export default function App({ Component, pageProps }: AppProps): any {
 	return (
 		<Layout>
 			<Head>
@@ -167,6 +167,7 @@ export default function App({ Component, pageProps }: AppProps) {
 
 				<link rel="icon" type="image/x-icon" href="favicon.ico"></link>
 			</Head>
+			{/* @ts-ignore */}
 			<Component {...pageProps} />
 		</Layout>
 	);
