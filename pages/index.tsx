@@ -94,7 +94,7 @@ export default function Index({
 						className="grow max-md:w-full"
 						onChange={debouncedOnCitySearch}
 					/>
-					<div className="text-neutral-500 uppercase tracking-wide font-semibold text-sm">
+					<div className="text-neutral-600 uppercase tracking-wide font-semibold text-sm">
 						Oder
 					</div>
 					<button
@@ -119,7 +119,7 @@ export default function Index({
 				/>
 			</section>
 			<Banner link={thgLink} />
-			<footer className="left-1/2 text-center text-neutral-700 opacity-60 uppercase tracking-wide font-semibold text-xs pb-5 mb-16">
+			<footer className="left-1/2 text-center text-neutral-600 opacity-90 uppercase tracking-wide font-semibold text-xs pb-5 mb-16">
 				<p className="mb-1 mt-2">
 					Alle Angaben ohne Gewähr
 					{" · "}
