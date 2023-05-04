@@ -8,9 +8,9 @@ COPY package.json yarn.lock ./
 
 RUN echo "nodeLinker: node-modules" > .yarnrc.yml
 
-RUN yarn set version berry
+RUN yarn set version latest
 
-RUN yarn install
+RUN yarn install --frozen-lockfile
 
 FROM node:18-alpine as builder
 
@@ -21,8 +21,6 @@ COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
 RUN echo "nodeLinker: node-modules" > .yarnrc.yml
-
-RUN yarn set version latest
 
 ENV NEXT_TELEMETRY_DISABLED 1
 
