@@ -28,9 +28,7 @@ export default function AutoCompleteInput({
 			setResults([]);
 			return;
 		}
-		const response = await axios.get(
-			`/api/autocomplete?filter=${searchTerm}`
-		);
+		const response = await axios.get(`/api/autocomplete/${searchTerm}`);
 		setResults(response.data);
 	};
 
