@@ -18,8 +18,6 @@ export default function Home({
 	cities: Array<InboxCity>;
 	cityStates: CityStats;
 }) {
-	console.log(cities);
-
 	const [openForm, setOpenForm] = useState(false);
 
 	const [results, setResults] = useState<Array<InboxCity>>(cities);
@@ -55,10 +53,7 @@ export default function Home({
 		!isLoading && getItems().length === 0 && searchQuery.length > 0;
 
 	return (
-		<div
-			className="justify-center w-full max-w-[750px] min-h-[28rem]"
-			role="main"
-		>
+		<div className="mx-auto w-full max-w-[750px] min-h-[28rem]" role="main">
 			<Dialog
 				isOpen={openForm}
 				onClose={handleOnClose}

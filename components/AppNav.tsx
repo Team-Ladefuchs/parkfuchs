@@ -1,10 +1,8 @@
-"use client";
-import parkfuchsLogo from "../public/parkfuchs-lottie.json";
-import Lottie from "lottie-react";
 import Link from "next/link";
 
 import { faMugHot } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Logo from "./Logo";
 
 export const bunqLink = "https://bunq.me/parkfuchs";
 
@@ -16,14 +14,7 @@ export default function AppNav() {
 		>
 			<div className="flex items-center justify-between mx-auto w-[750px] max-md:w-full select-none">
 				<Link className="flex gap-2" href="/">
-					<Lottie
-						animationData={parkfuchsLogo}
-						loop={true}
-						width={64}
-						draggable={false}
-						alt="Parkfuchs Logo"
-						className="w-16 mt-[-8px]"
-					/>
+					<Logo />
 					<div>
 						<h1
 							className="font-extrabold sm:text-md text-red text-[26px] leading-9 line max-md:text-2xl break-words uppercase roboto-900"

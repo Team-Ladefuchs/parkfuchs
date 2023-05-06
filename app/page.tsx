@@ -30,7 +30,7 @@ export default async function Index() {
 				<p className="mb-1 mt-2">
 					Alle Angaben ohne Gewähr
 					{" · "}
-					<Link href="impressum" className="hover:underline">
+					<Link href="/impressum" className="hover:underline">
 						Impressum
 					</Link>
 				</p>
