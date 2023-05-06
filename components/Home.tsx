@@ -1,47 +1,25 @@
-import { GetServerSidePropsContext } from "next";
-import { getCityCount, getNewestEnabledInboxCities } from "../db/city";
-import type { CityStats, InboxCity } from "../db/types";
-import Dialog from "../components/Dialog";
-import { useEffect, useState } from "react";
-import CityList from "../components/CityList";
-import SearchInput from "../components/SearchInput";
+"use client";
+
 import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
+import { useState } from "react";
+import { CityStats, InboxCity } from "../db/types";
 import { useDebounce } from "../functions/debounce";
-import Link from "next/link";
-import LandingBox from "../components/LandingBox";
-import Banner from "../components/Banner";
-import { getTGHLink } from "../db/config";
+import CityList from "./CityList";
+import Dialog from "./Dialog";
+import LandingBox from "./LandingBox";
+import SearchInput from "./SearchInput";
 
-interface Properties {
-	cities: Array<InboxCity>;
-	thgLink: string;
-	cityStates: CityStats;
-}
-
-export async function getServerSideProps(_context: GetServerSidePropsContext) {
-	const [cities, thgLink] = await Promise.all([
-		getNewestEnabledInboxCities(10),
-		getTGHLink(),
-	]);
-
-	const cityStates = await getCityCount();
-
-	return {
-		props: {
-			cities,
-			cityStates,
-			thgLink,
-		},
-	};
-}
-
-export default function Index({
-	cities = [],
-	thgLink,
+export default function Home({
+	cities,
 	cityStates,
-}: Properties) {
+}: {
+	cities: Array<InboxCity>;
+	cityStates: CityStats;
+}) {
+	console.log(cities);
+
 	const [openForm, setOpenForm] = useState(false);
 
 	const [results, setResults] = useState<Array<InboxCity>>(cities);
@@ -60,12 +38,10 @@ export default function Index({
 			return;
 		}
 		setIsLoading(true);
-		const response = await axios.get(`/api/search?query=${searchTerm}`);
+		const response = await axios.get(`/api/search/${searchTerm}`);
 		setResults(response.data);
 		setIsLoading(false);
 	};
-
-	useEffect(() => {}, []);
 
 	const debouncedOnCitySearch = useDebounce(onCitySearch, 350);
 
@@ -77,9 +53,10 @@ export default function Index({
 	};
 	const listIsEmpty =
 		!isLoading && getItems().length === 0 && searchQuery.length > 0;
+
 	return (
 		<div
-			className="justify-center w-[750px] max-md:w-w-11/12 min-h-[28rem]"
+			className="justify-center w-full max-w-[750px] min-h-[28rem]"
 			role="main"
 		>
 			<Dialog
@@ -118,16 +95,6 @@ export default function Index({
 					isEmpty={listIsEmpty}
 				/>
 			</section>
-			<Banner link={thgLink} />
-			<footer className="left-1/2 text-center text-neutral-600 opacity-90 uppercase tracking-wide font-semibold text-xs pb-5 mb-16">
-				<p className="mb-1 mt-2">
-					Alle Angaben ohne Gewähr
-					{" · "}
-					<Link href="impressum" className="hover:underline">
-						Impressum
-					</Link>
-				</p>
-			</footer>
 		</div>
 	);
 }
