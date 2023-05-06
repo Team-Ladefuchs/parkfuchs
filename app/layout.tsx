@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Head from "next/head";
 import { Toaster } from "react-hot-toast";
 import AppNav from "../components/AppNav";
 
@@ -100,9 +101,21 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }) {
 	return (
 		<html lang="de">
+			<Head>
+				<link
+					rel="/font/bitter-v25-latin-ext_latin-500italic.woff2"
+					type="font/woff2"
+					as="font"
+				></link>
+				<link
+					rel="/font/roboto-v29-latin-900.woff2"
+					type="font/woff2"
+					as="font"
+				></link>
+			</Head>
 			<body>
 				<AppNav />
-				<main className="flex flex-col justify-center py-6 max-md:px-4 max-md:pt-5">
+				<main className="w-full py-6 max-md:px-4 max-md:pt-5">
 					{children}
 				</main>
 
