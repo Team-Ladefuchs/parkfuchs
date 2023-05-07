@@ -31,6 +31,7 @@ export default function AppNav() {
 					className="bg-darkGreen font-semibold tracking-wider text-xs p-2 px-3 pt-[10px] rounded-lg uppercase hover:opacity-75 flex gap-2 max-md:hidden items-center"
 					target="_blank"
 					href={bunqLink}
+					prefetch={false}
 				>
 					<FontAwesomeIcon
 						icon={faMugHot}
