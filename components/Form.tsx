@@ -160,9 +160,9 @@ export default function Form({
 
 						<div className="bg-lightGreen rounded-b-lg p-6 px-8 max-md:px-4">
 							<section>
-								<div className="mb-4 form-check flex content-center">
+								<div className="mb-4 flex items-center gap-2 content-center">
 									<input
-										className="form-check-input appearance-none h-5 w-5 border border-gray-300 rounded-md bg-neutral-100 checked:bg-darkGreen checked:border-green  focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
+										className="form-check-input h-5 w-5 rounded border-gray-300 text-darkGreen focus:ring-green focus:ring-1 cursor-pointer disabled:opacity-50"
 										type="checkbox"
 										aria-label="Keine Privilegien für Elektroautos Checkbox"
 										id="nonePrivileges"
@@ -179,9 +179,9 @@ export default function Form({
 							<div className="flex gap-16 max-md:flex-col max-md:gap-4">
 								<section>
 									<div>Privilegien (mind. 1)</div>
-									<div className="mt-1 form-check flex content-center">
+									<div className="mt-1 flex items-center gap-2 content-center">
 										<input
-											className="form-check-input appearance-none h-5 w-5 border border-neutral-300 rounded-md bg-neutral-100 checked:bg-darkGreen checked:border-green  focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer disabled:opacity-50"
+											className="form-check-input h-5 w-5 rounded border-gray-300 text-darkGreen focus:ring-green focus:ring-1 cursor-pointer disabled:opacity-50"
 											{...register("freeParking")}
 											type="checkbox"
 											aria-label="Kostenlos parken Checkbox"
@@ -190,12 +190,12 @@ export default function Form({
 										/>
 										<label
 											htmlFor="freeParking"
-											className="form-check-label text-md inline-block text-gray-800 mt-[2px]"
+											className="form-check-label text-md inline-block text-gray-800"
 										>
 											Kostenlos parken
 										</label>
 										<input
-											className="ml-1 bg-neutral-100 border border-green text-gray-800 rounded-lg  block w-16 py-0.5 px-2 focus:bg-white focus:outline-none focus:ring-2  focus:ring-green focus:border-transparent appearance-text disabled:opacity-50"
+											className="form-check-input border-none p-1 rounded border-gray-300  focus:ring-green focus:ring-2 cursor-pointer disabled:opacity-50 text-black"
 											disabled={
 												formValue.untilMaxMarkingHour ||
 												formValue.nonePrivileges
@@ -220,9 +220,9 @@ export default function Form({
 											Std.
 										</span>
 									</div>
-									<div className="mt-1 ml-5 form-check flex content-center">
+									<div className="mt-1 ml-5 flex items-center gap-2">
 										<input
-											className="form-check-input appearance-none h-5 w-5 border border-gray-300 rounded-md bg-neutral-100 checked:bg-darkGreen checked:border-green  focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
+											className="form-check-input h-5 w-5 rounded border-gray-300 text-darkGreen focus:ring-green focus:ring-1 cursor-pointer disabled:opacity-50"
 											{...register("untilMaxMarkingHour")}
 											disabled={formValue.nonePrivileges}
 											type="checkbox"
@@ -236,9 +236,9 @@ export default function Form({
 											bis zur angegeb. Höchstparkdauer
 										</label>
 									</div>
-									<div className="mt-1 ml-5 form-check flex content-center">
+									<div className="mt-1 ml-5 flex items-center gap-2">
 										<input
-											className="form-check-input appearance-none h-5 w-5 border border-gray-300 rounded-md bg-neutral-100 checked:bg-darkGreen checked:border-green  focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
+											className="form-check-input h-5 w-5 rounded border-gray-300 text-darkGreen focus:ring-green focus:ring-1 cursor-pointer disabled:opacity-50"
 											{...register("whileCharging")}
 											disabled={formValue.nonePrivileges}
 											aria-label="während des Ladevorgangs Checkbox"
@@ -253,9 +253,9 @@ export default function Form({
 										</label>
 									</div>
 
-									<div className="mt-1 form-check flex content-center">
+									<div className="mt-1 flex items-center gap-2">
 										<input
-											className="form-check-input appearance-none h-5 w-5 border border-gray-300 rounded-md bg-neutral-100 checked:bg-darkGreen checked:border-green  focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
+											className="form-check-input h-5 w-5 rounded border-gray-300 text-darkGreen focus:ring-green focus:ring-1 cursor-pointer disabled:opacity-50"
 											{...register("useBusLane")}
 											disabled={formValue.nonePrivileges}
 											aria-label="Nutzung der Busspur erlaubt Checkbox"
@@ -273,9 +273,9 @@ export default function Form({
 
 								<section>
 									<div>Voraussetzungen</div>
-									<div className="mt-2 form-check flex content-center">
+									<div className="mt-2 flex items-center gap-2">
 										<input
-											className="form-check-input appearance-none h-5 w-5 border border-gray-300 rounded-md bg-neutral-100 checked:bg-darkGreen checked:border-green focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer disabled:opacity-50"
+											className="form-check-input h-5 w-5 rounded border-gray-300 text-darkGreen focus:ring-green focus:ring-1 cursor-pointer disabled:opacity-50"
 											{...register("withEMark")}
 											disabled={formValue.nonePrivileges}
 											aria-label="E-Kennzeichen Checkbox"
@@ -289,9 +289,9 @@ export default function Form({
 											E-Kennzeichen
 										</label>
 									</div>
-									<div className="mt-1 form-check flex content-center">
+									<div className="mt-1 flex items-center gap-2">
 										<input
-											className="form-check-input appearance-none h-5 w-5 border border-gray-300 rounded-md  bg-neutral-100 checked:bg-darkGreen checked:border-green focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer disabled:opacity-50"
+											className="form-check-input h-5 w-5 rounded border-gray-300 text-darkGreen focus:ring-green focus:ring-1 cursor-pointer disabled:opacity-50"
 											{...register("parkingDisk")}
 											disabled={formValue.nonePrivileges}
 											id="parkingDisk"
@@ -370,7 +370,7 @@ export default function Form({
 					data-modal-toggle="defaultModal"
 					aria-label="Formular Speichern"
 					type="submit"
-					className="text-black bg-green hover:bg-darkGreen focus:ring-4 focus:outline-none font-medium rounded-lg text-md px-5 py-3 text-center disabled:opacity-50 disabled:hover:bg-green"
+					className="text-black bg-green hover:bg-darkGreen focus:ring-2 focus:outline-none font-medium rounded-lg text-md px-5 py-3 text-center disabled:opacity-50 disabled:hover:bg-green focus:ring-darkGreen"
 				>
 					Speichern
 				</button>
@@ -379,7 +379,7 @@ export default function Form({
 					type="reset"
 					aria-label="dialog schließen"
 					onClick={onClose}
-					className="text-black bg-green hover:bg-darkGreen focus:ring-4 focus:outline-none font-medium rounded-lg text-md px-5 py-3 text-center "
+					className="text-black bg-green hover:bg-darkGreen focus:ring-2 focus:outline-none font-medium rounded-lg text-md px-5 py-3 text-center focus:ring-darkGreen"
 				>
 					Abbrechen
 				</button>

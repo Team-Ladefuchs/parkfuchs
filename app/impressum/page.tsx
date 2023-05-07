@@ -8,7 +8,7 @@ export default function Impressum() {
 	return (
 		<>
 			<style>{style}</style>
-			<div className="impressum m-auto pb-20 max-w-lg w-full max-md:mx-4">
+			<div className="impressum mx-auto pb-20  max-w-lg  max-md:mx-4">
 				<div className="flex mb-12">
 					<Link
 						className="flex gap-3 items-center underline"

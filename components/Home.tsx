@@ -41,7 +41,7 @@ export default function Home({
 		setIsLoading(false);
 	};
 
-	const debouncedOnCitySearch = useDebounce(onCitySearch, 350);
+	const debouncedOnCitySearch = useDebounce(onCitySearch, 220);
 
 	const getItems = (): InboxCity[] => {
 		if (searchQuery.length > 0 && results.length === 0) {
