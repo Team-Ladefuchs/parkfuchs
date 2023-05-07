@@ -4,6 +4,11 @@ import Home from "../components/Home";
 import { getCityCount, getNewestEnabledInboxCities } from "../db/city";
 import { getTGHLink } from "../db/config";
 
+export const dynamic = "auto",
+	runtime = "nodejs",
+	revalidate = 0,
+	fetchCache = "auto";
+
 async function fetchData() {
 	const [cities, thgLink] = await Promise.all([
 		getNewestEnabledInboxCities(10),
