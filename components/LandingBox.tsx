@@ -39,6 +39,7 @@ export default function LandingBox({
 			<p className="lg:ml-[-2px] max-md:block pb-1">
 				Feedback und Ideen:
 				<Link
+					prefetch={false}
 					href="https://parkfuchs.app/slack"
 					target="_blank"
 					className="ml-1 underline"
@@ -50,7 +51,11 @@ export default function LandingBox({
 				icon={faMugHot}
 				className="w-[22px] h-[22px] ml-1 max-md:mt-[-1px] md:hidden"
 			/>
-			<Link className="leading-5 underline md:hidden" href={bunqLink}>
+			<Link
+				className="leading-5 underline md:hidden"
+				href={bunqLink}
+				prefetch={false}
+			>
 				Danke sagen.
 			</Link>
 		</section>

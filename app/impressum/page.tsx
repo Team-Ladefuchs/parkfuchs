@@ -50,80 +50,116 @@ export default function Impressum() {
 					<h2 className="font-xl mt-6">Inhaltsübersicht</h2>
 					<ul className="list-disc ml-6">
 						<li>
-							<Link className="index-link" href="#m14">
+							<Link
+								className="index-link"
+								href="#m14"
+								prefetch={false}
+							>
 								Einleitung
 							</Link>
 						</li>
 						<li>
-							<Link className="index-link" href="#m3">
+							<Link
+								className="index-link"
+								href="#m3"
+								prefetch={false}
+							>
 								Verantwortlicher
 							</Link>
 						</li>
 						<li>
-							<Link className="index-link" href="#mOverview">
+							<Link
+								className="index-link"
+								href="#mOverview"
+								prefetch={false}
+							>
 								Übersicht der Verarbeitungen
 							</Link>
 						</li>
 						<li>
-							<Link className="index-link" href="#m13">
+							<Link
+								className="index-link"
+								href="#m13"
+								prefetch={false}
+							>
 								Maßgebliche Rechtsgrundlagen
 							</Link>
 						</li>
 						<li>
-							<Link className="index-link" href="#m27">
+							<Link
+								className="index-link"
+								href="#m27"
+								prefetch={false}
+							>
 								Sicherheitsmaßnahmen
 							</Link>
 						</li>
 						<li>
-							<Link className="index-link" href="#m25">
+							<Link
+								className="index-link"
+								href="#m25"
+								prefetch={false}
+							>
 								Übermittlung von personenbezogenen Daten
 							</Link>
 						</li>
 						<li>
-							<Link className="index-link" href="#m24">
+							<Link
+								className="index-link"
+								href="#m24"
+								prefetch={false}
+							>
 								Datenverarbeitung in Drittländern
 							</Link>
 						</li>
 						<li>
-							<Link className="index-link" href="#m12">
+							<Link
+								className="index-link"
+								href="#m12"
+								prefetch={false}
+							>
 								Löschung von Daten
 							</Link>
 						</li>
 						<li>
-							<Link className="index-link" href="#m225">
+							<Link
+								className="index-link"
+								href="#m225"
+								prefetch={false}
+							>
 								Bereitstellung des Onlineangebotes und
 								Webhosting
 							</Link>
 						</li>
 						<li>
-							<Link className="index-link" href="#m182">
+							<Link prefetch={false} className="index-link" href="#m182">
 								Kontakt- und Anfragenverwaltung
 							</Link>
 						</li>
 						<li>
-							<Link className="index-link" href="#m136">
+							<Link prefetch={false} className="index-link" href="#m136">
 								Präsenzen in sozialen Netzwerken (Social Media)
 							</Link>
 						</li>
 						<li>
-							<Link className="index-link" href="#m328">
+							<Link prefetch={false} className="index-link" href="#m328">
 								Plugins und eingebettete Funktionen sowie
 								Inhalte
 							</Link>
 						</li>
 						<li>
-							<Link className="index-link" href="#m15">
+							<Link prefetch={false} className="index-link" href="#m15">
 								Änderung und Aktualisierung der
 								Datenschutzerklärung
 							</Link>
 						</li>
 						<li>
-							<Link className="index-link" href="#m10">
+							<Link prefetch={false} className="index-link" href="#m10">
 								Rechte der betroffenen Personen
 							</Link>
 						</li>
 						<li>
-							<Link className="index-link" href="#m42">
+							<Link prefetch={false} className="index-link" href="#m42">
 								Begriffsdefinitionen
 							</Link>
 						</li>
