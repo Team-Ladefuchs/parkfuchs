@@ -1,11 +1,11 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { ResultCity } from "../db/types";
 import { useDebounce } from "../functions/debounce";
 import SearchInput from "./SearchInput";
+import { SlimCity } from "./Dialog";
 
 export interface Properties {
-	onSelectedCity: (city: ResultCity) => void;
+	onSelectedCity: (city: SlimCity) => void;
 	initQuery: string;
 }
 
@@ -13,7 +13,7 @@ export default function AutoCompleteInput({
 	onSelectedCity,
 	initQuery = "",
 }: Properties): JSX.Element {
-	const [results, setResults] = useState<Array<ResultCity>>([]);
+	const [results, setResults] = useState<Array<SlimCity>>([]);
 
 	useEffect(() => {
 		if (initQuery) {
@@ -28,9 +28,7 @@ export default function AutoCompleteInput({
 			setResults([]);
 			return;
 		}
-		const response = await axios.get(
-			`/api/autocomplete/${searchTerm}`
-		);
+		const response = await axios.get(`/api/autocomplete/${searchTerm}`);
 		setResults(response.data);
 	};
 
@@ -50,7 +48,15 @@ export default function AutoCompleteInput({
 								key={item.id}
 								onClick={(_e) => {
 									setResults([]);
-									onSelectedCity(item);
+									onSelectedCity({
+										id: item.id,
+										name: item.name,
+										state: item.state,
+										stateCode: item.stateCode,
+										cityRefId: item.id,
+										postcode: item.postcode,
+										exists: item.exists,
+									});
 								}}
 								className="pl-6 group pt-3 pb-3 first:rounded-t-lg cursor-pointer hover:bg-lightGreen border-b border-gray-200 last:border-0"
 							>

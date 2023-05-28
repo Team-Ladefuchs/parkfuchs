@@ -10,6 +10,7 @@ const cityTemplate: NewCity = {
 	city: "",
 	information: "",
 	website: null,
+	currentCity: null,
 	parkingDisk: false,
 	parkingHours: 2,
 	nonePrivileges: false,

@@ -1,14 +1,16 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
-import { NewCity, ResultCity } from "../db/types";
+import type { NewCity } from "../db/types";
 import { isValidUrl } from "../functions/utils";
 import WebsiteAddField, { webKeyPattern } from "./WebsiteAddField";
+import { AppContext } from "../context/appContext";
+import { SlimCity } from "./Dialog";
 
 export interface Properties {
-	selectedCity: ResultCity | null;
+	selectedCity: SlimCity | null;
 	onSubmit: (city: NewCity) => Promise<void>;
 	doReset: boolean;
 	onClose: () => void;
@@ -24,9 +26,18 @@ export default function Form({
 	doReset,
 	onClose,
 }: Properties): JSX.Element {
-	const { register, handleSubmit, reset, getValues, setValue, watch } =
-		useForm<NewCity>({
-			defaultValues: {
+	const { editCity, setEditCity } = useContext(AppContext);
+
+	useEffect(() => {
+		console.log("ddddd", editCity);
+	}, [setEditCity]);
+
+	const [disableCanAddMoreWebsite, setDisableCanAddMoreWebsite] =
+		useState(true);
+
+	const initFields = () => {
+		if (!editCity) {
+			return {
 				information: "",
 				nonePrivileges: false,
 				useBusLane: false,
@@ -37,11 +48,15 @@ export default function Form({
 				withEMark: true,
 				whileCharging: false,
 				website: null,
-			},
-		});
+			};
+		}
+		return {
+			...Object.assign({}, editCity),
+		};
+	};
 
-	const [disableCanAddMoreWebsite, setDisableCanAddMoreWebsite] =
-		useState(true);
+	const { register, handleSubmit, reset, getValues, setValue, watch } =
+		useForm<NewCity>({ defaultValues: initFields() });
 
 	const [websiteExtrasInputs, setWebsiteExtrasInputs] =
 		useState<string[]>(initWebsiteInputs);
@@ -346,14 +361,18 @@ export default function Form({
 									);
 								})}
 						</div>
+						<p className="mt-2 text-sm text-gray-600">
+							Bitte hinterlege einen Link als Quelle, damit dieser
+							Ort wird <b>schneller</b> freigegeben werden kann.
+						</p>
 					</div>
 					<div>
-						<label className="block mb-1 ml-[2px] text-md   dark:text-white font-semibold text-sm text-gray-500 uppercase tracking-wider">
+						<label className="block mb-1 ml-[2px] text-md font-semibold text-sm text-gray-500 uppercase tracking-wider">
 							Freitext
 						</label>
 						<textarea
 							id="message"
-							rows={8}
+							rows={4}
 							{...register("information", {
 								maxLength: 800,
 							})}
