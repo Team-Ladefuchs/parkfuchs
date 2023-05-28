@@ -1,8 +1,9 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useDebounce } from "../functions/debounce";
 import SearchInput from "./SearchInput";
 import { SlimCity } from "./Dialog";
+import { AppContext } from "../context/appContext";
 
 export interface Properties {
 	onSelectedCity: (city: SlimCity) => void;
@@ -11,17 +12,20 @@ export interface Properties {
 
 export default function AutoCompleteInput({
 	onSelectedCity,
-	initQuery = "",
 }: Properties): JSX.Element {
+	const { searchQuery } = useContext(AppContext);
+
 	const [results, setResults] = useState<Array<SlimCity>>([]);
 
 	useEffect(() => {
-		if (initQuery) {
-			autoCompleteCities(initQuery).then(() =>
+		if (searchQuery) {
+			autoCompleteCities(searchQuery).then(() =>
 				console.log("init fetching")
 			);
+		} else {
+			setResults([]);
 		}
-	}, [initQuery]);
+	}, [searchQuery]);
 
 	const autoCompleteCities = async (searchTerm: string) => {
 		if (searchTerm.length < 2) {
@@ -36,10 +40,7 @@ export default function AutoCompleteInput({
 
 	return (
 		<>
-			<SearchInput
-				initQuery={initQuery}
-				onChange={debouncedAutoCompleteCities}
-			/>
+			<SearchInput onChange={debouncedAutoCompleteCities} />
 			{results.length > 0 && (
 				<ul className="bg-neutral-100 rounded-lg w-full max-h-80 overflow-y-auto list">
 					{results.map((item) => {

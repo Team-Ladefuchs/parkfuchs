@@ -26,11 +26,7 @@ export default function Form({
 	doReset,
 	onClose,
 }: Properties): JSX.Element {
-	const { editCity, setEditCity } = useContext(AppContext);
-
-	useEffect(() => {
-		console.log("ddddd", editCity);
-	}, [setEditCity]);
+	const { editCity } = useContext(AppContext);
 
 	const [disableCanAddMoreWebsite, setDisableCanAddMoreWebsite] =
 		useState(true);

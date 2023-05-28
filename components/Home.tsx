@@ -21,18 +21,14 @@ export default function Home({
 }) {
 	const [openDialog, setOpenDilaog] = useState(false);
 
-	const { editCity, setEditCity } = useContext(AppContext);
-
-	useEffect(() => {
-		console.log("d2", editCity);
-	}, [editCity]);
-
 	const [results, setResults] = useState<Array<InboxCity>>(cities);
 	const [isLoading, setIsLoading] = useState(false);
 
 	const [searchQuery, setSearchQuery] = useState("");
 
 	const handleOnClose = () => {
+		setSearchQuery("");
+		setResults([]);
 		setOpenDilaog(false);
 	};
 
@@ -73,7 +69,6 @@ export default function Home({
 				<section className="pb-12 flex flex-col space-y-6 max-md:space-y-4">
 					<div className="flex gap-5 max-md:gap-2 items-center justify-between max-md:flex-col">
 						<SearchInput
-							initQuery=""
 							className="grow max-md:w-full"
 							onChange={debouncedOnCitySearch}
 						/>

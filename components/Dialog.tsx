@@ -41,8 +41,13 @@ export default function Dialog({
 	const [selectedCity, setSelectedCity] = useState<SlimCity | null>(null);
 
 	const [isResetForm, setIsResetForm] = useState(false);
+	const { setSearchQuery } = useContext(AppContext);
 
 	const { editCity, setEditCity } = useContext(AppContext);
+
+	useEffect(() => {
+		setSearchQuery(initQuery);
+	}, [initQuery]);
 
 	useEffect(() => {
 		if (!editCity) {

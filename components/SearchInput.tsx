@@ -1,19 +1,24 @@
 import { faMagnifyingGlass, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
+import { AppContext } from "../context/appContext";
 
 export interface Properties {
 	className?: string;
 	onChange: (value: string) => void;
-	initQuery: string;
 }
 
 export default function SearchInput({
 	onChange,
-	initQuery = "",
 	className = "",
 }: Properties): JSX.Element {
-	const [value, setValue] = useState(initQuery);
+	const { searchQuery } = useContext(AppContext);
+
+	const [value, setValue] = useState(searchQuery);
+
+	useEffect(() => {
+		setValue(searchQuery ?? "");
+	}, [searchQuery]);
 
 	const inputRef = useRef<HTMLInputElement | null>(null);
 	return (
