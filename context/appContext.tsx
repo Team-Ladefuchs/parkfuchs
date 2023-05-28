@@ -4,11 +4,15 @@ import { InboxCity } from "../db/types";
 interface AppContextType {
 	editCity: InboxCity | null;
 	setEditCity: (city: InboxCity | null) => void;
+	searchQuery: string;
+	setSearchQuery: (value: string) => void;
 }
 
 export const AppContext = createContext<AppContextType>({
 	editCity: null,
 	setEditCity: () => {},
+	searchQuery: "",
+	setSearchQuery: () => {},
 });
 
 interface AppContextProviderProps {
@@ -24,9 +28,20 @@ export const AppContextProvider: React.FC<AppContextProviderProps> = ({
 		setCity(updateCity);
 	};
 
+	const [searchQuery, setQuery] = useState<string>("");
+
+	const setSearchQuery = (value: string) => {
+		setQuery(value);
+	};
+
 	return (
 		<AppContext.Provider
-			value={{ editCity: selectedCity, setEditCity: setSelectedCity }}
+			value={{
+				editCity: selectedCity,
+				setEditCity: setSelectedCity,
+				searchQuery,
+				setSearchQuery,
+			}}
 		>
 			{children}
 		</AppContext.Provider>
