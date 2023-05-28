@@ -54,6 +54,7 @@ export default function LandingBox({
 			<Link
 				className="leading-5 underline md:hidden"
 				href={bunqLink}
+				target="_blank"
 				prefetch={false}
 			>
 				Danke sagen.
