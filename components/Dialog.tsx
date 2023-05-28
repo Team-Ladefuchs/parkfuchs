@@ -127,13 +127,13 @@ export default function Dialog({
 				<header className="flex bg-green rounded-t-lg items-start justify-between p-4 pl-6 border-b max-md:p-5 align-start h-14">
 					<Image
 						src={parkfuchsLogo}
-						width={78}
+						width={68}
 						role="img"
 						alt={"logo"}
 						aria-label="Parkfuchs Logo"
-						className="relative left-[-10px] top-[-28px]"
+						className="relative left-[-10px] top-[-20px]"
 					/>
-					<h3 className="text-xl font-semibold text-gray-900 items-center relative bottom-[6px]">
+					<h3 className="text-xl font-semibold text-gray-900 items-center relative bottom-[2px]">
 						{editCity ? "Falsche Info melden" : "Ort hinzufügen"}
 					</h3>
 					<button
@@ -141,7 +141,7 @@ export default function Dialog({
 						role="button"
 						onClick={handleOnClose}
 						aria-label="dialog schließen"
-						className="text-gray-600 bg-transparent hover:bg-darkGreen hover:text-gray-900 rounded-lg text-md p-1.5 ml-auto inline-flex items-center relative bottom-2"
+						className="text-gray-600 bg-transparent hover:bg-darkGreen hover:text-gray-900 rounded-lg text-md p-1.5 ml-auto inline-flex items-center relative bottom-[4px]"
 						data-modal-toggle="defaultModal"
 					>
 						<FontAwesomeIcon icon={faXmark} className="w-5 h-5" />
