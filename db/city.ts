@@ -25,6 +25,7 @@ function toRecordToInboxCity(row: InboxCity): InboxCity {
 			latitude: cityItem.latitude,
 			longitude: cityItem.longitude,
 			state: cityItem.state,
+			stateCode: cityItem.stateCode,
 		},
 		id: row.id,
 		city: cityItem.id,
@@ -40,6 +41,7 @@ function toRecordToInboxCity(row: InboxCity): InboxCity {
 		parkingHours: row.parkingHours,
 		whileCharging: row.whileCharging,
 		websiteExtras: row.websiteExtras,
+		currentCity: row.currentCity,
 	};
 
 	return ret;
@@ -171,6 +173,7 @@ function parseInput(newCity: NewCity): NewCity {
 			withEMark: false,
 			useBusLane: false,
 			whileCharging: false,
+			currentCity: newCity.currentCity,
 			untilMaxMarkingHour: false,
 		};
 	}

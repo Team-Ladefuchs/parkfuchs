@@ -1,0 +1,40 @@
+import PocketBase from "npm:pocketbase@^0.15.0";
+import eventsource from "npm:eventsource@^2.0.2";
+
+declare global {
+	let EventSource: any;
+}
+
+window.EventSource = eventsource;
+
+const pb = new PocketBase("http://0.0.0.0:8090");
+
+const cityInboxCollection = pb.collection("cityInbox");
+
+// console.log(pb.collection("demo1"));
+
+pb.collection("cityInbox").subscribe("*", async (event) => {
+	const record = event.record;
+	if (event.action != "update" || !record.related || !record.doUpdateAction) {
+		return;
+	}
+	record.doUpdateAction = false;
+
+	try {
+		const currentRecord = await cityInboxCollection.getOne(record.related, {
+			expand: "city",
+		});
+
+		if (!currentRecord.approved) {
+			return;
+		}
+
+		record.related = null;
+
+		await cityInboxCollection.update(record.id, record);
+
+		await pb.collection("cityInbox").delete(currentRecord.id);
+	} catch (error) {
+		console.error("cityInbox:", error.message);
+	}
+});

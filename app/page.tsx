@@ -11,7 +11,7 @@ export const dynamic = "auto",
 
 async function fetchData() {
 	const [cities, thgLink] = await Promise.all([
-		getNewestEnabledInboxCities(10),
+		getNewestEnabledInboxCities(15),
 		getTGHLink(),
 	]);
 
