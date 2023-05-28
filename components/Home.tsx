@@ -3,14 +3,14 @@
 import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
-import { useContext, useEffect, useState } from "react";
+import { useState } from "react";
 import { CityStats, InboxCity } from "../db/types";
 import { useDebounce } from "../functions/debounce";
 import CityList from "./CityList";
 import Dialog from "./Dialog";
 import LandingBox from "./LandingBox";
 import SearchInput from "./SearchInput";
-import { AppContext, AppContextProvider } from "../context/appContext";
+import { AppContextProvider } from "../context/appContext";
 
 export default function Home({
 	cities,
