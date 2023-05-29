@@ -22,8 +22,6 @@ function toRecordToInboxCity(row: InboxCity): InboxCity {
 			name: cityItem.name,
 			postcodes: cityItem.postcodes,
 			community: cityItem.community,
-			latitude: cityItem.latitude,
-			longitude: cityItem.longitude,
 			state: cityItem.state,
 			stateCode: cityItem.stateCode,
 		},
@@ -41,7 +39,6 @@ function toRecordToInboxCity(row: InboxCity): InboxCity {
 		parkingHours: row.parkingHours,
 		whileCharging: row.whileCharging,
 		websiteExtras: row.websiteExtras,
-		currentCity: row.currentCity,
 	};
 
 	return ret;
@@ -58,7 +55,6 @@ export async function getNewestEnabledInboxCities(
 				expand: "city",
 				sort: "-updated,city",
 			});
-
 		return resultList.items.map(toRecordToInboxCity);
 	} catch (error) {
 		console.error(error);

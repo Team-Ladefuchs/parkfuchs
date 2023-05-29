@@ -2,8 +2,6 @@ export interface CityRepo {
 	readonly id: string;
 	readonly name: string;
 	readonly community: string;
-	readonly latitude: string;
-	readonly longitude: string;
 	readonly postcodes: string[];
 	readonly state: string;
 	readonly stateCode: string;
@@ -42,7 +40,7 @@ export interface NewCity {
 	readonly nonePrivileges: boolean;
 	readonly parkingHours: number;
 	readonly whileCharging: boolean;
-	readonly currentCity: string | null;
+	readonly currentCity?: string | null;
 	readonly websiteExtras: Array<Website>;
 }
 

@@ -1,4 +1,4 @@
-export const useDebounce = (func, delay = 200): any => {
+export const useDebounce = (func, delay = 220): any => {
 	let timeoutId: number | undefined;
 
 	return function (...args: any) {
@@ -9,4 +9,3 @@ export const useDebounce = (func, delay = 200): any => {
 		}, delay) as unknown as number;
 	};
 };
-
