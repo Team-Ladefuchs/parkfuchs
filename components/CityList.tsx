@@ -139,7 +139,7 @@ export default function CityList({
 												))}
 									</div>
 									<div>
-										Zuletzt Aktualisiert am{" "}
+										Zuletzt aktualisiert am{" "}
 										{formateDate(item.updated)}
 									</div>
 									<button
