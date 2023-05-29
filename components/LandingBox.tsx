@@ -21,7 +21,7 @@ export default function LandingBox({
 	}
 	return (
 		<section
-			className={`bg-green rounded-lg p-6 h-fit opacity-75 grid grid-cols-[28px_1fr] gap-2 max-md:gap-3 max-md:gap-y-2 max-md:p-5 ${className}`}
+			className={`bg-green rounded-lg p-4 px-6 h-fit opacity-75 grid grid-cols-[28px_1fr] gap-2 max-md:gap-3 max-md:gap-y-2 max-md:p-4 ${className}`}
 		>
 			<FontAwesomeIcon
 				icon={faTreeCity}
