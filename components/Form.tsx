@@ -359,7 +359,7 @@ export default function Form({
 						</div>
 						<p className="mt-2 text-sm text-gray-600">
 							Bitte hinterlege einen Link als Quelle, damit dieser
-							Ort wird <b>schneller</b> freigegeben werden kann.
+							Ort <b>schneller</b> freigegeben werden kann.
 						</p>
 					</div>
 					<div>

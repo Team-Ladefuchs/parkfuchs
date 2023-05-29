@@ -132,11 +132,11 @@ export default function Dialog({
 				<header className="flex bg-green rounded-t-lg items-start justify-between p-4 pl-6 border-b max-md:p-5 align-start h-14">
 					<Image
 						src={parkfuchsLogo}
-						width={68}
+						height={64}
 						role="img"
 						alt={"logo"}
 						aria-label="Parkfuchs Logo"
-						className="relative left-[-10px] top-[-20px]"
+						className="relative left-[-10px] md:top-[-24px] top-[-28px] select-none"
 					/>
 					<h3 className="text-xl font-semibold text-gray-900 items-center relative bottom-[2px]">
 						{editCity ? "Falsche Info melden" : "Ort hinzufügen"}
@@ -167,10 +167,9 @@ export default function Dialog({
 									/>
 									<p>
 										Du möchtest <b>{selectedCity.name}</b>{" "}
-										eingeben?
-										<br />
-										Hast du gesehen, dass die Stadt bereits
-										im Parkfuchs Verzeichnis existiert?
+										eingeben? Hast du gesehen, dass die
+										Stadt bereits im Parkfuchs Verzeichnis
+										existiert?
 									</p>
 								</div>
 							)}
