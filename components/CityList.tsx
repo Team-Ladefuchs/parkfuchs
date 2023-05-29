@@ -14,6 +14,15 @@ export interface Properties {
 	onOpenDialog: () => void;
 }
 
+const formateDate = (dateString: string): string => {
+	const date = new Date(dateString);
+	return date.toLocaleDateString("de-DE", {
+		year: "2-digit",
+		month: "2-digit",
+		day: "2-digit",
+	});
+};
+
 function renderLink({ attributes, content }): JSX.Element {
 	const { href } = attributes;
 
@@ -129,8 +138,12 @@ export default function CityList({
 													/>
 												))}
 									</div>
+									<div>
+										Zuletzt Aktualisiert am{" "}
+										{formateDate(item.updated)}
+									</div>
 									<button
-										className="min-w-max underline justify-self-end text-sm text-neutral-600"
+										className="min-w-max underline text-neutral-600 justify-self-end flex text-sm"
 										onClick={(_e) => {
 											setEditCity(item);
 											openDialog();

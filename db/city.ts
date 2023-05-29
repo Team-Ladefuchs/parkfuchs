@@ -39,6 +39,7 @@ function toRecordToInboxCity(row: InboxCity): InboxCity {
 		parkingHours: row.parkingHours,
 		whileCharging: row.whileCharging,
 		websiteExtras: row.websiteExtras,
+		updated: row.updated,
 	};
 
 	return ret;

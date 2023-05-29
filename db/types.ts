@@ -19,6 +19,7 @@ export interface HttpError {
 export interface InboxCity extends NewCity {
 	id: string;
 	approved: boolean;
+	updated: string;
 	cityRef: CityRepo;
 	expand?: any;
 }

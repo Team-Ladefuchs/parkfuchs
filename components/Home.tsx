@@ -90,12 +90,14 @@ export default function Home({
 						cityStats={cityStates}
 						hidden={searchQuery.length > 0}
 					/>
-					<CityList
-						className="mt-6 min-h-[21rem]"
-						items={getItems()}
-						isEmpty={listIsEmpty}
-						onOpenDialog={() => setOpenDilaog(true)}
-					/>
+					<section>
+						<CityList
+							className="mt-3 min-h-[21rem]"
+							items={getItems()}
+							isEmpty={listIsEmpty}
+							onOpenDialog={() => setOpenDilaog(true)}
+						/>
+					</section>
 				</section>
 			</div>
 		</AppContextProvider>
