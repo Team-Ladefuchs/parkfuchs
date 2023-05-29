@@ -21,6 +21,7 @@
 		"eslint": "8.41.0",
 		"eslint-config-next": "^13.4.4",
 		"html2plaintext": "^2.1.4",
+		"javascript-time-ago": "^2.5.9",
 		"linkify-react": "^4.1.1",
 		"linkifyjs": "^4.1.1",
 		"lottie-react": "^2.4.0",
@@ -31,6 +32,7 @@
 		"react-dom": "^18.2.0",
 		"react-hook-form": "^7.44.2",
 		"react-hot-toast": "^2.4.1",
+		"react-time-ago": "^7.2.1",
 		"sanitize-html": "^2.10.0"
 	},
 	"devDependencies": {
