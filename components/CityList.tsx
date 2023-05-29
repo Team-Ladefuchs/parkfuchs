@@ -21,15 +21,6 @@ export interface Properties {
 	onOpenDialog: () => void;
 }
 
-const formateDate = (dateString: string): string => {
-	const date = new Date(dateString);
-	return date.toLocaleDateString("de-DE", {
-		year: "2-digit",
-		month: "2-digit",
-		day: "2-digit",
-	});
-};
-
 function renderLink({ attributes, content }): JSX.Element {
 	const { href } = attributes;
 

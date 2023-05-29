@@ -92,7 +92,7 @@ export default function Home({
 					/>
 					<section>
 						<CityList
-							className="mt-3 min-h-[21rem]"
+							className="min-h-[21rem]"
 							items={getItems()}
 							isEmpty={listIsEmpty}
 							onOpenDialog={() => setOpenDilaog(true)}
