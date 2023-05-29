@@ -6,6 +6,13 @@ import Link from "next/link";
 import { formatLink } from "../functions/utils";
 import { useContext, useState } from "react";
 import { AppContext } from "../context/appContext";
+import TimeAgo from "javascript-time-ago";
+
+import de from "javascript-time-ago/locale/de";
+import ReactTimeAgo from "react-time-ago";
+
+TimeAgo.addDefaultLocale(de);
+TimeAgo.addLocale(de);
 
 export interface Properties {
 	items: InboxCity[];
@@ -138,19 +145,29 @@ export default function CityList({
 													/>
 												))}
 									</div>
-									<div>
-										Zuletzt aktualisiert am{" "}
-										{formateDate(item.updated)}
-									</div>
-									<button
-										className="min-w-max underline text-neutral-600 justify-self-end flex text-sm"
-										onClick={(_e) => {
-											setEditCity(item);
-											openDialog();
-										}}
-									>
-										Falsche Info melden
-									</button>
+									<section className="text-neutral-500 text-sm mt-1">
+										<div>
+											<p>{"—"}</p>
+											<p className="relative bottom-1">
+												Zuletzt aktualisiert{" "}
+												<ReactTimeAgo
+													date={Date.parse(
+														item.updated
+													)}
+													locale="en-US"
+												/>
+											</p>
+										</div>
+										<button
+											className="min-w-max underline flex relative bottom-1"
+											onClick={(_e) => {
+												setEditCity(item);
+												openDialog();
+											}}
+										>
+											Falsche Info melden
+										</button>
+									</section>
 								</div>
 							</div>
 						</div>
