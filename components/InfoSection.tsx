@@ -55,32 +55,41 @@ export default function InfoSection({
 					<div>Du darfst kostenlos parken</div>
 					<ul>
 						{item.parkingHours > 0 && (
-							<li>
-								{checkField()} bis zu{" "}
-								<span className="bold">
-									{item.parkingHours}{" "}
-									{item.parkingHours > 1
-										? "Stunden"
-										: "Stunde"}
-								</span>
-								{chargingIsSuffix}
+							<li className="flex gap-1">
+								<p>{checkField()}</p>
+								<p>
+									bis zu{" "}
+									<span className="bold">
+										{item.parkingHours}{" "}
+										{item.parkingHours > 1
+											? "Stunden"
+											: "Stunde"}
+									</span>
+									{chargingIsSuffix}
+								</p>
 							</li>
 						)}
 
 						{item.untilMaxMarkingHour && (
-							<li>
-								{checkField()} bis zur angegebenen
-								Höchstparkdauer
-								{chargingIsSuffix}
+							<li className="flex gap-1">
+								<p>{checkField()}</p>
+								<p>
+									bis zur angegebenen Höchstparkdauer
+									{chargingIsSuffix}
+								</p>
 							</li>
 						)}
 
 						{item.whileCharging && !chargingIsSuffix && (
-							<li>{checkField()} nur während des Ladevorgangs</li>
+							<li className="flex gap-1">
+								<p>{checkField()}</p>
+								<p>nur während des Ladevorgangs</p>
+							</li>
 						)}
 						{item.useBusLane && (
-							<li>
-								{checkField()} Du darfst die Busspuren befahren
+							<li className="flex gap-1">
+								<p>{checkField()}</p>
+								<p>Du darfst die Busspuren befahren</p>
 							</li>
 						)}
 					</ul>
@@ -91,19 +100,27 @@ export default function InfoSection({
 					<div>Du brauchst dafür</div>
 					<ul>
 						{item.withEMark && (
-							<li>{checkField()} ein E-Kennzeichen</li>
+							<li className="flex gap-1">
+								<p>{checkField()}</p>
+								<p>ein E-Kennzeichen</p>
+							</li>
 						)}
 						{item.parkingDisk && (
-							<li>{checkField()} eine Parkscheibe</li>
+							<li className="flex gap-1">
+								<p>{checkField()}</p>
+								<p>eine Parkscheibe</p>
+							</li>
 						)}
 					</ul>
 				</section>
 			)}
 			{item.nonePrivileges && (
-				<p>
-					<span className="mr-1">❌</span> Keine{" "}
-					{nonePrivilegesPrefix(item)} Privilegien für
-					Elektrofahrzeuge
+				<p className="flex gap-1">
+					<span className="mr-1">❌</span>
+					<div>
+						Keine {nonePrivilegesPrefix(item)} Privilegien für
+						Elektrofahrzeuge
+					</div>
 				</p>
 			)}
 		</div>

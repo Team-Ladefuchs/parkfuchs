@@ -151,10 +151,13 @@ async function citAlreadyExists(
 	cityId: string
 ): Promise<boolean> {
 	try {
-		await cityInbox.getFirstListItem(`city.id="${cityId}"`, {});
+		await cityInbox.getFirstListItem(
+			`city.id="${cityId}" && approved=true`,
+			{}
+		);
 		return true;
 	} catch (error) {}
-
+	
 	return false;
 }
 

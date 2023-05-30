@@ -11,7 +11,6 @@ import TimeAgo from "javascript-time-ago";
 import de from "javascript-time-ago/locale/de";
 import ReactTimeAgo from "react-time-ago";
 
-TimeAgo.addDefaultLocale(de);
 TimeAgo.addLocale(de);
 
 export interface Properties {
@@ -145,7 +144,7 @@ export default function CityList({
 													date={Date.parse(
 														item.updated
 													)}
-													locale="en-US"
+													locale="de-De"
 												/>
 											</p>
 										</div>

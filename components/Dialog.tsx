@@ -46,8 +46,11 @@ export default function Dialog({
 	const { editCity, setEditCity } = useContext(AppContext);
 
 	useEffect(() => {
+		if (!isOpen) {
+			return;
+		}
 		setSearchQuery(initQuery);
-	}, [initQuery]);
+	}, [initQuery, isOpen]);
 
 	useEffect(() => {
 		if (!editCity) {

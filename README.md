@@ -2,6 +2,8 @@
 
 ![logo](public/parkfuchs-opengraph.jpg)
 
+**Go to [parkfuchs.app](https://parkfuchs.app)**
+
 ## Getting Started
 
 First, run the development server:
@@ -14,9 +16,11 @@ yarn dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+Using Next.js 13+.
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+
+The `app` directory is mapped to `app/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
 
 ## Learn More
 
