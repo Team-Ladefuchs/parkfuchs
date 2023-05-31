@@ -6,12 +6,13 @@ import Link from "next/link";
 import { formatLink } from "../functions/utils";
 import { useContext, useState } from "react";
 import { AppContext } from "../context/appContext";
-import TimeAgo from "javascript-time-ago";
 
-import de from "javascript-time-ago/locale/de";
-import ReactTimeAgo from "react-time-ago";
+import germanStrings from "react-timeago/lib/language-strings/de";
+import buildFormatter from "react-timeago/lib/formatters/buildFormatter";
 
-TimeAgo.addLocale(de);
+const formatter = buildFormatter(germanStrings);
+
+import TimeAgo from "react-timeago";
 
 export interface Properties {
 	items: InboxCity[];
@@ -140,11 +141,11 @@ export default function CityList({
 											<p>{"—"}</p>
 											<p className="relative bottom-1">
 												Zuletzt aktualisiert{" "}
-												<ReactTimeAgo
+												<TimeAgo
 													date={Date.parse(
 														item.updated
 													)}
-													locale="de-De"
+													formatter={formatter}
 												/>
 											</p>
 										</div>
