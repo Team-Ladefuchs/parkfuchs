@@ -4677,13 +4677,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"memoize-one@npm:^6.0.0":
-  version: 6.0.0
-  resolution: "memoize-one@npm:6.0.0"
-  checksum: f185ea69f7cceae5d1cb596266dcffccf545e8e7b4106ec6aa93b71ab9d16460dd118ac8b12982c55f6d6322fcc1485de139df07eacffaae94888b9b3ad7675f
-  languageName: node
-  linkType: hard
-
 "merge-stream@npm:^2.0.0":
   version: 2.0.0
   resolution: "merge-stream@npm:2.0.0"
@@ -5280,7 +5273,7 @@ __metadata:
     react-dom: ^18.2.0
     react-hook-form: ^7.44.2
     react-hot-toast: ^2.4.1
-    react-time-ago: ^7.2.1
+    react-timeago: ^7.1.0
     sanitize-html: ^2.10.0
     tailwindcss: ^3.3.2
     typescript: 5.0.4
@@ -5349,13 +5342,6 @@ __metadata:
   version: 4.0.0
   resolution: "path-type@npm:4.0.0"
   checksum: 5b1e2daa247062061325b8fdbfd1fb56dde0a448fb1455453276ea18c60685bdad23a445dc148cf87bc216be1573357509b7d4060494a6fd768c7efad833ee45
-  languageName: node
-  linkType: hard
-
-"performance-now@npm:^2.1.0":
-  version: 2.1.0
-  resolution: "performance-now@npm:2.1.0"
-  checksum: 534e641aa8f7cba160f0afec0599b6cecefbb516a2e837b512be0adbe6c1da5550e89c78059c7fabc5c9ffdf6627edabe23eb7c518c4500067a898fa65c2b550
   languageName: node
   linkType: hard
 
@@ -5610,15 +5596,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"raf@npm:^3.4.1":
-  version: 3.4.1
-  resolution: "raf@npm:3.4.1"
-  dependencies:
-    performance-now: ^2.1.0
-  checksum: 50ba284e481c8185dbcf45fc4618ba3aec580bb50c9121385d5698cb6012fe516d2015b1df6dd407a7b7c58d44be8086108236affbce1861edd6b44637c8cd52
-  languageName: node
-  linkType: hard
-
 "randombytes@npm:^2.1.0":
   version: 2.1.0
   resolution: "randombytes@npm:2.1.0"
@@ -5668,18 +5645,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-time-ago@npm:^7.2.1":
-  version: 7.2.1
-  resolution: "react-time-ago@npm:7.2.1"
-  dependencies:
-    memoize-one: ^6.0.0
-    prop-types: ^15.8.1
-    raf: ^3.4.1
+"react-timeago@npm:^7.1.0":
+  version: 7.1.0
+  resolution: "react-timeago@npm:7.1.0"
   peerDependencies:
-    javascript-time-ago: ^2.3.7
-    react: ">=0.16.8"
-    react-dom: ">=0.16.8"
-  checksum: 834406e6f2a0f5e934c7cae0e5e286d837db801f700535f942891a417ca3960539de08e187022b621c68dc4d062ec51be45be0090adbf9b4dae54d16a104cfd0
+    react: ^16.0.0 || ^17.0.0 || ^18.0.0
+  checksum: cfc3959701f657f7d2766e8ef1a8c2f8b87fdb6e6aa60812dd9d6b68d096740f80976e0a69e08c1bd07f5514f6c82ed01905afea3bb08941dbb9cc49136810d9
   languageName: node
   linkType: hard
 
