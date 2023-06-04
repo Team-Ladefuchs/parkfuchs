@@ -37,7 +37,10 @@ next-env.d.ts
 
 pocketbase-data
 .DS_Store
-.yarn
+
+.yarn/cache
+.yarn/*.gz
+
 public/sw.js
 public/*.map
 public/workbox*.js
