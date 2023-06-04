@@ -1,4 +1,4 @@
-FROM node:18-alpine as deps
+FROM node:20-alpine as deps
 
 RUN apk add --no-cache libc6-compat
 
@@ -10,9 +10,9 @@ RUN echo "nodeLinker: node-modules" > .yarnrc.yml
 
 RUN yarn set version berry 
 
-RUN yarn install --frozen-lockfile
+RUN yarn install --immutable 
 
-FROM node:18-alpine as builder
+FROM node:20-alpine as builder
 
 WORKDIR /app
 
@@ -32,7 +32,7 @@ RUN yarn build
 # RUN npm run build
 
 # Production image, copy all the files and run next
-FROM node:18-alpine AS runner
+FROM node:20-alpine AS runner
 WORKDIR /app
 
 ENV NODE_ENV production
