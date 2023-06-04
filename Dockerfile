@@ -10,7 +10,7 @@ RUN echo "nodeLinker: node-modules" > .yarnrc.yml
 
 RUN yarn set version berry 
 
-RUN yarn install --immutable 
+RUN yarn install
 
 FROM node:20-alpine as builder
 
