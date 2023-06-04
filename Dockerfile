@@ -8,9 +8,9 @@ COPY package.json yarn.lock ./
 
 RUN echo "nodeLinker: node-modules" > .yarnrc.yml
 
-RUN yarn set version berry 
+COPY .yarn .yarn 
 
-RUN yarn install
+RUN yarn install --immutable 
 
 FROM node:20-alpine as builder
 
@@ -23,8 +23,6 @@ COPY . .
 RUN echo "nodeLinker: node-modules" > .yarnrc.yml
 
 ENV NEXT_TELEMETRY_DISABLED 1
-
-RUN yarn set version berry
 
 RUN yarn build
 
