@@ -22,7 +22,7 @@ interface Properties {
 	initQuery: string;
 	onClose: () => void;
 }
-
+// TODO fix me/delete me
 export interface SlimCity {
 	id: string;
 	name: string;
@@ -60,7 +60,7 @@ export default function Dialog({
 			id: editCity.id,
 			stateCode: editCity.cityRef.stateCode,
 			state: editCity.cityRef.state,
-			name: editCity.cityRef.state,
+			name: editCity.cityRef.name,
 			cityRefId: editCity.cityRef.id,
 			postcode: editCity.cityRef.postcodes,
 			exists: false,
