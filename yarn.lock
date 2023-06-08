@@ -1813,17 +1813,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:*":
+"@types/node@npm:*, @types/node@npm:20.2.5":
   version: 20.2.5
   resolution: "@types/node@npm:20.2.5"
   checksum: 38ce7c7e9d76880dc632f71d71e0d5914fcda9d5e9a7095d6c339abda55ca4affb0f2a882aeb29398f8e09d2c5151f0b6586c81c8ccdfe529c34b1ea3337425e
-  languageName: node
-  linkType: hard
-
-"@types/node@npm:18.16.16":
-  version: 18.16.16
-  resolution: "@types/node@npm:18.16.16"
-  checksum: 0efad726dd1e0bef71c392c708fc5d78c5b39c46b0ac5186fee74de4ccb1b2e847b3fa468da67d62812f56569da721b15bf31bdc795e6c69b56c73a45079ed2d
   languageName: node
   linkType: hard
 
@@ -1852,7 +1845,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react@npm:*, @types/react@npm:18.2.8":
+"@types/react@npm:*":
   version: 18.2.8
   resolution: "@types/react@npm:18.2.8"
   dependencies:
@@ -1860,6 +1853,17 @@ __metadata:
     "@types/scheduler": "*"
     csstype: ^3.0.2
   checksum: 351fe2450d30bff2ceb6aa84788e948317555e5ea22cb44f6778e08c977aab1878a0119bd94bc3d1bec5f5af4a75ffaa2ce111df5cd9d4ce26bfd719e4d971c2
+  languageName: node
+  linkType: hard
+
+"@types/react@npm:18.2.9":
+  version: 18.2.9
+  resolution: "@types/react@npm:18.2.9"
+  dependencies:
+    "@types/prop-types": "*"
+    "@types/scheduler": "*"
+    csstype: ^3.0.2
+  checksum: f155256171a2d701eb962a1d3aa2a1c9ee36d9dd4a4aecb911d29e50717aab1a76914aef25242665147c455b9e8d081d1a60275d13ca81075c148ebd6607414a
   languageName: node
   linkType: hard
 
@@ -5599,8 +5603,8 @@ __metadata:
     "@fortawesome/free-solid-svg-icons": ^6.4.0
     "@fortawesome/react-fontawesome": ^0.2.0
     "@tailwindcss/forms": ^0.5.3
-    "@types/node": 18.16.16
-    "@types/react": 18.2.8
+    "@types/node": 20.2.5
+    "@types/react": 18.2.9
     "@types/react-dom": 18.2.4
     "@types/react-list": ^0.8.7
     autoprefixer: ^10.4.14
@@ -5615,7 +5619,7 @@ __metadata:
     lottie-react: ^2.4.0
     next: ^13.4.4
     next-pwa: ^5.6.0
-    pocketbase: ^0.15.1
+    pocketbase: ^0.15.2
     postcss: ^8.4.24
     react: ^18.2.0
     react-dom: ^18.2.0
@@ -5767,10 +5771,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"pocketbase@npm:^0.15.1":
-  version: 0.15.1
-  resolution: "pocketbase@npm:0.15.1"
-  checksum: 81fd5dac5c079ff2f6d55ca992b9118320b423ef9e98be36a99790b640f36c30a54f2b65b748351fec9082455910eb189bfe1e5e7446f4dca2738cd5e90f28e5
+"pocketbase@npm:^0.15.2":
+  version: 0.15.2
+  resolution: "pocketbase@npm:0.15.2"
+  checksum: 27f2eb38cccc2735f22afbcb36f5bd1da81819c3c8c3e1a5bd9d8a317b0833bdda0d57057df70c9a6eea7cf9a29cf0d3ee90b3bdb3c495087c820fafc2ffc054
   languageName: node
   linkType: hard
 
