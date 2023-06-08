@@ -19,7 +19,7 @@ export default function Home({
 	cities: Array<InboxCity>;
 	cityStates: CityStats;
 }) {
-	const [openDialog, setOpenDilaog] = useState(false);
+	const [openDialog, setOpenDialog] = useState(false);
 
 	const [results, setResults] = useState<Array<InboxCity>>(cities);
 	const [isLoading, setIsLoading] = useState(false);
@@ -29,7 +29,7 @@ export default function Home({
 	const handleOnClose = () => {
 		setSearchQuery("");
 		setResults([]);
-		setOpenDilaog(false);
+		setOpenDialog(false);
 	};
 
 	const onCitySearch = async (searchTerm: string) => {
@@ -77,7 +77,7 @@ export default function Home({
 						</div>
 						<button
 							className="bg-green max-md:w-full max-md:justify-center gap-2 flex items-center text-lg rounded-lg hover:bg-darkGreen text-black w-max py-2 px-4 justify-self-start"
-							onClick={(_e) => setOpenDilaog(true)}
+							onClick={(_e) => setOpenDialog(true)}
 						>
 							<FontAwesomeIcon
 								icon={faLocationDot}
@@ -95,7 +95,7 @@ export default function Home({
 							className="min-h-[21rem]"
 							items={getItems()}
 							isEmpty={listIsEmpty}
-							onOpenDialog={() => setOpenDilaog(true)}
+							onOpenDialog={() => setOpenDialog(true)}
 						/>
 					</section>
 				</section>

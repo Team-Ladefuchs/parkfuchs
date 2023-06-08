@@ -25,6 +25,9 @@ export default function AutoCompleteInput({
 		} else {
 			setResults([]);
 		}
+		return () => {
+			setResults([]);
+		};
 	}, [searchQuery]);
 
 	const autoCompleteCities = async (searchTerm: string) => {

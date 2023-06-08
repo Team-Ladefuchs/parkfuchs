@@ -64,6 +64,24 @@ export async function getNewestEnabledInboxCities(
 	return [];
 }
 
+export async function getCityById(cityId: string): Promise<InboxCity | null> {
+	try {
+		const result = await pocketBase
+			.collection("cityInbox")
+			.getFirstListItem<InboxCity>(
+				`city.id="${cityId}" && approved = true`,
+				{
+					expand: "city",
+				}
+			);
+		return toRecordToInboxCity(result);
+	} catch (error) {
+		console.error(error);
+	}
+
+	return null;
+}
+
 export async function search(
 	query: string,
 	maxResults: number
@@ -152,8 +170,11 @@ async function citAlreadyExists(
 	try {
 		await cityInbox.getFirstListItem(
 			`city.id="${cityId}" && approved=true`,
-			{}
+			{
+				fields: "city",
+			}
 		);
+
 		return true;
 	} catch (error) {}
 
