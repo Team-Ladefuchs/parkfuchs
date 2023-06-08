@@ -13,11 +13,13 @@ export default function SearchInput({
 	className = "",
 }: Properties): JSX.Element {
 	const { searchQuery } = useContext(AppContext);
-
 	const [value, setValue] = useState(searchQuery);
 
 	useEffect(() => {
 		setValue(searchQuery ?? "");
+		return () => {
+			setValue("");
+		};
 	}, [searchQuery]);
 
 	const inputRef = useRef<HTMLInputElement | null>(null);

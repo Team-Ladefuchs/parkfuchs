@@ -85,6 +85,10 @@ export default function Form({
 			return false;
 		}
 
+		if (selectedCity.exists) {
+			return false;
+		}
+
 		let { useBusLane, freeParking, whileCharging, nonePrivileges } =
 			getValues();
 
@@ -108,12 +112,16 @@ export default function Form({
 			freeParking,
 		} = getValues();
 
-		setDisableCanAddMoreWebsite(canAddMoreWebsite(website));
-
 		if (!selectedCity) {
 			setFormValid(false);
 			return;
 		}
+
+		if (selectedCity.exists) {
+			return false;
+		}
+
+		setDisableCanAddMoreWebsite(canAddMoreWebsite(website));
 
 		if (nonePrivileges) {
 			setValue("freeParking", false);
@@ -187,7 +195,7 @@ export default function Form({
 									</label>
 								</div>
 							</section>
-							<div className="flex gap-16 max-md:flex-col max-md:gap-4">
+							<div className="flex gap-10 max-md:flex-col max-md:gap-4">
 								<section>
 									<div>Privilegien (mind. 1)</div>
 									<div className="mt-1 flex items-center gap-2 content-center">
@@ -206,7 +214,7 @@ export default function Form({
 											Kostenlos parken
 										</label>
 										<input
-											className="form-check-input border-none p-1 rounded border-gray-300  focus:ring-green focus:ring-2 cursor-pointer disabled:opacity-50 text-black"
+											className="form-check-input border-none p-1 rounded border-gray-300 focus:ring-green focus:ring-2 cursor-pointer disabled:opacity-50 text-black max-w-[4em]"
 											disabled={
 												formValue.untilMaxMarkingHour ||
 												formValue.nonePrivileges

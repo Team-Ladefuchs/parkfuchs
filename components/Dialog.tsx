@@ -2,7 +2,7 @@
 import axios from "axios";
 
 import { useContext, useEffect, useState } from "react";
-import { NewCity, Website } from "../db/types";
+import { InboxCity, NewCity, Website } from "../db/types";
 import AutoCompleteInput from "./AutoCompleteInput";
 import Image from "next/image";
 import parkfuchsLogo from "../public/parkfuchs.svg";
@@ -39,11 +39,23 @@ export default function Dialog({
 	initQuery = "",
 }: Properties): JSX.Element {
 	const [selectedCity, setSelectedCity] = useState<SlimCity | null>(null);
+	const { editCity, setEditCity } = useContext(AppContext);
 
 	const [isResetForm, setIsResetForm] = useState(false);
 	const { setSearchQuery } = useContext(AppContext);
 
-	const { editCity, setEditCity } = useContext(AppContext);
+	const getCityById = async (id: string) => {
+		try {
+			const { data } = await axios.get<InboxCity>(`/api/city/${id}`);
+
+			if (!data) {
+				return;
+			}
+			setEditCity(data);
+		} catch (error) {
+			console.error("[getCityById]", error);
+		}
+	};
 
 	useEffect(() => {
 		if (!isOpen) {
@@ -65,7 +77,7 @@ export default function Dialog({
 			postcode: editCity.cityRef.postcodes,
 			exists: false,
 		});
-	}, [setEditCity]);
+	}, [editCity]);
 
 	const onSubmit = async (formData: NewCity) => {
 		const websiteExtras: Array<Website> = Object.entries(formData)
@@ -79,7 +91,7 @@ export default function Dialog({
 			return;
 		}
 
-		const newCity: NewCity = {
+		const toSave: NewCity = {
 			parkingHours: parseFloat(formData.parkingHours?.toString() ?? "0"),
 			website: formData.website,
 			city: selectedCity.cityRefId,
@@ -94,10 +106,10 @@ export default function Dialog({
 			whileCharging: formData.whileCharging,
 			currentCity: editCity?.id ?? null,
 		};
-		console.log("saving new City", { newCity });
+		console.info("saving new City", { toSave });
 		handleOnClose();
 		await toast.promise(
-			axios.post("/api/newCity", newCity),
+			axios.post("/api/newCity", toSave),
 			{
 				loading: "Wird gespeichert …",
 				success: editCity
@@ -132,60 +144,84 @@ export default function Dialog({
 			className="w-full mx-auto animate-slideIn overflow-y-hidden z-50 backdrop:bg-red-300 bg-gray-600 inset-0 h-full fixed bg-opacity-80"
 		>
 			<div className="bg-white rounded-lg shadow mt-1 opacity-100 max-w-2xl mx-auto">
-				<header className="flex bg-green rounded-t-lg items-start justify-between p-4 pl-6 border-b max-md:p-5 align-start h-14">
+				<header className="flex bg-green rounded-t-lg items-start justify-between border-b  align-start h-14">
 					<Image
 						src={parkfuchsLogo}
 						height={64}
 						role="img"
 						alt={"logo"}
 						aria-label="Parkfuchs Logo"
-						className="relative left-[-10px] md:top-[-24px] top-[-28px] select-none"
+						className="relative left-2 top-[-9px] select-none"
 					/>
-					<h3 className="text-xl font-semibold text-gray-900 items-center relative bottom-[2px]">
-						{editCity ? "Falsche Info melden" : "Ort hinzufügen"}
-					</h3>
-					<button
-						type="button"
-						role="button"
-						onClick={handleOnClose}
-						aria-label="dialog schließen"
-						className="text-gray-600 bg-transparent hover:bg-darkGreen hover:text-gray-900 rounded-lg text-md p-1.5 ml-auto inline-flex items-center relative bottom-[4px]"
-						data-modal-toggle="defaultModal"
-					>
-						<FontAwesomeIcon icon={faXmark} className="w-5 h-5" />
-					</button>
-				</header>
-				<div className="p-6 pt-4 max-md:px-3 overflow-y-auto space-y-6 max-h-[85vh]">
-					{!editCity && (
-						<>
-							<AutoCompleteInput
-								initQuery={initQuery}
-								onSelectedCity={handleSelectedCity}
+					<div className="flex w-full p-2 pt-4 ml-1">
+						<h3 className="text-xl font-semibold text-gray-900">
+							{editCity
+								? "Falsche Info melden"
+								: "Ort hinzufügen"}
+						</h3>
+						<button
+							type="button"
+							role="button"
+							onClick={() => handleOnClose()}
+							aria-label="dialog schließen"
+							className="text-gray-600 bg-transparent hover:bg-darkGreen hover:text-gray-900 rounded-lg text-md p-1.5 ml-auto relative bottom-[1px] left-1"
+							data-modal-toggle="defaultModal"
+						>
+							<FontAwesomeIcon
+								icon={faXmark}
+								className="w-5 h-5"
 							/>
-							{selectedCity?.exists && (
-								<div className="bg-lightGreen p-3 rounded-lg text-black flex gap-4 items-center ">
-									<FontAwesomeIcon
-										size="2xl"
-										icon={faCircleExclamation}
-									/>
-									<p>
-										Du möchtest <b>{selectedCity.name}</b>{" "}
-										eingeben? Hast du gesehen, dass die
-										Stadt bereits im Parkfuchs Verzeichnis
-										existiert?
-									</p>
-								</div>
-							)}
-						</>
-					)}
+						</button>
+					</div>
+				</header>
 
-					<Form
-						selectedCity={selectedCity}
-						doReset={isResetForm}
-						onSubmit={onSubmit}
-						onClose={handleOnClose}
-					/>
-				</div>
+				{isOpen && (
+					<div className="p-6 pt-4 max-md:px-3 overflow-y-auto space-y-6 max-h-[85vh]">
+						{!editCity && (
+							<>
+								<AutoCompleteInput
+									initQuery={initQuery}
+									onSelectedCity={handleSelectedCity}
+								/>
+								{selectedCity?.exists && (
+									<div className="bg-lightGreen p-3 rounded-lg text-black flex gap-4 items-center ">
+										<FontAwesomeIcon
+											size="2xl"
+											icon={faCircleExclamation}
+										/>
+										<div>
+											Du möchtest{" "}
+											<b>{selectedCity.name}</b> eingeben?
+											Hast du gesehen, dass die Stadt
+											bereits im Parkfuchs-Verzeichnis
+											existiert?
+											<br />
+											<div
+												className="underline cursor-pointer mt-2"
+												onClick={async () => {
+													console.log(selectedCity);
+
+													await getCityById(
+														selectedCity.id
+													);
+												}}
+											>
+												Falsche Info melden
+											</div>
+										</div>
+									</div>
+								)}
+							</>
+						)}
+
+						<Form
+							selectedCity={selectedCity}
+							doReset={isResetForm}
+							onSubmit={onSubmit}
+							onClose={handleOnClose}
+						/>
+					</div>
+				)}
 			</div>
 		</dialog>
 	);
