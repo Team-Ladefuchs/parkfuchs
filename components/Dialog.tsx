@@ -153,7 +153,7 @@ export default function Dialog({
 						aria-label="Parkfuchs Logo"
 						className="relative left-2 top-[-9px] select-none"
 					/>
-					<div className="flex w-full p-2 pt-4 ml-1">
+					<div className="w-full p-2 pt-4 ml-1 relative">
 						<h3 className="text-xl font-semibold text-gray-900">
 							{editCity
 								? "Falsche Info melden"
@@ -161,16 +161,11 @@ export default function Dialog({
 						</h3>
 						<button
 							type="button"
-							role="button"
 							onClick={() => handleOnClose()}
 							aria-label="dialog schließen"
-							className="text-gray-600 bg-transparent hover:bg-darkGreen hover:text-gray-900 rounded-lg text-md p-1.5 ml-auto relative bottom-[1px] left-1"
-							data-modal-toggle="defaultModal"
+							className="text-gray-600 bg-transparent hover:text-gray-900 rounded-lg text-md p-1.5 m-1 ml-auto absolute top-[-4px] right-0"
 						>
-							<FontAwesomeIcon
-								icon={faXmark}
-								className="w-5 h-5"
-							/>
+							<FontAwesomeIcon icon={faXmark} size="xl" />
 						</button>
 					</div>
 				</header>
