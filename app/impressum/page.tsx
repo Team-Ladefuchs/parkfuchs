@@ -193,7 +193,7 @@ export default function Impressum() {
 					<h2 id="m3" className="font-bold mb-2">
 						Verantwortlicher
 					</h2>
-					<address className="font-normal">
+					<address className="!font-normal">
 						Malik Aziz<br></br>
 						Stephanstraße 43-45<br></br>
 						52064 Aachen
@@ -211,6 +211,7 @@ export default function Impressum() {
 						<Link
 							href="https://parkfuchs.app/impressum"
 							target="_blank"
+							className="underline"
 						>
 							https://parkfuchs.app/impressum
 						</Link>
@@ -927,7 +928,7 @@ export default function Impressum() {
 					<div className="seal mt-4">
 						<Link
 							href="https://github.com/zauberware/postal-codes-json-xml-csv"
-							className="hover:underline flex items-center"
+							className="underline flex items-center"
 						>
 							<FontAwesomeIcon
 								icon={faCreativeCommons}
