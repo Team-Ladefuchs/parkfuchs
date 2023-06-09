@@ -60,31 +60,31 @@ export default function SearchInput({
 				icon={faMagnifyingGlass}
 				className="w-[17px] h-[17px] absolute left-[0.85rem] top-3.5"
 			/>
-			<div>
-				<input
-					ref={inputRef}
-					type="type"
-					autoComplete="off"
-					autoCorrect="off"
-					autoFocus
-					role="search"
-					aria-label="Eingabefeld zum suchen nach einem Ort via Name oder Postleitzahl"
-					onChange={(e) => {
-						const text = e.target.value;
-						setValue(text);
-					}}
-					value={value}
-					className="p-2 pl-10 rounded-lg border text-lg border-gray-200 bg-white focus:bg-white focus:ring-2 focus:ring-green focus:border-green w-full focus:outline-none"
-					placeholder="Ort oder Postleitzahl"
-				/>
 
-				<button onClick={() => getLocation()}>
-					<FontAwesomeIcon
-						icon={faLocationCrosshairs}
-						className="w-5 h-5 absolute right-2.5 top-3.5 cursor-pointer"
-					/>
-				</button>
-			</div>
+			<input
+				ref={inputRef}
+				type="type"
+				autoComplete="off"
+				autoCorrect="off"
+				autoFocus
+				role="search"
+				aria-label="Eingabefeld zum suchen nach einem Ort via Name oder Postleitzahl"
+				onChange={(e) => {
+					const text = e.target.value;
+					setValue(text);
+				}}
+				value={value}
+				className="p-2 pl-10 rounded-lg border text-lg border-gray-200 bg-white focus:bg-white focus:ring-2 focus:ring-green focus:border-green w-full focus:outline-none"
+				placeholder="Ort oder Postleitzahl"
+			/>
+
+			<button>
+				<FontAwesomeIcon
+					onClick={() => getLocation()}
+					icon={faLocationCrosshairs}
+					className="w-5 h-5 absolute right-2.5 top-1.5 p-2 cursor-pointer "
+				/>
+			</button>
 		</div>
 	);
 }
