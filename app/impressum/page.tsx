@@ -8,7 +8,7 @@ export default function Impressum() {
 	return (
 		<>
 			<style>{style}</style>
-			<div className="impressum mx-auto pb-20  max-w-lg  max-md:mx-4">
+			<div className="impressum mx-auto pb-20 max-w-xl  max-md:mx-4">
 				<div className="flex mb-12">
 					<Link
 						className="flex gap-3 items-center underline"
@@ -132,34 +132,58 @@ export default function Impressum() {
 							</Link>
 						</li>
 						<li>
-							<Link prefetch={false} className="index-link" href="#m182">
+							<Link
+								prefetch={false}
+								className="index-link"
+								href="#m182"
+							>
 								Kontakt- und Anfragenverwaltung
 							</Link>
 						</li>
 						<li>
-							<Link prefetch={false} className="index-link" href="#m136">
+							<Link
+								prefetch={false}
+								className="index-link"
+								href="#m136"
+							>
 								Präsenzen in sozialen Netzwerken (Social Media)
 							</Link>
 						</li>
 						<li>
-							<Link prefetch={false} className="index-link" href="#m328">
+							<Link
+								prefetch={false}
+								className="index-link"
+								href="#m328"
+							>
 								Plugins und eingebettete Funktionen sowie
 								Inhalte
 							</Link>
 						</li>
 						<li>
-							<Link prefetch={false} className="index-link" href="#m15">
+							<Link
+								prefetch={false}
+								className="index-link"
+								href="#m15"
+							>
 								Änderung und Aktualisierung der
 								Datenschutzerklärung
 							</Link>
 						</li>
 						<li>
-							<Link prefetch={false} className="index-link" href="#m10">
+							<Link
+								prefetch={false}
+								className="index-link"
+								href="#m10"
+							>
 								Rechte der betroffenen Personen
 							</Link>
 						</li>
 						<li>
-							<Link prefetch={false} className="index-link" href="#m42">
+							<Link
+								prefetch={false}
+								className="index-link"
+								href="#m42"
+							>
 								Begriffsdefinitionen
 							</Link>
 						</li>
@@ -520,7 +544,7 @@ export default function Impressum() {
 						Kontaktanfragen und etwaiger angefragter Maßnahmen
 						erforderlich ist.
 					</p>
-					<ul className="m-elements">
+					<ul className="m-elements list-disc">
 						<li>
 							<strong>Verarbeitete Datenarten:</strong>{" "}
 							Kontaktdaten (z.B. E-Mail, Telefonnummern);
@@ -597,7 +621,7 @@ export default function Impressum() {
 						geben. Sollten Sie dennoch Hilfe benötigen, dann können
 						Sie sich an uns wenden.
 					</p>
-					<ul className="m-elements">
+					<ul className="m-elements list-disc">
 						<li>
 							<strong>Verarbeitete Datenarten:</strong>{" "}
 							Kontaktdaten (z.B. E-Mail, Telefonnummern);
@@ -627,7 +651,7 @@ export default function Impressum() {
 							Verfahren und Diensten:
 						</strong>
 					</p>
-					<ul className="m-elements">
+					<ul className="m-elements list-disc">
 						<li>
 							<strong>Twitter: </strong>Soziales Netzwerk;{" "}
 							<strong>Dienstanbieter:</strong> Twitter
@@ -692,7 +716,7 @@ export default function Impressum() {
 						solchen Informationen aus anderen Quellen verbunden
 						werden.
 					</p>
-					<ul className="m-elements">
+					<ul className="m-elements list-disc">
 						<li>
 							<strong>Verarbeitete Datenarten:</strong>{" "}
 							Nutzungsdaten (z.B. besuchte Webseiten, Interesse an
@@ -903,7 +927,7 @@ export default function Impressum() {
 					<div className="seal mt-4">
 						<Link
 							href="https://github.com/zauberware/postal-codes-json-xml-csv"
-							className="hover:underline"
+							className="hover:underline flex items-center"
 						>
 							<FontAwesomeIcon
 								icon={faCreativeCommons}
