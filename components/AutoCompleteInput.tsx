@@ -20,7 +20,7 @@ export default function AutoCompleteInput({
 	useEffect(() => {
 		if (searchQuery) {
 			autoCompleteCities(searchQuery).then(() =>
-				console.log("init fetching")
+				console.log("[AutoCompleteInput] init fetching")
 			);
 		} else {
 			setResults([]);

@@ -61,7 +61,11 @@ export default function Dialog({
 		if (!isOpen) {
 			return;
 		}
-		setSearchQuery(initQuery);
+		console.log("init query", initQuery);
+
+		if (initQuery) {
+			setSearchQuery(initQuery);
+		}
 	}, [initQuery, isOpen]);
 
 	useEffect(() => {
