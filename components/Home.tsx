@@ -27,7 +27,7 @@ export default function Home({
 	const [searchQuery, setSearchQuery] = useState("");
 
 	const handleOnClose = () => {
-		setSearchQuery("");
+		// setSearchQuery("");
 		setResults([]);
 		setOpenDialog(false);
 	};

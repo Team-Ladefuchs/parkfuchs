@@ -1,4 +1,4 @@
-import PocketBase, { RecordService } from "pocketbase";
+import PocketBase, { ListResult, RecordService } from "pocketbase";
 import type {
 	CityRepo,
 	CityStats,
@@ -45,6 +45,21 @@ function toRecordToInboxCity(row: InboxCity): InboxCity {
 	return ret;
 }
 
+function parseSearch(
+	searchQuery: string
+): null | { postcode: string; cityName: string } {
+	const parts = searchQuery.split(",");
+
+	if (parts.length > 1) {
+		return {
+			postcode: parts[0]?.trim() ?? "",
+			cityName: parts[1]?.trim() ?? "",
+		};
+	}
+
+	return null;
+}
+
 export async function getNewestEnabledInboxCities(
 	maxResults: number
 ): Promise<InboxCity[]> {
@@ -88,13 +103,30 @@ export async function search(
 ): Promise<InboxCity[]> {
 	try {
 		const searchQuery = query ?? "";
-		const resultList = await pocketBase
-			.collection("cityInbox")
-			.getList<InboxCity>(1, maxResults, {
-				filter: `approved = true && (city.name ~ '${searchQuery.trim()}%' || city.postcodes ~ '${searchQuery}')`,
-				expand: "city",
-				sort: "-updated,+city",
-			});
+
+		const complexQuery = parseSearch(searchQuery);
+
+		const collection = pocketBase.collection("cityInbox");
+
+		if (complexQuery) {
+			const { postcode, cityName } = complexQuery;
+			const resultList = await collection.getList<InboxCity>(
+				1,
+				maxResults,
+				{
+					filter: `approved = true && (city.name ~ '${cityName}%' && city.postcodes ~ '${postcode}')`,
+					expand: "city",
+					sort: "-updated,+city",
+				}
+			);
+			return resultList.items.map(toRecordToInboxCity);
+		}
+
+		const resultList = await collection.getList<InboxCity>(1, maxResults, {
+			filter: `approved = true && (city.name ~ '${searchQuery.trim()}%' || city.postcodes ~ '${searchQuery}')`,
+			expand: "city",
+			sort: "-updated,+city",
+		});
 
 		return resultList.items.map(toRecordToInboxCity);
 	} catch (error) {
@@ -126,11 +158,22 @@ export async function autocomplete(
 ): Promise<ResultCity[]> {
 	try {
 		const searchQuery = query ?? "";
-		const results = await pocketBase
-			.collection("cityRepo")
-			.getList(1, maxResults, {
+		const collection = pocketBase.collection("cityRepo");
+
+		const complexQuery = parseSearch(searchQuery);
+
+		let results;
+
+		if (complexQuery) {
+			const { postcode, cityName } = complexQuery;
+			results = await collection.getList(1, maxResults, {
+				filter: `name ~ '${cityName}%' && postcodes ~ '${postcode}'`,
+			});
+		} else {
+			results = await collection.getList(1, maxResults, {
 				filter: `name ~ '${searchQuery.trim()}%' || postcodes ~ '${searchQuery}'`,
 			});
+		}
 
 		const cityInbox = pocketBase.collection("cityInbox");
 
