@@ -69,7 +69,7 @@ export default function SearchInput({
 				onChange={(e) => {
 					onChange(e.target.value);
 				}}
-				className="p-2 pl-10 rounded-lg border text-lg border-gray-200 bg-white focus:bg-white focus:ring-2 focus:ring-green focus:border-green w-full focus:outline-none"
+				className="p-2 px-10 rounded-lg border text-lg border-gray-200 bg-white focus:bg-white focus:ring-2 focus:ring-green focus:border-green w-full focus:outline-none"
 				placeholder="Ort oder Postleitzahl"
 			/>
 
@@ -77,7 +77,7 @@ export default function SearchInput({
 				<FontAwesomeIcon
 					onClick={() => getLocation()}
 					icon={faLocationCrosshairs}
-					className="w-5 h-5 absolute right-2.5 top-1.5 p-2 cursor-pointer "
+					className="w-5 h-5 absolute right-1 top-1.5 p-2 cursor-pointer "
 				/>
 			</button>
 		</div>
