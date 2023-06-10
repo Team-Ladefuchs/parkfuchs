@@ -77,7 +77,7 @@ export default function SearchInput({
 				<FontAwesomeIcon
 					onClick={() => getLocation()}
 					icon={faLocationCrosshairs}
-					className="w-5 h-5 absolute right-1 top-1.5 p-2 cursor-pointer "
+					className="w-5 h-5 absolute right-1 top-[5px] p-2 cursor-pointer "
 				/>
 			</button>
 		</div>

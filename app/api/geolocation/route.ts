@@ -1,7 +1,7 @@
 import axios from "axios";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function c(request: NextRequest) {
+export async function POST(request: NextRequest) {
 	try {
 		const { latitude, longitude } = await request.json();
 
