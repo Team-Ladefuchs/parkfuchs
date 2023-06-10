@@ -42,7 +42,8 @@ export default function Dialog({
 	const { editCity, setEditCity } = useContext(AppContext);
 
 	const [isResetForm, setIsResetForm] = useState(false);
-	const { setSearchQuery } = useContext(AppContext);
+
+	const [search, setSearch] = useState("");
 
 	const getCityById = async (id: string) => {
 		try {
@@ -61,10 +62,9 @@ export default function Dialog({
 		if (!isOpen) {
 			return;
 		}
-		console.log("init query", initQuery);
 
 		if (initQuery) {
-			setSearchQuery(initQuery);
+			setSearch(initQuery);
 		}
 	}, [initQuery, isOpen]);
 
@@ -128,6 +128,7 @@ export default function Dialog({
 	const resetFields = () => {
 		setSelectedCity(null);
 		setEditCity(null);
+		setSearch("");
 		setIsResetForm(true);
 	};
 
@@ -179,7 +180,7 @@ export default function Dialog({
 						{!editCity && (
 							<>
 								<AutoCompleteInput
-									initQuery={initQuery}
+									initQuery={search}
 									onSelectedCity={handleSelectedCity}
 								/>
 								{selectedCity?.exists && (

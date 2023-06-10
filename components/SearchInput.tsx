@@ -4,25 +4,31 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
-import { useContext, useEffect, useRef, useState } from "react";
-import { AppContext } from "../context/appContext";
-
+import { useEffect, useRef, useState } from "react";
 export interface Properties {
 	className?: string;
 	onChange: (value: string) => void;
+	initValue?: string;
 }
 
 export default function SearchInput({
 	onChange,
 	className = "",
+	initValue = "",
 }: Properties): JSX.Element {
-	const { searchQuery, setSearchQuery } = useContext(AppContext);
-	const [value, setValue] = useState(searchQuery);
+	const inputRef = useRef<HTMLInputElement | null>(null);
+
+	useEffect(() => {
+		if (inputRef.current) {
+			inputRef.current.value = initValue;
+		}
+	}, [initValue]);
 
 	const getLocation = () => {
 		if (!navigator.geolocation) {
 			return;
 		}
+
 		navigator.geolocation.getCurrentPosition(async (position) => {
 			const { latitude, longitude } = position.coords;
 			try {
@@ -35,25 +41,16 @@ export default function SearchInput({
 					return;
 				}
 
-				setSearchQuery(`${data.postalCode}, ${data.cityName}`);
+				if (inputRef.current) {
+					onChange(`${data.postalCode}, ${data.cityName}`);
+					inputRef.current.value = `${data.postalCode}, ${data.cityName}`;
+				}
 			} catch (error) {
 				console.error("[geolocation]", error);
 			}
 		});
 	};
 
-	useEffect(() => {
-		setValue(searchQuery ?? "");
-		return () => {
-			setValue("");
-		};
-	}, [searchQuery]);
-
-	useEffect(() => {
-		onChange(value);
-	}, [value]);
-
-	const inputRef = useRef<HTMLInputElement | null>(null);
 	return (
 		<div className={`relative ${className}`}>
 			<FontAwesomeIcon
@@ -70,10 +67,8 @@ export default function SearchInput({
 				role="search"
 				aria-label="Eingabefeld zum suchen nach einem Ort via Name oder Postleitzahl"
 				onChange={(e) => {
-					const text = e.target.value;
-					setValue(text);
+					onChange(e.target.value);
 				}}
-				value={value}
 				className="p-2 pl-10 rounded-lg border text-lg border-gray-200 bg-white focus:bg-white focus:ring-2 focus:ring-green focus:border-green w-full focus:outline-none"
 				placeholder="Ort oder Postleitzahl"
 			/>

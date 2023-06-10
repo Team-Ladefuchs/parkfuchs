@@ -1,9 +1,8 @@
 import axios from "axios";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useDebounce } from "../functions/debounce";
 import SearchInput from "./SearchInput";
 import { SlimCity } from "./Dialog";
-import { AppContext } from "../context/appContext";
 
 export interface Properties {
 	onSelectedCity: (city: SlimCity) => void;
@@ -12,38 +11,49 @@ export interface Properties {
 
 export default function AutoCompleteInput({
 	onSelectedCity,
+	initQuery = "",
 }: Properties): JSX.Element {
-	const { searchQuery } = useContext(AppContext);
-
 	const [results, setResults] = useState<Array<SlimCity>>([]);
 
+	const [isSearching, setIsSearching] = useState(false);
+
 	useEffect(() => {
-		if (searchQuery) {
-			autoCompleteCities(searchQuery).then(() =>
+		if (isSearching) {
+			return;
+		}
+
+		if (initQuery) {
+			autoCompleteCities(initQuery).then(() =>
 				console.log("[AutoCompleteInput] init fetching")
 			);
 		} else {
 			setResults([]);
 		}
 		return () => {
+			setIsSearching(false);
 			setResults([]);
 		};
-	}, [searchQuery]);
+	}, [initQuery]);
 
 	const autoCompleteCities = async (searchTerm: string) => {
 		if (searchTerm.length < 2) {
 			setResults([]);
 			return;
 		}
+		setIsSearching(true);
 		const response = await axios.get(`/api/autocomplete/${searchTerm}`);
 		setResults(response.data);
+		setIsSearching(false);
 	};
 
 	const debouncedAutoCompleteCities = useDebounce(autoCompleteCities, 110);
 
 	return (
 		<>
-			<SearchInput onChange={debouncedAutoCompleteCities} />
+			<SearchInput
+				onChange={debouncedAutoCompleteCities}
+				initValue={initQuery}
+			/>
 			{results.length > 0 && (
 				<ul className="bg-neutral-100 rounded-lg w-full max-h-80 overflow-y-auto list">
 					{results.map((item) => {
