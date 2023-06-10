@@ -1,7 +1,7 @@
 import axios from "axios";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function POST(request: NextRequest) {
+export async function c(request: NextRequest) {
 	try {
 		const { latitude, longitude } = await request.json();
 
@@ -13,16 +13,18 @@ export async function POST(request: NextRequest) {
 				{ status: 400 }
 			);
 		}
-		// in meter
-		const radius = 1500;
-
-		const url = `https://api.tomtom.com/search/2/reverseGeocode/crossStreet/${latitude},${longitude}.json?limit=1&spatialKeys=false&radius=${radius}&allowFreeformNewLine=false&view=Unified&key=${process.env.TOMTOM_KEY}`;
-
-		const response = await axios.get(encodeURI(url));
+		// radius in meter
+		const response = await axios.get(
+			encodeURI(
+				`https://api.tomtom.com/search/2/reverseGeocode/crossStreet/${latitude},${longitude}.json?limit=1&spatialKeys=false&radius=1500&allowFreeformNewLine=false&view=Unified&key=${process.env.TOMTOM_KEY}`
+			)
+		);
 
 		if (!response.data.addresses.length) {
 			return NextResponse.json(
-				{ msg: `location wth ${latitude},${longitude} was not found` },
+				{
+					msg: `location wth latitude ${latitude}, longitude ${longitude} was not found`,
+				},
 				{ status: 404 }
 			);
 		}
