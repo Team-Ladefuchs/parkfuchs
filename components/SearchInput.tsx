@@ -79,7 +79,7 @@ export default function SearchInput({
 				placeholder="Ort oder Postleitzahl"
 			/>
 
-			<button className="active:!outline-none">
+			<button className="active:outline-none webkit-highlight-fix">
 				<FontAwesomeIcon
 					onClick={() => getLocation()}
 					icon={faLocationCrosshairs}
