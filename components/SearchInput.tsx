@@ -19,9 +19,14 @@ export default function SearchInput({
 	const inputRef = useRef<HTMLInputElement | null>(null);
 
 	useEffect(() => {
-		if (inputRef.current) {
-			inputRef.current.value = initValue;
+		if (!inputRef.current) {
+			return;
 		}
+		if (inputRef.current?.value == initValue) {
+			return;
+		}
+
+		inputRef.current.value = initValue;
 	}, [initValue]);
 
 	const getLocation = () => {
