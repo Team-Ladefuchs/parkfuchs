@@ -45,7 +45,7 @@ async function shareCity(
 			title: "Parkfuchs",
 			text: nonePrivileges
 				? undefined
-				: "hey hier in meiner stadt kannste umsonst parken!",
+				: "Guck mal, hier gibt es ein paar Vorteile für Elektro-Autos!",
 			url: encodeURI(
 				`${location.origin}?query=${postcodes[0] ?? ""}, ${name}`
 			),
@@ -144,7 +144,7 @@ export default function CityList({
 									{shareIsSupported &&
 										isSelected(item.id) && (
 											<button
-												className="p-2 active:!outline-none"
+												className="p-2 active:!outline-none  webkit-highlight-fix"
 												onClick={async (event) => {
 													event.stopPropagation();
 													await shareCity(
