@@ -75,7 +75,7 @@ export default function CityList({
 		if (!searchParams.get("query")) {
 			return;
 		}
-		if (items.length > 0) {
+		if (items.length > 1) {
 			setSelectedID("");
 			return;
 		}
