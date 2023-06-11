@@ -144,7 +144,7 @@ export default function CityList({
 									{shareIsSupported &&
 										isSelected(item.id) && (
 											<button
-												className="p-2"
+												className="p-2 active:!outline-none"
 												onClick={async (event) => {
 													event.stopPropagation();
 													await shareCity(

@@ -61,7 +61,7 @@ export default function SearchInput({
 		<div className={`relative ${className}`}>
 			<FontAwesomeIcon
 				icon={faMagnifyingGlass}
-				className="w-[17px] h-[17px] absolute left-[0.85rem] top-3.5"
+				className="w-[18px] h-[18px] absolute left-[0.85rem] top-3.5"
 			/>
 
 			<input
@@ -79,11 +79,12 @@ export default function SearchInput({
 				placeholder="Ort oder Postleitzahl"
 			/>
 
-			<button>
+			<button className="active:!outline-none">
 				<FontAwesomeIcon
 					onClick={() => getLocation()}
 					icon={faLocationCrosshairs}
-					className="w-5 h-5 absolute right-1 top-[5px] p-2 cursor-pointer "
+					size="lg"
+					className="absolute right-1 top-[5px] p-2 cursor-pointer "
 				/>
 			</button>
 		</div>
