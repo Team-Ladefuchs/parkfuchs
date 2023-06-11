@@ -11,6 +11,7 @@ import Dialog from "./Dialog";
 import LandingBox from "./LandingBox";
 import SearchInput from "./SearchInput";
 import { AppContextProvider } from "../context/appContext";
+import { useSearchParams } from "next/navigation";
 
 export default function Home({
 	cities,
@@ -23,6 +24,8 @@ export default function Home({
 
 	const [results, setResults] = useState<Array<InboxCity>>(cities);
 	const [isLoading, setIsLoading] = useState(false);
+
+	const searchParams = useSearchParams();
 
 	const [searchQuery, setSearchQuery] = useState("");
 
@@ -68,6 +71,7 @@ export default function Home({
 					<div className="flex gap-5 max-md:gap-2 items-center justify-between max-md:flex-col">
 						<SearchInput
 							className="grow max-md:w-full"
+							initValue={searchParams.get("query") ?? ""}
 							onChange={debouncedOnCitySearch}
 						/>
 						<div className="text-neutral-600 uppercase tracking-wide font-semibold text-sm">

@@ -1,18 +1,19 @@
-import { InboxCity } from "../db/types";
+import { CityRepo, InboxCity } from "../db/types";
 import InfoSection from "./InfoSection";
 import Url from "./Link";
 import Linkify from "linkify-react";
 import Link from "next/link";
 import { formatLink } from "../functions/utils";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AppContext } from "../context/appContext";
-
+import { faArrowUpRightFromSquare } from "@fortawesome/free-solid-svg-icons";
 import germanStrings from "react-timeago/lib/language-strings/de";
 import buildFormatter from "react-timeago/lib/formatters/buildFormatter";
 
 const formatter = buildFormatter(germanStrings);
 
 import TimeAgo from "react-timeago";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export interface Properties {
 	items: InboxCity[];
@@ -31,6 +32,22 @@ function renderLink({ attributes, content }): JSX.Element {
 	);
 }
 
+async function shareCity({ postcodes, name }: CityRepo) {
+	if (!navigator.share) {
+		return;
+	}
+	try {
+		await navigator.share({
+			title: "Parkfuchs",
+			url: encodeURI(
+				`${location.origin}?query=${postcodes[0] ?? ""}, ${name}`
+			),
+		});
+	} catch (error) {
+		console.error("[shareCity]", error);
+	}
+}
+
 const options = {
 	render: renderLink,
 	className:
@@ -43,8 +60,20 @@ export default function CityList({
 	isEmpty = false,
 	onOpenDialog: openDialog,
 }: Properties): JSX.Element {
+	const [shareIsSupported] = useState("share" in navigator);
 	const [selectedID, setSelectedID] = useState("");
 	const { setEditCity } = useContext(AppContext);
+
+	const isSelected = (id: string) => {
+		return selectedID === id;
+	};
+
+	useEffect(() => {
+		if (items.length === 1) {
+			setSelectedID(items[0]!.id);
+		}
+	}, [items]);
+
 	return (
 		<div className={`accordion ${className}`} id="accordionList">
 			{isEmpty && (
@@ -61,37 +90,58 @@ export default function CityList({
 						className="accordion-item-wrapper bg-cardBg border border-gray-200 w-full"
 					>
 						<h2 className="accordion-header mb-0">
-							<button
+							<header
 								className={`accordion-button 
 						relative block items-center w-full py-4 px-5
 						text-base text-black text-left
 						bg-white border-0 rounded-none
 						transition focus:outline-none ${
-							selectedID === item.id
-								? "accordion-button-open"
-								: ""
+							isSelected(item.id) ? "accordion-button-open" : ""
 						}`}
-								type="button"
+								role="button"
 								aria-label="Ort ausklappen Button"
 								onClick={() => {
-									if (selectedID === item.id) {
+									if (isSelected(item.id)) {
 										setSelectedID("");
 									} else {
 										setSelectedID(item.id);
 									}
 								}}
 							>
-								<p className="text-black card-title">
-									{item.cityRef.name}
-								</p>
-								<p className="text-neutral-500">
-									{item.cityRef.state}
-								</p>
-							</button>
+								<div className="flex items-center justify-between">
+									<div>
+										<p className="text-black card-title">
+											{item.cityRef.name}
+										</p>
+										<p className="text-neutral-500">
+											{item.cityRef.state}
+										</p>
+									</div>
+									{shareIsSupported &&
+										isSelected(item.id) && (
+											<button
+												className="p-2"
+												onClick={async (event) => {
+													event.stopPropagation();
+													await shareCity(
+														item.cityRef
+													);
+												}}
+											>
+												<FontAwesomeIcon
+													icon={
+														faArrowUpRightFromSquare
+													}
+													size="lg"
+												/>
+											</button>
+										)}
+								</div>
+							</header>
 						</h2>
 						<div
 							className={`accordion-content ${
-								selectedID === item.id
+								isSelected(item.id)
 									? "accordion-content-open"
 									: ""
 							}`}
