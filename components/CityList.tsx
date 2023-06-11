@@ -70,6 +70,7 @@ export default function CityList({
 	const searchParams = useSearchParams();
 
 	const [shareIsSupported] = useState("share" in navigator);
+	const [disableAutoSelect, setDisableAutoSelect] = useState(false);
 	const [selectedID, setSelectedID] = useState("");
 	const { setEditCity } = useContext(AppContext);
 
@@ -78,7 +79,7 @@ export default function CityList({
 	};
 
 	useEffect(() => {
-		if (!searchParams.get("query")) {
+		if (!searchParams.get("query") || disableAutoSelect) {
 			return;
 		}
 		if (items.length > 1) {
@@ -89,10 +90,12 @@ export default function CityList({
 			return;
 		}
 		const { id } = items[0];
+
 		if (id == selectedID) {
 			return;
 		}
 		setSelectedID(id);
+		setDisableAutoSelect(true);
 	}, [items]);
 
 	return (
