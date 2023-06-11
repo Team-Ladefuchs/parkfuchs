@@ -75,10 +75,14 @@ export default function CityList({
 		if (!searchParams.get("query")) {
 			return;
 		}
-		if (items.length !== 1) {
+		if (items.length > 0) {
+			setSelectedID("");
 			return;
 		}
-		const { id } = items[0]!;
+		if (!items[0]?.id) {
+			return;
+		}
+		const { id } = items[0];
 		if (id == selectedID) {
 			return;
 		}
