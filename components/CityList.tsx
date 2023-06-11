@@ -14,6 +14,7 @@ const formatter = buildFormatter(germanStrings);
 
 import TimeAgo from "react-timeago";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useSearchParams } from "next/navigation";
 
 export interface Properties {
 	items: InboxCity[];
@@ -60,6 +61,8 @@ export default function CityList({
 	isEmpty = false,
 	onOpenDialog: openDialog,
 }: Properties): JSX.Element {
+	const searchParams = useSearchParams();
+
 	const [shareIsSupported] = useState("share" in navigator);
 	const [selectedID, setSelectedID] = useState("");
 	const { setEditCity } = useContext(AppContext);
@@ -69,9 +72,17 @@ export default function CityList({
 	};
 
 	useEffect(() => {
-		if (items.length === 1) {
-			setSelectedID(items[0]!.id);
+		if (!searchParams.get("query")) {
+			return;
 		}
+		if (items.length !== 1) {
+			return;
+		}
+		const { id } = items[0]!;
+		if (id == selectedID) {
+			return;
+		}
+		setSelectedID(id);
 	}, [items]);
 
 	return (
