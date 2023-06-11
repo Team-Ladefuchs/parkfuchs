@@ -154,7 +154,6 @@ export default function CityList({
 													icon={
 														faArrowUpRightFromSquare
 													}
-													size="lg"
 												/>
 											</button>
 										)}
