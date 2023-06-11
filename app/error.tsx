@@ -4,6 +4,7 @@ import fuchsLog from "../public/parkfuchs.svg";
 import Image from "next/image";
 
 import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 export default function Error({
 	error,
@@ -16,6 +17,8 @@ export default function Error({
 		console.error("[error]", error.message, error);
 	}, [error]);
 
+	const router = useRouter();
+
 	return (
 		<div className="h-full grid justify-items-center mt-28 gap-3">
 			<Image src={fuchsLog} alt="Parkfuchs logo" height={100} />
@@ -25,7 +28,7 @@ export default function Error({
 			</p>
 			<button
 				className="bg-green max-md:justify-center gap-2 flex items-center text-lg rounded-lg hover:bg-darkGreen text-black w-max py-2 px-4 justify-self-start mx-auto"
-				onClick={() => reset()}
+				onClick={() => router.refresh()}
 			>
 				Probier es nochmal
 			</button>
