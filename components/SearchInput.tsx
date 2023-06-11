@@ -27,6 +27,7 @@ export default function SearchInput({
 		}
 
 		inputRef.current.value = initValue;
+		onChange(initValue);
 	}, [initValue]);
 
 	const getLocation = () => {
