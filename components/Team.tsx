@@ -63,7 +63,7 @@ export default function Team() {
 									href={member.social.url}
 									prefetch={false}
 									target="_blank"
-									className="hover:underline italic"
+									className="italic"
 								>
 									{member.social.text}
 								</Link>

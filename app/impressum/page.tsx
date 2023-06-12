@@ -11,11 +11,8 @@ export default function Impressum() {
 			<style>{style}</style>
 
 			<div className="impressum mx-auto pb-20 max-w-xl max-md:mx-4 overflow-x-none">
-				<div className="flex mb-12">
-					<Link
-						className="flex gap-3 items-center underline"
-						href="/"
-					>
+				<div className="flex mb-8">
+					<Link className="flex gap-3 items-center" href="/">
 						<FontAwesomeIcon
 							icon={faArrowLeft}
 							className="w-5 h-5"
@@ -25,7 +22,7 @@ export default function Impressum() {
 				</div>
 				<h1 className="text-3xl mb-6">Das Team</h1>
 				<Team />
-				<h1 className="text-3xl mt-12">Datenschutzerklärung</h1>
+				<h1 className="text-3xl mt-10">Datenschutzerklärung</h1>
 				<section className="mt-6">
 					<h2 id="m14" className="text-2xl mb-2">
 						Einleitung
