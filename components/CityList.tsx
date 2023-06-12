@@ -33,19 +33,16 @@ function renderLink({ attributes, content }): JSX.Element {
 	);
 }
 
-async function shareCity(
-	{ postcodes, name }: CityRepo,
-	nonePrivileges: boolean
-) {
+async function shareCity({ postcodes, name }: CityRepo, hasExtras: boolean) {
 	if (!navigator.share) {
 		return;
 	}
 	try {
 		await navigator.share({
 			title: "Parkfuchs",
-			text: nonePrivileges
-				? undefined
-				: "Guck mal, hier gibt es ein paar Vorteile für Elektro-Autos!",
+			text: hasExtras
+				? "Guck mal, hier gibt es ein paar Vorteile für Elektro-Autos!"
+				: undefined,
 			url: encodeURI(
 				`${location.origin}?query=${postcodes[0] ?? ""}, ${name}`
 			),
@@ -149,7 +146,9 @@ export default function CityList({
 													event.stopPropagation();
 													await shareCity(
 														item.cityRef,
-														item.nonePrivileges
+														item.freeParking ||
+															item.whileCharging ||
+															item.useBusLane
 													);
 												}}
 											>
