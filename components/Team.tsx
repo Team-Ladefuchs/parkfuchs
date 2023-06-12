@@ -32,7 +32,7 @@ const members = [
 	{
 		name: "Sven",
 		title: "Moderatorfuchs",
-		image: "sven2.jpg",
+		image: "sven.jpg",
 		social: {
 			url: "https://chaos.social/@svenraskin",
 			text: "@svenraskin@chaos.social",
