@@ -40,7 +40,7 @@ export default async function Index() {
 						className="hover:underline"
 						prefetch={false}
 					>
-						Impressum
+						Impressum & Team
 					</Link>
 				</p>
 			</footer>
