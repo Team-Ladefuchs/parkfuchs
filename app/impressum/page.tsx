@@ -3,12 +3,14 @@ import { faCreativeCommons } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
 import { style } from "../../styles/Impressum.Module";
+import Team from "../../components/Team";
 
 export default function Impressum() {
 	return (
 		<>
 			<style>{style}</style>
-			<div className="impressum mx-auto pb-20 max-w-xl  max-md:mx-4">
+
+			<div className="impressum mx-auto pb-20 max-w-xl max-md:mx-4 overflow-x-none">
 				<div className="flex mb-12">
 					<Link
 						className="flex gap-3 items-center underline"
@@ -21,7 +23,9 @@ export default function Impressum() {
 						<div>zurück</div>
 					</Link>
 				</div>
-				<h1 className="text-3xl">Datenschutzerklärung</h1>
+				<h1 className="text-3xl mb-6">Das Team</h1>
+				<Team />
+				<h1 className="text-3xl mt-12">Datenschutzerklärung</h1>
 				<section className="mt-6">
 					<h2 id="m14" className="text-2xl mb-2">
 						Einleitung
@@ -189,6 +193,7 @@ export default function Impressum() {
 						</li>
 					</ul>
 				</section>
+
 				<section className="mt-6">
 					<h2 id="m3" className="font-bold mb-2">
 						Verantwortlicher
@@ -198,14 +203,14 @@ export default function Impressum() {
 						Stephanstraße 43-45<br></br>
 						52064 Aachen
 					</address>
-					<p className="mt-1">
-						E-Mail-Adresse:{" "}
+					<div className="mt-1">
+						<p>pE-Mail-Adresse:</p>
 						<p className="mb-1">
 							<Link href="mailto:malik@ladefuchs.app">
 								malik@ladefuchs.app
 							</Link>
 						</p>
-					</p>
+					</div>
 					Impressum:{" "}
 					<div>
 						<Link
@@ -256,7 +261,6 @@ export default function Impressum() {
 						<li>Informationstechnische Infrastruktur.</li>
 					</ul>
 				</section>
-
 				<section className="mt-6">
 					<h3 id="m13">Maßgebliche Rechtsgrundlagen</h3>
 					<p>
@@ -387,6 +391,7 @@ export default function Impressum() {
 						).
 					</p>
 				</section>
+
 				<section className="mt-6">
 					<h2 id="m12">Löschung von Daten</h2>
 					<p>
@@ -413,6 +418,7 @@ export default function Impressum() {
 						die für die jeweiligen Verarbeitungen vorrangig gelten.
 					</p>
 				</section>
+
 				<section className="mt-6">
 					<h2 id="m225">
 						Bereitstellung des Onlineangebotes und Webhosting
@@ -534,6 +540,7 @@ export default function Impressum() {
 						</li>
 					</ul>
 				</section>
+
 				<section className="mt-6">
 					<h2 id="m182">Kontakt- und Anfragenverwaltung</h2>
 					<p>
@@ -571,6 +578,7 @@ export default function Impressum() {
 						</li>
 					</ul>
 				</section>
+
 				<section className="mt-6">
 					<h2 id="m136">
 						Präsenzen in sozialen Netzwerken (Social Media)
@@ -680,6 +688,7 @@ export default function Impressum() {
 						</li>
 					</ul>
 				</section>
+
 				<section className="mt-6">
 					<h2 id="m328">
 						Plugins und eingebettete Funktionen sowie Inhalte
@@ -761,6 +770,7 @@ export default function Impressum() {
 						</li>
 					</ul>
 				</section>
+
 				<section className="mt-6">
 					<h2 id="m15">
 						Änderung und Aktualisierung der Datenschutzerklärung
@@ -862,6 +872,7 @@ export default function Impressum() {
 						</li>
 					</ul>
 				</section>
+
 				<section className="mt-6">
 					<h2 id="m42">Begriffsdefinitionen</h2>
 					<p>
@@ -924,6 +935,7 @@ export default function Impressum() {
 						</Link>
 					</div>
 				</section>
+
 				<section>
 					<div className="seal mt-4">
 						<Link
