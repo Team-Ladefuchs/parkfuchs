@@ -14,7 +14,7 @@ export const style = `. ul {
 	line-height: 1.75rem /* 28px */;
 	margin: 1em 0 0.5em 0;
 }
-.a {
+.a:hover {
 	text-decoration: underline;
 }`;
 
