@@ -9,7 +9,6 @@ export default function Impressum() {
 	return (
 		<>
 			<style>{style}</style>
-
 			<div className="impressum mx-auto pb-20 max-w-xl max-md:mx-4 overflow-x-none">
 				<div className="flex mb-8">
 					<Link className="flex gap-3 items-center" href="/">
