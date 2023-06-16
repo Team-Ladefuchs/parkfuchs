@@ -23,23 +23,19 @@ function nonePrivilegesPrefix(item: InboxCity): string {
 }
 
 function whileChargingSuffix(item: InboxCity): null | string {
-	if (!item.whileCharging || item.nonePrivileges) {
+	if (!item.whileCharging) {
 		return null;
 	}
 
-	if (
-		item.whileCharging &&
-		!item.untilMaxMarkingHour &&
-		item.parkingHours === 0
-	) {
+	if (!item.untilMaxMarkingHour && item.parkingHours === 0) {
 		return null;
 	}
 
-	if (item.freeParking && item.untilMaxMarkingHour && item.parkingHours) {
-		return null;
+	if (item.freeParking || item.untilMaxMarkingHour) {
+		return " während des Ladevorgangs";
 	}
 
-	return " während des Ladevorgangs";
+	return null;
 }
 
 export default function InfoSection({
