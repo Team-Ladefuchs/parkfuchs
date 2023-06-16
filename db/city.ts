@@ -158,7 +158,6 @@ export async function autocomplete(
 	try {
 		const searchQuery = query ?? "";
 		const collection = pocketBase.collection("cityRepo");
-
 		const complexQuery = parseSearch(searchQuery);
 
 		let results;
