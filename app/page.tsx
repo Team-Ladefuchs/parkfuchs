@@ -36,7 +36,7 @@ export default async function Index() {
 					Alle Angaben ohne Gewähr
 					{" · "}
 					<Link
-						href="/impressum"
+						href="/impressum#top"
 						className="hover:underline"
 						prefetch={false}
 					>

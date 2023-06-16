@@ -137,18 +137,17 @@ export async function search(
 }
 
 export async function getCityCount(): Promise<CityStats> {
-	const cityInbox = pocketBase.collection("cityInbox");
+	const collection = pocketBase.collection("statistic");
 
-	const citiesAll = await cityInbox.getList(1, 1, {
-		filter: "approved = true",
-	});
+	const result = await collection.getList<{ id: number; total: number }>(
+		1,
+		1
+	);
+	const { id, total } = result.items[0] ?? { id: 0, total: 0 };
 
-	const citiesWithPrivileges = await cityInbox.getList(1, 1, {
-		filter: "approved = true && nonePrivileges = false",
-	});
 	return {
-		count: citiesAll.totalItems,
-		countWithPrivileges: citiesWithPrivileges.totalItems,
+		count: total,
+		countWithPrivileges: id,
 	};
 }
 

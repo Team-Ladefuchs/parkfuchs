@@ -11,6 +11,7 @@ export default function AppNav() {
 		<nav
 			className="p-3 w-device sticky top-0 left-0 right-0 bg-green w-full z-20 max-md:py-3 max-md:px-4"
 			role="banner"
+			id="top"
 		>
 			<div className="flex items-center justify-between mx-auto w-[750px] max-md:w-full select-none">
 				<Link className="flex gap-2" href="/">
