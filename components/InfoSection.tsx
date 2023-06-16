@@ -18,6 +18,14 @@ function showSpecificPrivileges(item: InboxCity): boolean {
 	);
 }
 
+function hasAllPrivileges(item: InboxCity): boolean {
+	return (
+		item.freeParking &&
+		(item.parkingHours > 0 || item.untilMaxMarkingHour) &&
+		item.useBusLane
+	);
+}
+
 function nonePrivilegesPrefix(item: InboxCity): string {
 	return showSpecificPrivileges(item) ? "weiteren" : "";
 }
@@ -110,7 +118,7 @@ export default function InfoSection({
 					</ul>
 				</section>
 			)}
-			{item.nonePrivileges && (
+			{!hasAllPrivileges(item) && (
 				<div className="flex gap-1">
 					<span className="mr-1">❌</span>
 					<div>
