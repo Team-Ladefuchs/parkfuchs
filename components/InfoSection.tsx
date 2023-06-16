@@ -26,10 +26,6 @@ function hasAllPrivileges(item: InboxCity): boolean {
 	);
 }
 
-function nonePrivilegesPrefix(item: InboxCity): string {
-	return showSpecificPrivileges(item) ? "weiteren" : "";
-}
-
 function whileChargingSuffix(item: InboxCity): null | string {
 	if (!item.whileCharging) {
 		return null;
@@ -51,9 +47,7 @@ export default function InfoSection({
 	className = "",
 }: Properties): JSX.Element {
 	const chargingIsSuffix = whileChargingSuffix(item);
-
 	const hasSpecificPrivileges = showSpecificPrivileges(item);
-
 	const noMorePrivileges = !hasAllPrivileges(item) && !item.nonePrivileges;
 
 	return (
@@ -125,10 +119,7 @@ export default function InfoSection({
 			{noMorePrivileges && (
 				<div className="flex gap-1">
 					<span className="mr-1">❌</span>
-					<div>
-						Keine {nonePrivilegesPrefix(item)} Privilegien für
-						Elektrofahrzeuge
-					</div>
+					<div>Keine weiteren Privilegien für Elektrofahrzeuge</div>
 				</div>
 			)}
 			{!noMorePrivileges && (
