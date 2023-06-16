@@ -122,7 +122,7 @@ export default function InfoSection({
 					<div>Keine weiteren Privilegien für Elektrofahrzeuge</div>
 				</div>
 			)}
-			{!noMorePrivileges && (
+			{!noMorePrivileges && item.nonePrivileges && (
 				<div className="flex gap-1">
 					<span className="mr-1">❌</span>
 					<div>Keine Privilegien für Elektrofahrzeuge</div>
