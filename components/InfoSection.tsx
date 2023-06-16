@@ -52,9 +52,13 @@ export default function InfoSection({
 }: Properties): JSX.Element {
 	const chargingIsSuffix = whileChargingSuffix(item);
 
+	const hasSpecificPrivileges = showSpecificPrivileges(item);
+
+	const noMorePrivileges = !hasAllPrivileges(item) && !item.nonePrivileges;
+
 	return (
 		<div className={className}>
-			{showSpecificPrivileges(item) && (
+			{hasSpecificPrivileges && (
 				<section>
 					<div>Du darfst kostenlos parken</div>
 					<ul>
@@ -118,13 +122,19 @@ export default function InfoSection({
 					</ul>
 				</section>
 			)}
-			{!hasAllPrivileges(item) && (
+			{noMorePrivileges && (
 				<div className="flex gap-1">
 					<span className="mr-1">❌</span>
 					<div>
 						Keine {nonePrivilegesPrefix(item)} Privilegien für
 						Elektrofahrzeuge
 					</div>
+				</div>
+			)}
+			{!noMorePrivileges && (
+				<div className="flex gap-1">
+					<span className="mr-1">❌</span>
+					<div>Keine Privilegien für Elektrofahrzeuge</div>
 				</div>
 			)}
 		</div>
