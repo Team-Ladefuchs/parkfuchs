@@ -84,7 +84,7 @@ export default function SearchInput({
 					onClick={() => getLocation()}
 					icon={faLocationCrosshairs}
 					size="lg"
-					className="absolute right-1 top-[5px] p-2 cursor-pointer "
+					className="absolute w-5 h-5 right-1 top-[5px] p-2 cursor-pointer"
 				/>
 			</button>
 		</div>
