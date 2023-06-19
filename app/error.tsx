@@ -8,10 +8,10 @@ import { useRouter } from "next/navigation";
 
 export default function Error({
 	error,
-	reset,
+	_reset,
 }: {
 	error: Error;
-	reset: () => void;
+	_reset: () => void;
 }) {
 	useEffect(() => {
 		console.error("[error]", error.message, error);
@@ -28,7 +28,7 @@ export default function Error({
 			</p>
 			<button
 				className="bg-green max-md:justify-center gap-2 flex items-center text-lg rounded-lg hover:bg-darkGreen text-black w-max py-2 px-4 justify-self-start mx-auto"
-				onClick={() => router.refresh()}
+				onClick={() => window.location.reload()}
 			>
 				Probier es nochmal
 			</button>
