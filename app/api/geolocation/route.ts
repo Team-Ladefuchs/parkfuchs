@@ -38,12 +38,13 @@ export async function POST(request: NextRequest) {
 			community: address.countrySecondarySubdivision,
 		});
 	} catch (error: AxiosError | any) {
-		NextResponse.json(
+		console.error("[geolocation]", error.message);
+
+		return NextResponse.json(
 			{
 				msg: "internal server error",
 			},
 			{ status: 500 }
 		);
-		console.error("[geolocation]", error.message);
 	}
 }
