@@ -66,7 +66,7 @@ export default function CityList({
 }: Properties): JSX.Element {
 	const searchParams = useSearchParams();
 
-	const [shareIsSupported] = useState("share" in navigator);
+	const [shareIsSupported, setShareIsSupported] = useState(false);
 	const [disableAutoSelect, setDisableAutoSelect] = useState(false);
 	const [selectedID, setSelectedID] = useState("");
 	const { setEditCity } = useContext(AppContext);
@@ -74,6 +74,12 @@ export default function CityList({
 	const isSelected = (id: string) => {
 		return selectedID === id;
 	};
+
+	useEffect(() => {
+		if (navigator && "share" in navigator) {
+			setShareIsSupported(true);
+		}
+	});
 
 	useEffect(() => {
 		if (!searchParams.get("query") || disableAutoSelect) {

@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest) {
@@ -37,13 +37,13 @@ export async function POST(request: NextRequest) {
 			state: address.countrySubdivision,
 			community: address.countrySecondarySubdivision,
 		});
-	} catch (error) {
+	} catch (error: AxiosError | any) {
 		NextResponse.json(
 			{
 				msg: "internal server error",
 			},
 			{ status: 500 }
 		);
-		console.error("[geolocation]", error);
+		console.error("[geolocation]", error.message);
 	}
 }
