@@ -65,7 +65,7 @@ export default function CityList({
 	onOpenDialog: openDialog,
 }: Properties): JSX.Element {
 	const searchParams = useSearchParams();
-
+	console.log(items);
 	const [shareIsSupported, setShareIsSupported] = useState(false);
 	const [disableAutoSelect, setDisableAutoSelect] = useState(false);
 	const [selectedID, setSelectedID] = useState("");
@@ -189,7 +189,10 @@ export default function CityList({
 									{item.information && (
 										<Linkify as="pre" options={options}>
 											<span className="font-sans break-words whitespace-pre-wrap">
-												{item.information}
+												{item.information.replaceAll(
+													/\r\n/g,
+													"\n"
+												)}
 											</span>
 										</Linkify>
 									)}
