@@ -65,7 +65,6 @@ export default function CityList({
 	onOpenDialog: openDialog,
 }: Properties): JSX.Element {
 	const searchParams = useSearchParams();
-	console.log(items);
 	const [shareIsSupported, setShareIsSupported] = useState(false);
 	const [disableAutoSelect, setDisableAutoSelect] = useState(false);
 	const [selectedID, setSelectedID] = useState("");
