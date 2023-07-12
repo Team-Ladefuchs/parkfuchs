@@ -101,7 +101,7 @@ export default function Form({
 
 	useEffect(() => {
 		setFormValid(doValidate());
-	}, [selectedCity]);
+	}, [selectedCity, doValidate]);
 
 	const validateForm = () => {
 		let {
