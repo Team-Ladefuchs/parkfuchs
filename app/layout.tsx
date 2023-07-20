@@ -15,6 +15,8 @@ export const metadata: Metadata = {
 	manifest: "/manifest.json",
 	appleWebApp: {
 		capable: true,
+		statusBarStyle: "default",
+		title: "Parkfuchs",
 		startupImage: [
 			{
 				url: "/splashscreens/apple-splash-2048-2732.png",

@@ -12,7 +12,7 @@ export const pocketBase = new PocketBase(
 	process.env.DB_HOST ?? "http://127.0.0.1:8090"
 );
 
-pocketBase.autoCancellation(true);
+pocketBase.autoCancellation(false);
 
 function toRecordToInboxCity(row: InboxCity): InboxCity {
 	const cityItem: CityRepo = row.expand.city as unknown as CityRepo;
