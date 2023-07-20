@@ -4,7 +4,6 @@ import fuchsLog from "../public/parkfuchs.svg";
 import Image from "next/image";
 
 import { useEffect } from "react";
-import { useRouter } from "next/navigation";
 
 export default function Error({
 	error,
@@ -16,8 +15,6 @@ export default function Error({
 	useEffect(() => {
 		console.error("[error]", error.message, error);
 	}, [error]);
-
-	const router = useRouter();
 
 	return (
 		<div className="h-full grid justify-items-center mt-28 gap-3">
