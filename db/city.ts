@@ -72,8 +72,8 @@ export async function getNewestEnabledInboxCities(
 				sort: "-updated,city",
 			});
 		return resultList.items.map(toRecordToInboxCity);
-	} catch (error) {
-		console.error(error);
+	} catch (error: Error | any) {
+		console.error("[getNewestEnabledInboxCities]", error.message);
 	}
 
 	return [];
@@ -90,8 +90,8 @@ export async function getCityById(cityId: string): Promise<InboxCity | null> {
 				}
 			);
 		return toRecordToInboxCity(result);
-	} catch (error) {
-		console.error(error);
+	} catch (error: Error | any) {
+		console.error("[getCityById]", error.message);
 	}
 
 	return null;
@@ -129,8 +129,8 @@ export async function search(
 		});
 
 		return resultList.items.map(toRecordToInboxCity);
-	} catch (error) {
-		console.error(error);
+	} catch (error: Error | any) {
+		console.error("[search]", error.message);
 	}
 
 	return [];
@@ -197,8 +197,8 @@ export async function autocomplete(
 		});
 
 		return list;
-	} catch (error) {
-		console.log(error);
+	} catch (error: Error | any) {
+		console.log("[autocomplete]", error.message);
 	}
 
 	return [];
@@ -217,7 +217,7 @@ async function citAlreadyExists(
 		);
 
 		return true;
-	} catch (error) {}
+	} catch (error: Error | any) {}
 
 	return false;
 }
