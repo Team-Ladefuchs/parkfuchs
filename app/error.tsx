@@ -13,7 +13,7 @@ export default function Error({
 	_reset: () => void;
 }) {
 	useEffect(() => {
-		console.error("[error]", error.message, error);
+		console.error("500 page [error]", error.message, error);
 	}, [error]);
 
 	return (
