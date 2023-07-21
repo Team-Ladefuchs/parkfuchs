@@ -8,8 +8,8 @@ export async function getTGHLink(): Promise<string> {
 			.collection("config")
 			.getFirstListItem<Config>("field = 'tghLink'", {});
 		return result.value ?? defaultTGH;
-	} catch (error) {
-		console.error("getTGHLink:", error);
+	} catch (error: Error | any) {
+		console.error("[getTGHLink]", error.message);
 	}
 	return defaultTGH;
 }
