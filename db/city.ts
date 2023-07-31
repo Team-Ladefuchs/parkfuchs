@@ -7,6 +7,7 @@ import type {
 	ResultCity,
 } from "./types";
 import h2p from "html2plaintext";
+import { log } from "console";
 
 export const pocketBase = new PocketBase(
 	process.env.DB_HOST ?? "http://127.0.0.1:8090"
@@ -215,7 +216,6 @@ async function citAlreadyExists(
 				fields: "city",
 			}
 		);
-
 		return true;
 	} catch (error: Error | any) {}
 
