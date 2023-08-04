@@ -217,7 +217,7 @@ export default function CityList({
 													/>
 												))}
 									</div>
-									<section className="text-neutral-500 text-sm mt-1">
+									<section className="text-neutral-500 text-sm mt-5">
 										<div>
 											<p className="relative bottom-1">
 												Zuletzt aktualisiert{" "}
