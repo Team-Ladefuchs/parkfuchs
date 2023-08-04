@@ -219,7 +219,6 @@ export default function CityList({
 									</div>
 									<section className="text-neutral-500 text-sm mt-1">
 										<div>
-											<p>{"—"}</p>
 											<p className="relative bottom-1">
 												Zuletzt aktualisiert{" "}
 												<TimeAgo
