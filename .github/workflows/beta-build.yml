@@ -1,7 +1,7 @@
 name: Docker-Build-CI
 on:
-    release:
-        types: [published]
+    push:
+        branches: [main]
 jobs:
     docker:
         runs-on: ubuntu-latest
@@ -20,4 +20,4 @@ jobs:
               uses: docker/build-push-action@v3
               with:
                   push: true
-                  tags: ghcr.io/team-ladefuchs/parkfuchs:${{ github.ref_name }}
+                  tags: ghcr.io/team-ladefuchs/parkfuchs:latest
