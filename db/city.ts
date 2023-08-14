@@ -8,11 +8,10 @@ import type {
 } from "./types";
 import h2p from "html2plaintext";
 
-export const pocketBase = new PocketBase(
-	process.env.DB_HOST ?? "http://127.0.0.1:8090"
-);
+const dbHost = process.env.DB_HOST ?? "http://127.0.0.1:8090";
+export const pocketBase = new PocketBase(dbHost);
 
-console.log("DB_HOST:", process.env.DB_HOST);
+console.log("Using (DB_HOST) for pocketbase:", dbHost);
 
 pocketBase.autoCancellation(true);
 
