@@ -12,6 +12,8 @@ export const pocketBase = new PocketBase(
 	process.env.DB_HOST ?? "http://127.0.0.1:8090"
 );
 
+console.log("DB_HOST:", process.env.DB_HOST);
+
 pocketBase.autoCancellation(true);
 
 function toRecordToInboxCity(row: InboxCity): InboxCity {
