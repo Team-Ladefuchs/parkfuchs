@@ -13,10 +13,11 @@ jobs:
             - name: Login to DockerHub
               uses: docker/login-action@v2
               with:
-                  username: ${{ secrets.DOCKERHUB_USERNAME }}
-                  password: ${{ secrets.DOCKERHUB_TOKEN }}
+                  username: ${{ secrets.USERNAME }}
+                  password: ${{ secrets.TOKEN }}
+                  registry: ghcr.io
             - name: Build and push
               uses: docker/build-push-action@v3
               with:
                   push: true
-                  tags: dominicwrege/parkfuchs-web:latest
+                  tags: team-ladefuchs/parkfuchs:latest

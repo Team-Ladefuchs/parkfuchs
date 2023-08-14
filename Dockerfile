@@ -54,4 +54,4 @@ EXPOSE 3000
 ENV PORT 3000
 ENV NEXT_SHARP_PATH /node_modules/sharp
 
-CMD ["node", "server.js", "--hostname", "localhost"]
+CMD ["node", "server.js"]
