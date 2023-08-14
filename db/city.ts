@@ -1,4 +1,4 @@
-import PocketBase, { ListResult, RecordService } from "pocketbase";
+import PocketBase, { RecordService } from "pocketbase";
 import type {
 	CityRepo,
 	CityStats,
@@ -7,7 +7,6 @@ import type {
 	ResultCity,
 } from "./types";
 import h2p from "html2plaintext";
-import { log } from "console";
 
 export const pocketBase = new PocketBase(
 	process.env.DB_HOST ?? "http://127.0.0.1:8090"
