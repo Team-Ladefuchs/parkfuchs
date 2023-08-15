@@ -13,7 +13,7 @@ export async function POST(request: NextRequest) {
 				{ status: 400 }
 			);
 		}
-		console.log("reverseGeocode");
+		console.log("reverseGeocode, TOMTOM_KEY", process.env.TOMTOM_KEY);
 		// radius in meter
 		const response = await axios.get(
 			encodeURI(
@@ -39,7 +39,7 @@ export async function POST(request: NextRequest) {
 			community: address.countrySecondarySubdivision,
 		});
 	} catch (error: any) {
-		console.error("[geolocation]", error.message);
+		console.error("[geolocation] error:", error.message);
 
 		return NextResponse.json(
 			{
