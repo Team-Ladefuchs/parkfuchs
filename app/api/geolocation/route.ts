@@ -1,4 +1,4 @@
-import axios, { type AxiosError } from "axios";
+import axios from "axios";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest) {
@@ -37,12 +37,12 @@ export async function POST(request: NextRequest) {
 			state: address.countrySubdivision,
 			community: address.countrySecondarySubdivision,
 		});
-	} catch (error: AxiosError | any) {
+	} catch (error: any) {
 		const { response } = error;
 		console.error({
 			context: "[geolocation] error",
-			status: response.status,
-			data: response.data,
+			status: response?.status,
+			data: response?.data,
 		});
 
 		return NextResponse.json(
