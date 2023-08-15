@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { type AxiosError } from "axios";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest) {
@@ -13,11 +13,10 @@ export async function POST(request: NextRequest) {
 				{ status: 400 }
 			);
 		}
-		console.log("reverseGeocode, TOMTOM_KEY", process.env.TOMTOM_KEY);
 		// radius in meter
 		const response = await axios.get(
 			encodeURI(
-				`https://api.tomtom.com/search/2/reverseGeocode/${latitude},${longitude}.json?limit=1&spatialKeys=false&radius=1300&allowFreeformNewLine=false&view=Unified&key=${process.env.TOMTOM_KEY}`
+				`https://api.tomtom.com/search/2/reverseGeocode/${latitude},${longitude}.json?limit=1&spatialKeys=false&radius=1300&allowFreeformNewLine=false&view=Unified&key=${process.env.TOMTOM_KEY}aaa`
 			)
 		);
 
@@ -38,8 +37,13 @@ export async function POST(request: NextRequest) {
 			state: address.countrySubdivision,
 			community: address.countrySecondarySubdivision,
 		});
-	} catch (error: any) {
-		console.error("[geolocation] error:", error.message);
+	} catch (error: AxiosError | any) {
+		const { response } = error;
+		console.error({
+			context: "[geolocation] error",
+			status: response.status,
+			data: response.data,
+		});
 
 		return NextResponse.json(
 			{
