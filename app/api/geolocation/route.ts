@@ -13,6 +13,7 @@ export async function POST(request: NextRequest) {
 				{ status: 400 }
 			);
 		}
+		console.log("reverseGeocode");
 		// radius in meter
 		const response = await axios.get(
 			encodeURI(
