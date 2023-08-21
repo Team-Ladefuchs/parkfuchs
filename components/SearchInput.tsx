@@ -1,6 +1,8 @@
 import {
 	faMagnifyingGlass,
 	faLocationCrosshairs,
+	faCross,
+	faXmark,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
@@ -75,9 +77,25 @@ export default function SearchInput({
 				onChange={(e) => {
 					onChange(e.target.value);
 				}}
-				className="p-2 px-10 rounded-lg border text-lg border-gray-200 bg-white focus:bg-white focus:ring-2 focus:ring-green focus:border-green w-full focus:outline-none"
-				placeholder="Ort oder Postleitzahl"
+				className="p-2 pl-10 pr-16 rounded-lg border text-lg border-gray-200 bg-white focus:bg-white focus:ring-2 focus:ring-green focus:border-green w-full focus:outline-none"
+				placeholder="Ort, Postleitzahl, oder lokale Position →"
 			/>
+			{inputRef.current && inputRef.current.value.trim() && (
+				<button className="active:outline-none webkit-highlight-fix">
+					<FontAwesomeIcon
+						onClick={() => {
+							if (!inputRef.current) {
+								return;
+							}
+							inputRef.current.value = "";
+							onChange("");
+						}}
+						icon={faXmark}
+						size="lg"
+						className="absolute w-5 h-5 right-[30px] top-[5px] p-2 cursor-pointer"
+					/>
+				</button>
+			)}
 
 			<button className="active:outline-none webkit-highlight-fix">
 				<FontAwesomeIcon
