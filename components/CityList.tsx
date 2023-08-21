@@ -14,7 +14,6 @@ const formatter = buildFormatter(germanStrings);
 
 import TimeAgo from "react-timeago";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useSearchParams } from "next/navigation";
 
 export interface Properties {
 	items: InboxCity[];
@@ -64,9 +63,7 @@ export default function CityList({
 	isEmpty = false,
 	onOpenDialog: openDialog,
 }: Properties): JSX.Element {
-	const searchParams = useSearchParams();
 	const [shareIsSupported, setShareIsSupported] = useState(false);
-	const [disableAutoSelect, setDisableAutoSelect] = useState(false);
 	const [selectedID, setSelectedID] = useState("");
 	const { setEditCity } = useContext(AppContext);
 
@@ -81,9 +78,6 @@ export default function CityList({
 	});
 
 	useEffect(() => {
-		if (!searchParams.get("query") || disableAutoSelect) {
-			return;
-		}
 		if (items.length > 1) {
 			setSelectedID("");
 			return;
@@ -97,7 +91,6 @@ export default function CityList({
 			return;
 		}
 		setSelectedID(id);
-		setDisableAutoSelect(true);
 	}, [items]);
 
 	return (
