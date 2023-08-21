@@ -1,6 +1,8 @@
 import {
 	faMagnifyingGlass,
 	faLocationCrosshairs,
+	faXmark,
+	faArrowRight,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
@@ -17,6 +19,8 @@ export default function SearchInput({
 	initValue = "",
 }: Properties): JSX.Element {
 	const inputRef = useRef<HTMLInputElement | null>(null);
+
+	const showClearButton = inputRef.current && inputRef.current.value.trim();
 
 	useEffect(() => {
 		if (!inputRef.current) {
@@ -75,18 +79,51 @@ export default function SearchInput({
 				onChange={(e) => {
 					onChange(e.target.value);
 				}}
-				className="p-2 px-10 rounded-lg border text-lg border-gray-200 bg-white focus:bg-white focus:ring-2 focus:ring-green focus:border-green w-full focus:outline-none"
-				placeholder="Ort oder Postleitzahl"
+				className="p-2 pl-10 pr-16 rounded-lg border text-lg border-gray-200 bg-white focus:bg-white focus:ring-2 focus:ring-green focus:border-green w-full focus:outline-none"
+				placeholder="Ort, PLZ oder lokale Position"
 			/>
+			{showClearButton && (
+				<button className="active:outline-none webkit-highlight-fix">
+					<FontAwesomeIcon
+						onClick={() => {
+							if (!inputRef.current) {
+								return;
+							}
+							inputRef.current.value = "";
+							onChange("");
+						}}
+						icon={faXmark}
+						size="lg"
+						className="absolute w-5 h-5 right-1 top-[5px] p-2 cursor-pointer"
+					/>
+				</button>
+			)}
+			{!showClearButton && (
+				<>
+					<FontAwesomeIcon
+						onClick={() => {
+							if (!inputRef.current) {
+								return;
+							}
+							inputRef.current.value = "";
+							onChange("");
+						}}
+						icon={faArrowRight}
+						size="lg"
+						bounce={true}
+						className="absolute right-[38px] top-[13px] text-[rgb(170,170,170)] animate-bounceX"
+					/>
 
-			<button className="active:outline-none webkit-highlight-fix">
-				<FontAwesomeIcon
-					onClick={() => getLocation()}
-					icon={faLocationCrosshairs}
-					size="lg"
-					className="absolute w-5 h-5 right-1 top-[5px] p-2 cursor-pointer"
-				/>
-			</button>
+					<button className="active:outline-none webkit-highlight-fix">
+						<FontAwesomeIcon
+							onClick={() => getLocation()}
+							icon={faLocationCrosshairs}
+							size="lg"
+							className="absolute right-1 top-[5px] p-2 cursor-pointer"
+						/>
+					</button>
+				</>
+			)}
 		</div>
 	);
 }

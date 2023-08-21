@@ -19,6 +19,7 @@ module.exports = {
 			animation: {
 				fade: "fadeIn 200ms ease-in-out",
 				slideIn: "slideIn 275ms ease-in",
+				bounceX: "bounceX 1.8s infinite",
 			},
 			keyframes: {
 				fadeIn: {
@@ -28,6 +29,16 @@ module.exports = {
 				slideIn: {
 					"0%": { top: "-50px", opacity: 0 },
 					"100%": { top: "0", opacity: 1 },
+				},
+				bounceX: {
+					"0%, 100%": {
+						transform: "translateX(-25%)",
+						animationTimingFunction: "cubic-bezier(0.8, 0, 1, 1)",
+					},
+					"50%": {
+						transform: "translateY(0)",
+						animationTimingFunction: "cubic-bezier(0, 0, 0.2, 1)",
+					},
 				},
 			},
 		},
