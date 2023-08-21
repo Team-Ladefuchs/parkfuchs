@@ -25,7 +25,7 @@
 		"linkify-react": "^4.1.1",
 		"linkifyjs": "^4.1.1",
 		"lottie-react": "^2.4.0",
-		"next": "13.4.19",
+		"next": "13.4.12",
 		"next-pwa": "^5.6.0",
 		"pocketbase": "^0.16.0",
 		"react": "^18.2.0",
