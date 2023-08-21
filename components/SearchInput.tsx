@@ -111,7 +111,7 @@ export default function SearchInput({
 						icon={faArrowRight}
 						size="lg"
 						bounce={true}
-						className="absolute right-[38px] top-[13px] text-[rgb(170,170,170)] animate-bounceX"
+						className="absolute right-[38px] w-5 h-5 top-[13px] text-[rgb(170,170,170)] animate-bounceX"
 					/>
 
 					<button className="active:outline-none webkit-highlight-fix">
@@ -119,7 +119,7 @@ export default function SearchInput({
 							onClick={() => getLocation()}
 							icon={faLocationCrosshairs}
 							size="lg"
-							className="absolute right-1 top-[5px] p-2 cursor-pointer"
+							className="absolute right-1 w-5 h-5 top-[5px] p-2 cursor-pointer"
 						/>
 					</button>
 				</>
