@@ -1560,7 +1560,7 @@ __metadata:
   conditions: os=darwin & cpu=arm64
   languageName: node
   linkType: hard
-
+  
 "@next/swc-darwin-x64@npm:13.4.19":
   version: 13.4.19
   resolution: "@next/swc-darwin-x64@npm:13.4.19"
@@ -5791,6 +5791,7 @@ __metadata:
     zod: 3.21.4
   peerDependencies:
     "@opentelemetry/api": ^1.1.0
+    fibers: ">= 3.1.0"
     react: ^18.2.0
     react-dom: ^18.2.0
     sass: ^1.3.0
@@ -5816,11 +5817,13 @@ __metadata:
   peerDependenciesMeta:
     "@opentelemetry/api":
       optional: true
+    fibers:
+      optional: true
     sass:
       optional: true
   bin:
     next: dist/bin/next
-  checksum: f4873dab8888ed4dae14d36d7cf8dc54cd042695cf7ee41d05e8757f463d11952a594eb066143cc2f7253ea1d41c6efe681cdc3ab8c2fa6eb0815fa5a94de3dc
+  checksum: 50bd443ffe09424c1a94d6606d41886ccd1d65185e125aa199957ea92c5e4d1c226f1675f3e5ea92e88f43f8355824ba50db52a8aeae225f7a86b6c901d25527
   languageName: node
   linkType: hard
 
@@ -6177,7 +6180,7 @@ __metadata:
     linkify-react: ^4.1.1
     linkifyjs: ^4.1.1
     lottie-react: ^2.4.0
-    next: 13.4.19
+    next: 13.4.12
     next-pwa: ^5.6.0
     pocketbase: ^0.16.0
     postcss: ^8.4.28

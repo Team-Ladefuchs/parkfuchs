@@ -15,9 +15,7 @@ export async function POST(request: NextRequest) {
 		}
 		// radius in meter
 		const response = await axios.get(
-			encodeURI(
-				`https://api.tomtom.com/search/2/reverseGeocode/${latitude},${longitude}.json?limit=1&spatialKeys=false&radius=1300&allowFreeformNewLine=false&view=Unified&key=${process.env.TOMTOM_KEY}`
-			)
+			`https://api.tomtom.com/search/2/reverseGeocode/${latitude},${longitude}.json?limit=1&spatialKeys=false&radius=1300&allowFreeformNewLine=false&view=Unified&key=${process.env.TOMTOM_KEY}`
 		);
 
 		if (!response.data.addresses.length) {
@@ -38,7 +36,13 @@ export async function POST(request: NextRequest) {
 			community: address.countrySecondarySubdivision,
 		});
 	} catch (error: any) {
-		console.error("[geolocation]", error.message);
+		const { response } = error;
+		console.error({
+			context: "[geolocation] error",
+			status: response?.status,
+			data: response?.data,
+			url: response?.config?.url,
+		});
 
 		return NextResponse.json(
 			{
