@@ -101,17 +101,10 @@ export default function SearchInput({
 			{!showClearButton && (
 				<>
 					<FontAwesomeIcon
-						onClick={() => {
-							if (!inputRef.current) {
-								return;
-							}
-							inputRef.current.value = "";
-							onChange("");
-						}}
 						icon={faArrowRight}
 						size="lg"
 						bounce={true}
-						className="absolute right-[38px] w-5 h-5 top-[13px] text-[rgb(170,170,170)] animate-bounceX"
+						className="absolute right-[38px] w-5 h-5 top-[13px] text-[rgb(170,170,170)] animate-bounceX active:outline-none webkit-highlight-fix"
 					/>
 
 					<button className="active:outline-none webkit-highlight-fix">
