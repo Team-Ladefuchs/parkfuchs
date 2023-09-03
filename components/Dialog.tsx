@@ -146,7 +146,7 @@ export default function Dialog({
 			open={isOpen}
 			id="dialog"
 			aria-label="Formular zum hinzufügen eines neuen Ortes"
-			className="w-full mx-auto animate-slideIn overflow-y-hidden z-50 backdrop:bg-red-300 bg-gray-600 inset-0 h-full fixed bg-opacity-80"
+			className="w-full mx-auto animate-slideIn overflow-y-hidden z-50 backdrop:bg-red-300 bg-gray-600 inset-0 h-full fixed bg-opacity-80 md:pt-10 md:px-0 pt-4 px-4"
 		>
 			<div className="bg-white rounded-lg shadow mt-1 opacity-100 max-w-2xl mx-auto">
 				<header className="flex bg-green rounded-t-lg items-start justify-between border-b  align-start h-14">
