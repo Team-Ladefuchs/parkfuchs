@@ -2,7 +2,7 @@ version: "3.7"
 
 services:
     pocketbase:
-        image: spectado/pocketbase:0.17.4
+        image: spectado/pocketbase:0.18.3
         container_name: pocketbase
         restart: always
         ports:
