@@ -5,6 +5,8 @@ export interface CityRepo {
 	readonly postcodes: string[];
 	readonly state: string;
 	readonly stateCode: string;
+	readonly latitude: string;
+	readonly longitude: string;
 }
 
 export interface Expand {
