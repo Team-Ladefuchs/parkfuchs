@@ -141,88 +141,95 @@ export default function Dialog({
 		onClose();
 	};
 
+	if (!isOpen) {
+		return <></>;
+	}
 	return (
-		<dialog
-			open={isOpen}
-			id="dialog"
-			aria-label="Formular zum hinzufügen eines neuen Ortes"
-			className="w-full mx-auto animate-slideIn overflow-y-hidden z-50 backdrop:bg-red-300 bg-gray-600 inset-0 h-full fixed bg-opacity-80 md:pt-10 md:px-0 pt-4 px-4"
-		>
-			<div className="bg-white rounded-lg shadow mt-1 opacity-100 max-w-2xl mx-auto">
-				<header className="flex bg-green rounded-t-lg items-start justify-between border-b  align-start h-14">
-					<Image
-						src={parkfuchsLogo}
-						height={64}
-						role="img"
-						alt={"logo"}
-						aria-label="Parkfuchs Logo"
-						className="relative left-2 top-[-9px] select-none"
-					/>
-					<div className="w-full p-2 pt-4 ml-1 relative">
-						<h3 className="text-xl font-semibold text-gray-900">
-							{editCity
-								? "Falsche Info melden"
-								: "Ort hinzufügen"}
-						</h3>
-						<button
-							type="button"
-							onClick={() => handleOnClose()}
-							aria-label="dialog schließen"
-							className="text-gray-600 bg-transparent hover:text-gray-900 rounded-lg text-md p-1.5 m-1 ml-auto absolute top-[-4px] right-0"
-						>
-							<FontAwesomeIcon icon={faXmark} size="xl" />
-						</button>
-					</div>
-				</header>
+		<div className="w-full h-full inset-0 fixed bg-gray-600 bg-opacity-80 z-50">
+			<dialog
+				open={isOpen}
+				id="dialog"
+				aria-label="Formular zum hinzufügen eines neuen Ortes"
+				className="mx-auto animate-slideIn overflow-y-hidden backdrop:bg-red-300 relative top-12 bg-transparent max-w-2xl w-full px-4 md:px-0"
+			>
+				<div className="rounded-lg shadow mt-1 bg-white mx-auto">
+					<header className="flex bg-green rounded-t-lg items-start justify-between border-b align-start h-14">
+						<Image
+							src={parkfuchsLogo}
+							height={64}
+							role="img"
+							alt={"logo"}
+							aria-label="Parkfuchs Logo"
+							className="relative left-2 top-[-9px] select-none"
+						/>
+						<div className="w-full p-2 pt-4 ml-1 relative">
+							<h3 className="text-xl font-semibold text-gray-900">
+								{editCity
+									? "Falsche Info melden"
+									: "Ort hinzufügen"}
+							</h3>
+							<button
+								type="button"
+								onClick={() => handleOnClose()}
+								aria-label="dialog schließen"
+								className="text-gray-600 bg-transparent hover:text-gray-900 rounded-lg text-md p-1.5 m-1 ml-auto absolute top-[-4px] right-0"
+							>
+								<FontAwesomeIcon icon={faXmark} size="xl" />
+							</button>
+						</div>
+					</header>
 
-				{isOpen && (
-					<div className="p-6 pt-4 max-md:px-3 overflow-y-auto space-y-6 max-h-[85vh]">
-						{!editCity && (
-							<>
-								<AutoCompleteInput
-									initQuery={search}
-									onSelectedCity={handleSelectedCity}
-								/>
-								{selectedCity?.exists && (
-									<div className="bg-lightGreen p-3 rounded-lg text-black flex gap-4 items-center ">
-										<FontAwesomeIcon
-											size="2xl"
-											icon={faCircleExclamation}
-										/>
-										<div>
-											Du möchtest{" "}
-											<b>{selectedCity.name}</b> eingeben?
-											Hast du gesehen, dass die Stadt
-											bereits im Parkfuchs-Verzeichnis
-											existiert?
-											<br />
-											<div
-												className="underline cursor-pointer mt-2"
-												onClick={async () => {
-													console.log(selectedCity);
+					{isOpen && (
+						<div className="p-6 pt-4 max-md:px-3 overflow-y-auto space-y-6 max-h-[85vh]">
+							{!editCity && (
+								<>
+									<AutoCompleteInput
+										initQuery={search}
+										onSelectedCity={handleSelectedCity}
+									/>
+									{selectedCity?.exists && (
+										<div className="bg-lightGreen p-3 rounded-lg text-black flex gap-4 items-center ">
+											<FontAwesomeIcon
+												size="2xl"
+												icon={faCircleExclamation}
+											/>
+											<div>
+												Du möchtest{" "}
+												<b>{selectedCity.name}</b>{" "}
+												eingeben? Hast du gesehen, dass
+												die Stadt bereits im
+												Parkfuchs-Verzeichnis existiert?
+												<br />
+												<div
+													className="underline cursor-pointer mt-2"
+													onClick={async () => {
+														console.log(
+															selectedCity
+														);
 
-													await getCityById(
-														selectedCity.id
-													);
-												}}
-											>
-												Falsche Info melden
+														await getCityById(
+															selectedCity.id
+														);
+													}}
+												>
+													Falsche Info melden
+												</div>
 											</div>
 										</div>
-									</div>
-								)}
-							</>
-						)}
+									)}
+								</>
+							)}
 
-						<Form
-							selectedCity={selectedCity}
-							doReset={isResetForm}
-							onSubmit={onSubmit}
-							onClose={handleOnClose}
-						/>
-					</div>
-				)}
-			</div>
-		</dialog>
+							<Form
+								selectedCity={selectedCity}
+								doReset={isResetForm}
+								onSubmit={onSubmit}
+								onClose={handleOnClose}
+							/>
+						</div>
+					)}
+				</div>
+			</dialog>
+		</div>
 	);
 }
