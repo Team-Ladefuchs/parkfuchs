@@ -25,6 +25,8 @@ function toRecordToInboxCity(row: InboxCity): InboxCity {
 			community: cityItem.community,
 			state: cityItem.state,
 			stateCode: cityItem.stateCode,
+			latitude: cityItem.latitude,
+			longitude: cityItem.longitude,
 		},
 		id: row.id,
 		city: cityItem.id,
@@ -62,7 +64,7 @@ function parseSearch(
 }
 
 export async function getNewestEnabledInboxCities(
-	maxResults: number
+	maxResults = 16
 ): Promise<InboxCity[]> {
 	try {
 		const resultList = await pocketBase
