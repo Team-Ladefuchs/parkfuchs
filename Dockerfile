@@ -51,7 +51,9 @@ USER nextjs
 
 EXPOSE 3000
 
-ENV HOSTNAME localhost
+# set hostname to localhost
+ENV HOSTNAME "0.0.0.0"
+
 ENV PORT 3000
 ENV NEXT_SHARP_PATH /node_modules/sharp
 
