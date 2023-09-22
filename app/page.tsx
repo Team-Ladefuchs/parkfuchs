@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Banner from "../components/Banner";
 import Home from "../components/Home";
-import { getCityCount, getNewestEnabledInboxCities } from "../db/city";
+import { getCityCount, getEnabledInboxCities } from "../db/city";
 import { getTGHLink } from "../db/config";
 
 export const dynamic = "auto",
@@ -11,7 +11,7 @@ export const dynamic = "auto",
 
 async function fetchData() {
 	const [cities, thgLink] = await Promise.all([
-		getNewestEnabledInboxCities(16),
+		getEnabledInboxCities(),
 		getTGHLink(),
 	]);
 
