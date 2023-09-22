@@ -63,7 +63,7 @@ function parseSearch(
 	return null;
 }
 
-export async function getNewestEnabledInboxCities(
+export async function getEnabledInboxCities(
 	maxResults = 16
 ): Promise<InboxCity[]> {
 	try {
@@ -98,6 +98,21 @@ export async function getCityById(cityId: string): Promise<InboxCity | null> {
 	}
 
 	return null;
+}
+export async function getCitiesWithPrivileges(): Promise<InboxCity[]> {
+	try {
+		const resultList = await pocketBase
+			.collection("cityInbox")
+			.getFullList<InboxCity>({
+				filter: "approved = true && (freeParking = true || parkingHours > 0 || untilMaxMarkingHour = true || useBusLane = true)",
+				expand: "city",
+			});
+		return resultList.map(toRecordToInboxCity);
+	} catch (error: Error | any) {
+		console.error("[getCityById]", error.message);
+	}
+
+	return [];
 }
 
 export async function search(
