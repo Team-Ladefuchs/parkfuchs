@@ -1,4 +1,3 @@
-import { faSlack } from "@fortawesome/free-brands-svg-icons";
 import { faMugHot, faTreeCity } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
@@ -31,21 +30,6 @@ export default function LandingBox({
 				Für E-Autos gibt’s Privilegien in{" "}
 				{cityStats.countWithPrivileges} von insgesamt {cityStats.count}{" "}
 				eingetragenen Städten.
-			</p>
-			<FontAwesomeIcon
-				icon={faSlack}
-				className="w-5 h-5 max-md:h-6 max-md:w-6 relative top-[2px]"
-			/>
-			<p className="lg:ml-[-2px] max-md:block pb-1">
-				Feedback und Ideen:
-				<Link
-					prefetch={false}
-					href="https://parkfuchs.app/slack"
-					target="_blank"
-					className="ml-1 underline"
-				>
-					hier entlang!
-				</Link>
 			</p>
 			<FontAwesomeIcon
 				icon={faMugHot}
