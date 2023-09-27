@@ -104,7 +104,7 @@ export async function getCitiesWithPrivileges(): Promise<InboxCity[]> {
 		const resultList = await pocketBase
 			.collection("cityInbox")
 			.getFullList<InboxCity>({
-				filter: "approved = true && (freeParking = true || parkingHours > 0 || untilMaxMarkingHour = true || useBusLane = true)",
+				filter: "approved = true && ((freeParking = true || parkingHours > 0) || untilMaxMarkingHour = true || useBusLane = true)",
 				expand: "city",
 			});
 		return resultList.map(toRecordToInboxCity);
