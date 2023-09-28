@@ -44,6 +44,9 @@ export const metadata: Metadata = {
 			},
 		],
 	},
+	itunes: {
+		appId: "6460892143",
+	},
 	icons: [
 		{
 			href: "/icons/icon-48x48.png",
