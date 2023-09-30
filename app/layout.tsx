@@ -10,7 +10,7 @@ const url = "https://parkfuchs.app";
 export const metadata: Metadata = {
 	title: "Parkfuchs",
 	description: "Schlau elektrisch parken",
-	themeColor: "#ece9e1",
+	themeColor: "#D1D9C0B8",
 	viewport: "width=device-width, initial-scale=1.0",
 	manifest: "/manifest.json",
 	appleWebApp: {
