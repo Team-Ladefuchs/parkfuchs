@@ -1,7 +1,7 @@
 name: Docker-Build-CI
 on:
     push:
-        branches: [main]
+        branches: [dev]
 jobs:
     docker:
         runs-on: ubuntu-latest
