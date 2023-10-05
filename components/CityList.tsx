@@ -94,7 +94,10 @@ export default function CityList({
 	}, [items]);
 
 	return (
-		<div className={`accordion ${className}`} id="accordionList">
+		<div
+			className={`accordion ${className} divide-y-2 divide-gray-200`}
+			id="accordionList"
+		>
 			{isEmpty && (
 				<div className="text-center px-4 text-lg my-6">
 					Es wurde keine Stadt gefunden. Vielleicht möchtest du eine
@@ -106,15 +109,14 @@ export default function CityList({
 				return (
 					<div
 						key={item.id}
-						className="accordion-item-wrapper bg-cardBg border border-gray-200 w-full"
+						className="accordion-item-wrapper bg-white w-full"
 					>
-						<h2 className="accordion-header mb-0">
-							<header
+						<header className="accordion-header mb-0">
+							<h2
 								className={`accordion-button 
 						relative block items-center w-full py-4 px-5
 						text-base text-black text-left
-						bg-white border-0 rounded-none
-						transition focus:outline-none ${
+						bg-white transition focus:outline-none ${
 							isSelected(item.id) ? "accordion-button-open" : ""
 						}`}
 								role="button"
@@ -158,8 +160,8 @@ export default function CityList({
 											</button>
 										)}
 								</div>
-							</header>
-						</h2>
+							</h2>
+						</header>
 						<div
 							className={`accordion-content ${
 								isSelected(item.id)
