@@ -8,7 +8,6 @@ module.exports = {
 		extend: {
 			colors: {
 				backgroundPrimary: "#ece9e1",
-				cardBg: "#f9f8f6",
 				green: "#D1D9C0",
 				lightGreen: "#E9ECE0",
 				red: "#D53D25",
@@ -18,7 +17,7 @@ module.exports = {
 			visibility: ["group-hover"],
 			animation: {
 				fade: "fadeIn 200ms ease-in-out",
-				slideIn: "slideIn 275ms ease-in",
+				show: "show 380ms ease normal",
 				bounceX: "bounceX 1.8s infinite",
 			},
 			keyframes: {
@@ -26,9 +25,9 @@ module.exports = {
 					"0%": { opacity: 0 },
 					"100%": { opacity: 1 },
 				},
-				slideIn: {
-					"0%": { top: "-50px", opacity: 0 },
-					"100%": { top: "0", opacity: 1 },
+				show: {
+					from: { transform: "translateY(-110%)" },
+					to: { transform: "translateY(0%)" },
 				},
 				bounceX: {
 					"0%, 100%": {
