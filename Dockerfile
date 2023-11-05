@@ -1,4 +1,4 @@
-FROM node:18-alpine as deps
+FROM node:20-alpine as deps
 
 RUN apk add --no-cache libc6-compat
 
@@ -30,7 +30,7 @@ RUN yarn build
 # RUN npm run build
 
 # Production image, copy all the files and run next
-FROM node:18-alpine AS runner
+FROM node:20-alpine AS runner
 WORKDIR /app
 
 ENV NODE_ENV production
