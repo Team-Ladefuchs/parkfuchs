@@ -74,7 +74,9 @@ export async function getEnabledInboxCities(
 				expand: "city",
 				sort: "-updated,city",
 			});
-		return resultList.items.map(toRecordToInboxCity);
+		return resultList.items
+			.map(toRecordToInboxCity)
+			.filter((item) => item.approved);
 	} catch (error: Error | any) {
 		console.error("[getNewestEnabledInboxCities]", error.message);
 	}
@@ -92,6 +94,10 @@ export async function getCityById(cityId: string): Promise<InboxCity | null> {
 					expand: "city",
 				}
 			);
+
+		if (!result.approved) {
+			return null;
+		}
 		return toRecordToInboxCity(result);
 	} catch (error: Error | any) {
 		console.error("[getCityById]", error.message);
@@ -104,10 +110,23 @@ export async function getCitiesWithPrivileges(): Promise<InboxCity[]> {
 		const resultList = await pocketBase
 			.collection("cityInbox")
 			.getFullList<InboxCity>({
-				filter: "approved = true && ((freeParking = true || parkingHours > 0) || untilMaxMarkingHour = true || useBusLane = true)",
+				filter: "approved=true",
 				expand: "city",
 			});
-		return resultList.map(toRecordToInboxCity);
+		return resultList
+			.map(toRecordToInboxCity)
+			.filter(({ approved }) => approved)
+			.filter(
+				({
+					freeParking,
+					parkingHours,
+					untilMaxMarkingHour,
+					useBusLane,
+				}) =>
+					(freeParking = true || parkingHours > 0) ||
+					untilMaxMarkingHour ||
+					useBusLane
+			);
 	} catch (error: Error | any) {
 		console.error("[getCityById]", error.message);
 	}
@@ -137,7 +156,9 @@ export async function search(
 					sort: "-updated,+city",
 				}
 			);
-			return resultList.items.map(toRecordToInboxCity);
+			return resultList.items
+				.map(toRecordToInboxCity)
+				.filter((item) => item.approved);
 		}
 
 		const resultList = await collection.getList<InboxCity>(1, maxResults, {
@@ -146,7 +167,9 @@ export async function search(
 			sort: "-updated,+city",
 		});
 
-		return resultList.items.map(toRecordToInboxCity);
+		return resultList.items
+			.map(toRecordToInboxCity)
+			.filter((item) => item.approved);
 	} catch (error: Error | any) {
 		console.error("[search]", error.message);
 	}
