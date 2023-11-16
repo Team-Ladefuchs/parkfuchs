@@ -123,7 +123,8 @@ export async function getCitiesWithPrivileges(): Promise<InboxCity[]> {
 					untilMaxMarkingHour,
 					useBusLane,
 				}) =>
-					(freeParking = true || parkingHours > 0) ||
+					freeParking ||
+					parkingHours > 0 ||
 					untilMaxMarkingHour ||
 					useBusLane
 			);
