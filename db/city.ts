@@ -115,7 +115,6 @@ export async function getCitiesWithPrivileges(): Promise<InboxCity[]> {
 			});
 		return resultList
 			.map(toRecordToInboxCity)
-			.filter(({ approved }) => approved)
 			.filter(
 				({
 					freeParking,
@@ -123,10 +122,10 @@ export async function getCitiesWithPrivileges(): Promise<InboxCity[]> {
 					untilMaxMarkingHour,
 					useBusLane,
 				}) =>
-					freeParking ||
+					freeParking === true ||
 					parkingHours > 0 ||
-					untilMaxMarkingHour ||
-					useBusLane
+					untilMaxMarkingHour === true ||
+					useBusLane === true
 			);
 	} catch (error: Error | any) {
 		console.error("[getCityById]", error.message);
