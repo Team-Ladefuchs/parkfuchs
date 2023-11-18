@@ -5,6 +5,7 @@ indent_style = tab
 quote_type = double
 semicolon = true
 
-[*.yaml]
+[*.{yaml,yml}]
 indent_style = space
 semicolon = false
+tab_width = 2
