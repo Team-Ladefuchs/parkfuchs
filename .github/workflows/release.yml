@@ -20,4 +20,4 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           push: true
-          tags: ghcr.io/team-ladefuchs/parkfuchs:latest
+          tags: ghcr.io/team-ladefuchs/parkfuchs:${{github.ref_name}},ghcr.io/team-ladefuchs/parkfuchs:latest
