@@ -1,13 +1,9 @@
-name: Docker-Build-CI
+name: Docker-Release
 on:
-  pull_request:
-    branches:
-      - main
-    types: [closed]
-
+  release:
+    types: [published]
 jobs:
   docker:
-    if: ${{ github.event.pull_request.merged }}
     runs-on: ubuntu-latest
     steps:
       - name: Set up QEMU
