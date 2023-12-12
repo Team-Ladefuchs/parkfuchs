@@ -1,19 +1,19 @@
 version: "3.7"
 
 services:
-    pocketbase:
-        image: spectado/pocketbase:0.18.3
-        container_name: pocketbase
-        restart: always
-        ports:
-            - 8090:8090
-        volumes:
-            - ./pocketbase-data:/pb_data
-    parkfuchsweb:
-        image: dominicwrege/parkfuchs-web:latest
-        container_name: parkfuchs-web
-        restart: always
-        ports:
-            - 3000:3000
-        environment:
-            DB_HOST: http://pocketbase:8090
+  pocketbase:
+    image: spectado/pocketbase:0.20.1
+    container_name: pocketbase
+    restart: always
+    ports:
+      - 8090:8090
+    volumes:
+      - ./pocketbase-data:/pb_data
+  parkfuchsweb:
+    image: dominicwrege/parkfuchs-web:latest
+    container_name: parkfuchs-web
+    restart: always
+    ports:
+      - 3000:3000
+    environment:
+      DB_HOST: http://pocketbase:8090
