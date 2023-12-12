@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import Head from "next/head";
 import { Toaster } from "react-hot-toast";
 import AppNav from "../components/AppNav";
@@ -7,11 +7,16 @@ import "../styles/globals.css";
 
 const url = "https://parkfuchs.app";
 
+export const viewport: Viewport = {
+	colorScheme: "light",
+	themeColor: "#D1D9C0B8",
+	width: "width=device-width, initial-scale=1.0",
+	initialScale: 1,
+};
+
 export const metadata: Metadata = {
 	title: "Parkfuchs",
 	description: "Schlau elektrisch parken",
-	themeColor: "#D1D9C0B8",
-	viewport: "width=device-width, initial-scale=1.0",
 	manifest: "/manifest.json",
 	appleWebApp: {
 		capable: true,
