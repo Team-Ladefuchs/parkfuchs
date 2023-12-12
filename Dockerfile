@@ -12,7 +12,7 @@ COPY .yarn .yarn
 
 RUN yarn install --immutable 
 
-FROM node:18-alpine as builder
+FROM node:20-alpine as builder
 
 WORKDIR /app
 
