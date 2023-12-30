@@ -8,6 +8,7 @@
 		"start": "next start",
 		"lint": "next lint"
 	},
+	"bin": {"parkfuchs": ".next/standalone/server.js"},	
 	"dependencies": {
 		"@fortawesome/fontawesome-svg-core": "^6.5.1",
 		"@fortawesome/free-brands-svg-icons": "^6.5.1",
@@ -45,5 +46,5 @@
 		"typescript": "5.3.3",
 		"webpack": "^5.89.0"
 	},
-	"packageManager": "yarn@4.0.1"
+	"packageManager": "npm"
 }
