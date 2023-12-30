@@ -7,34 +7,33 @@
 
   outputs = { self, nixpkgs, flake-utils, ... }: {
     nixosModules.parkfuchs = import ./nix { inherit self nixpkgs; };
-	} // flake-utils.lib.eachDefaultSystem (system:
-      let
-        pkgs = import nixpkgs { inherit system; };
-        inherit (pkgs) buildNpmPackage nodejs_20;
-        nodejs = nodejs_20;
-        parkfuchs = buildNpmPackage {
-          src = ./.;
-          npmBuild = "npm run build";
-          npmPackFlags = [ "--ignore-scripts" ];
-          pname = "parkfuchs";
-          version = "1.6.5";
-          npmDepsHash = "sha256-L4440lAbgc0U06KlzIqcnyTc5lnrH678apbraK+6mQ8=";
-          installPhase = ''
-            			runHook preInstall
-            			mkdir -p $out/.next
-            			cp -r .next/standalone/. $out/
-            			cp -r .next/static $out/.next/
-            			cp -r ./public $out/
-            			runHook postInstall
-            		  '';
-        };
-      in
-      with pkgs; {
-        defaultPackage = parkfuchs;
-		packages = {
-          inherit parkfuchs;
-		};
-        devShell = mkShell { buildInputs = [ nodejs ]; };
-        nixosModules = { parkfuchs = import ./nix; };
-      });
+  } // flake-utils.lib.eachDefaultSystem (system:
+    let
+      pkgs = import nixpkgs { inherit system; };
+      inherit (pkgs) buildNpmPackage nodejs_20;
+      nodejs = nodejs_20;
+      parkfuchs = buildNpmPackage {
+        src = ./.;
+        npmBuild = "npm run build";
+        npmPackFlags = [ "--ignore-scripts" ];
+        pname = "parkfuchs";
+        version = "1.6.5";
+        npmDepsHash = "sha256-L4440lAbgc0U06KlzIqcnyTc5lnrH678apbraK+6mQ8=";
+        installPhase = ''
+          			runHook preInstall
+          			mkdir -p $out/.next
+          			cp -r .next/standalone/. $out/
+          			cp -r .next/static $out/.next/
+          			cp -r ./public $out/
+          			runHook postInstall
+          		  '';
+      };
+    in
+    {
+      defaultPackage = parkfuchs;
+      packages = {
+        inherit parkfuchs;
+      };
+      devShell = pkgs.mkShell { buildInputs = [ nodejs ]; };
+    });
 }
