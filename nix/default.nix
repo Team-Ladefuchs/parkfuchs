@@ -78,7 +78,7 @@ in
             ADDR = cfg.addr;
             PORT = toString cfg.port;
             TOMTOM_KEY = cfg.tomtomKey;
-            DB_HOST = "${pocketBaseHost}";
+            DB_HOST = "http://${pocketBaseHost}";
           };
           serviceConfig = {
             Type = "simple";
