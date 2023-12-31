@@ -42,47 +42,51 @@ in
     };
   };
 
-  config = lib.mkIf (cfg.enable) {
-    users.users.parkfuchs = {
-      isSystemUser = true;
-      group = "parkfuchs";
-    };
-    users.groups.parkfuchs = { };
+  config =
+    let pocketBaseHost = "127.0.0.1:${toString cfg.pocketBasePort}";
+    in
+    lib.mkIf (cfg.enable)
+      {
+        users.users.parkfuchs = {
+          isSystemUser = true;
+          group = "parkfuchs";
+        };
+        users.groups.parkfuchs = { };
 
-    systemd.services.pocketbase = {
-      enable = true;
-      description = "Pocketbase: Open Source backend";
-      wantedBy = [ "multi-user.target" ];
-      serviceConfig = {
-        Type = "simple";
-        User = "parkfuchs";
-        LimitNOFILE = "4096";
-        Restart = "always";
-        RestartSec = "5s";
-        Group = "parkfuchs";
-        StateDirectory = stateDir;
-        # Starts the web server (default to 127.0.0.1:8090 if no domain is specified)
-        ExecStart = "${pkgs.pocketbase}/bin/pocketbase serve --http='127.0.0.1:${cfg.pocketBasePort}' --dir=/var/lib/${stateDir}";
-      };
-    };
+        systemd.services.pocketbase = {
+          enable = true;
+          description = "Pocketbase: Open Source backend";
+          wantedBy = [ "multi-user.target" ];
+          serviceConfig = {
+            Type = "simple";
+            User = "parkfuchs";
+            LimitNOFILE = "4096";
+            Restart = "always";
+            RestartSec = "5s";
+            Group = "parkfuchs";
+            StateDirectory = stateDir;
+            # Starts the web server (default to 127.0.0.1:8090 if no domain is specified)
+            ExecStart = "${pkgs.pocketbase}/bin/pocketbase serve --http='${pocketBaseHost}' --dir=/var/lib/${stateDir}";
+          };
+        };
 
-    systemd.services.parkfuchs = {
-      enable = true;
-      description = "Parkfuchs Web App";
-      wantedBy = [ "multi-user.target" "pocketbase.service" ];
-      environment = {
-        ADDR = cfg.addr;
-        PORT = toString cfg.port;
-        TOMTOM_KEY = cfg.tomtomKey;
-        DB_HOST = "http://127.0.0.1:${cfg.pocketBasePort}";
+        systemd.services.parkfuchs = {
+          enable = true;
+          description = "Parkfuchs Web App";
+          wantedBy = [ "multi-user.target" "pocketbase.service" ];
+          environment = {
+            ADDR = cfg.addr;
+            PORT = toString cfg.port;
+            TOMTOM_KEY = cfg.tomtomKey;
+            DB_HOST = "${pocketBaseHost}";
+          };
+          serviceConfig = {
+            Type = "simple";
+            User = "parkfuchs";
+            Group = "parkfuchs";
+            ExecStart = "${pkgs.nodejs_20}/bin/node ${self.packages.${pkgs.system}.parkfuchs}/server.js ";
+          };
+        };
       };
-      serviceConfig = {
-        Type = "simple";
-        User = "parkfuchs";
-        Group = "parkfuchs";
-        ExecStart = "${pkgs.nodejs_20}/bin/node ${self.packages.${pkgs.system}.parkfuchs}/server.js ";
-      };
-    };
-  };
 }
 
