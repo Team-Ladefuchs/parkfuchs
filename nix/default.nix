@@ -62,7 +62,7 @@ in
         Group = "parkfuchs";
         StateDirectory = stateDir;
         # Starts the web server (default to 127.0.0.1:8090 if no domain is specified)
-        ExecStart = "${pkgs.pocketbase}/bin/pocketbase serve --http='127.0.0.1:${pocketBasePort}' --dir=/var/lib/${stateDir}";
+        ExecStart = "${pkgs.pocketbase}/bin/pocketbase serve --http='127.0.0.1:${cfg.pocketBasePort}' --dir=/var/lib/${stateDir}";
       };
     };
 
@@ -74,7 +74,7 @@ in
         ADDR = cfg.addr;
         PORT = toString cfg.port;
         TOMTOM_KEY = cfg.tomtomKey;
-        DB_HOST = "http://127.0.0.1:${pocketBasePort}";
+        DB_HOST = "http://127.0.0.1:${cfg.pocketBasePort}";
       };
       serviceConfig = {
         Type = "simple";
