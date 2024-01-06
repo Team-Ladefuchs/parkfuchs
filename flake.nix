@@ -5,8 +5,8 @@
     flake-utils.url = "github:numtide/flake-utils";
   };
 
-  outputs = { self, nixpkgs, flake-utils, ... }: {
-    nixosModules.parkfuchs = import ./nix { inherit self nixpkgs; };
+  outputs = { self, nixpkgs, flake-utils, unstable, ... }: {
+    nixosModules.parkfuchs = import ./nix { inherit self nixpkgs unstable; };
   } // flake-utils.lib.eachDefaultSystem (system:
     let
       pkgs = import nixpkgs { inherit system; };
