@@ -1,6 +1,6 @@
 {
 	"name": "parkfuchs",
-	"version": "1.6.12",
+	"version": "1.6.14",
 	"private": true,
 	"scripts": {
 		"dev": "next dev",
@@ -8,7 +8,9 @@
 		"start": "next start",
 		"lint": "next lint"
 	},
-	"bin": {"parkfuchs": ".next/standalone/server.js"},	
+	"bin": {
+		"parkfuchs": ".next/standalone/server.js"
+	},
 	"dependencies": {
 		"@fortawesome/fontawesome-svg-core": "^6.5.1",
 		"@fortawesome/free-brands-svg-icons": "^6.5.1",
