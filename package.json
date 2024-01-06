@@ -1,6 +1,6 @@
 {
 	"name": "parkfuchs",
-	"version": "1.6.5",
+	"version": "1.6.12",
 	"private": true,
 	"scripts": {
 		"dev": "next dev",

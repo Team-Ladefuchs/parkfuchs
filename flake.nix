@@ -17,7 +17,7 @@
         npmBuild = "NEXT_TELEMETRY_DISABLED 1 npm run build";
         npmPackFlags = [ "--ignore-scripts" ];
         pname = "parkfuchs";
-        version = "1.6.5";
+        version = (builtins.fromJSON (builtins.readFile ./package.json)).version;
         npmDepsHash = "sha256-L4440lAbgc0U06KlzIqcnyTc5lnrH678apbraK+6mQ8=";
         installPhase = ''
           			runHook preInstall
