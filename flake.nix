@@ -1,12 +1,12 @@
 {
-  description = "My example Nix flake";
+  description = "Parkfuchs";
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+	nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     flake-utils.url = "github:numtide/flake-utils";
   };
 
-  outputs = { self, nixpkgs, flake-utils, unstable, ... }: {
-    nixosModules.parkfuchs = import ./nix { inherit self nixpkgs unstable; };
+  outputs = { self, nixpkgs, flake-utils, ... }: {
+    nixosModules.parkfuchs = import ./nix { inherit self nixpkgs; };
   } // flake-utils.lib.eachDefaultSystem (system:
     let
       pkgs = import nixpkgs { inherit system; };
