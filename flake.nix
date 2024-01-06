@@ -14,7 +14,7 @@
       nodejs = nodejs_20;
       parkfuchs = buildNpmPackage {
         src = ./.;
-        npmBuild = "npm run build";
+        npmBuild = "NEXT_TELEMETRY_DISABLED 1 npm run build";
         npmPackFlags = [ "--ignore-scripts" ];
         pname = "parkfuchs";
         version = "1.6.5";
