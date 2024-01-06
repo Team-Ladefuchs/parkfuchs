@@ -1,4 +1,4 @@
-{ self, nixpkgs }: { pkgs, lib, config, unstable, ... }:
+{ self, nixpkgs, unstable }: { pkgs, lib, config, ... }:
 let
   cfg = config.services.parkfuchs;
   stateDir = "pocktetbase-db";
