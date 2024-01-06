@@ -35,7 +35,15 @@ in
         type = types.port;
         default = 8090;
         description = ''
-          	Pokcetbase Host Port
+          	Pokcetbase Host Port.
+        '';
+      };
+
+	  pocketBaseAddr = lib.mkOption {
+        type = types.str;
+        default = "0.0.0.0";
+        description = ''
+          	Pokcetbase Addr to use.
         '';
       };
 
@@ -43,9 +51,7 @@ in
   };
 
   config =
-    let pocketBaseHost = "127.0.0.1:${toString cfg.pocketBasePort}";
-    in
-    lib.mkIf (cfg.enable)
+    lib.mkIf cfg.enable
       {
         users.users.parkfuchs = {
           isSystemUser = true;
@@ -66,7 +72,7 @@ in
             Group = "parkfuchs";
             StateDirectory = stateDir;
             # Starts the web server (default to 127.0.0.1:8090 if no domain is specified)
-            ExecStart = "${pkgs.pocketbase}/bin/pocketbase serve --http='${pocketBaseHost}' --dir=/var/lib/${stateDir}";
+            ExecStart = "${pkgs.pocketbase}/bin/pocketbase serve --http='${toString cfg.pocketBaseAddr}:${pocketBasePort}' --dir=/var/lib/${stateDir}";
           };
         };
 
@@ -78,7 +84,7 @@ in
             ADDR = cfg.addr;
             PORT = toString cfg.port;
             TOMTOM_KEY = cfg.tomtomKey;
-            DB_HOST = "http://${pocketBaseHost}";
+            DB_HOST = "http://127.0.0.1:${toString cfg.pocketBasePort}";
           };
           serviceConfig = {
             Type = "simple";
