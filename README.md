@@ -10,8 +10,6 @@ First, run the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
@@ -21,6 +19,29 @@ Using Next.js 13+.
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
 The `app` directory is mapped to `app/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+
+# Build
+
+## Nix
+
+**Package**
+
+```nix
+nix build .#parkfuchs
+```
+
+**Update flake**
+
+```nix
+nix flake update
+```
+
+**Docker**c
+
+```nix
+docker build -t parkfuchs:latest
+```
+
 
 ## Learn More
 

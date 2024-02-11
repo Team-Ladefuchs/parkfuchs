@@ -4,13 +4,9 @@ RUN apk add --no-cache libc6-compat
 
 WORKDIR /app
 
-COPY package.json yarn.lock ./
+COPY package.json package-lock.json ./
 
-RUN echo "nodeLinker: node-modules" > .yarnrc.yml
-
-COPY .yarn .yarn 
-
-RUN yarn install --immutable 
+RUN npm install
 
 FROM node:20-alpine as builder
 
@@ -20,11 +16,7 @@ COPY --from=deps /app/node_modules ./node_modules
 
 COPY . .
 
-RUN echo "nodeLinker: node-modules" > .yarnrc.yml
-
-ENV NEXT_TELEMETRY_DISABLED 1
-
-RUN yarn build
+RUN npm run build
 
 # If using npm comment out above and use below instead
 # RUN npm run build
