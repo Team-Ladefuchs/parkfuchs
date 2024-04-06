@@ -17,7 +17,7 @@ jobs:
           password: ${{ secrets.TOKEN }}
           registry: ghcr.io
       - name: Build and push
-        uses: docker/build-push-action@v3
+        uses: docker/build-push-action@v5
         with:
           push: true
           tags: ghcr.io/team-ladefuchs/parkfuchs:${{github.ref_name}},ghcr.io/team-ladefuchs/parkfuchs:latest
