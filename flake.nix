@@ -1,7 +1,7 @@
 {
   description = "Parkfuchs";
   inputs = {
-	nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     flake-utils.url = "github:numtide/flake-utils";
   };
 
@@ -18,7 +18,7 @@
         npmPackFlags = [ "--ignore-scripts" ];
         pname = "parkfuchs";
         version = (builtins.fromJSON (builtins.readFile ./package.json)).version;
-        npmDepsHash = "sha256-u1N/JggChtiPsNirhAqY1v0A0O6pA3vZI2ISNb3X/5U=";
+        npmDepsHash = "sha256-CgQtCzdoRTuPLmUVN6kSxoJeRFZYBqUP7GOIE1La9/k=";
         installPhase = ''
           			runHook preInstall
           			mkdir -p $out/.next
