@@ -20,6 +20,19 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 The `app` directory is mapped to `app/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
 
+## Setup
+
+Create a `.env` file
+
+```bash
+# Pocketbase server URI
+DB_HOST=localhost:8080
+
+# Your TomTom API key
+TOMTOM_KEY=djahdi1xxxxxxxxx
+
+```
+
 # Build
 
 ## Nix
@@ -41,7 +54,6 @@ nix flake update
 ```nix
 docker build -t parkfuchs:latest
 ```
-
 
 ## Learn More
 
