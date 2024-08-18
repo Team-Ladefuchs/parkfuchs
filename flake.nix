@@ -15,7 +15,7 @@
       parkfuchs = buildNpmPackage {
         src = ./.;
         npmBuild = "NEXT_TELEMETRY_DISABLED 1 npm run build";
-        npmPackFlags = [ "--ignore-scripts" ];
+        npmPackFlags = [ "--ignore-scripts" "--legacy-peer-deps" ];
         pname = "parkfuchs";
         version = (builtins.fromJSON (builtins.readFile ./package.json)).version;
         npmDepsHash = "sha256-3wZmjXU4XjYlNcBETV7DafLgi65iUxHq5t5QcxXT1m8=";
