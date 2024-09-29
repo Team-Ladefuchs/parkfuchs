@@ -18,7 +18,7 @@
         npmPackFlags = [ "--ignore-scripts" "--legacy-peer-deps" ];
         pname = "parkfuchs";
         version = (builtins.fromJSON (builtins.readFile ./package.json)).version;
-        npmDepsHash = "sha256-AtKB9Gwp+Xr5vgdoBw2Z/6ENrX94NjnY17jZeUgSa74=";
+        npmDepsHash = "sha256-b3ke5eyIbvWvmCtTY9bClXuKYAHvFvtjcaShWrOZAjo=";
         installPhase = ''
           			runHook preInstall
           			mkdir -p $out/.next
