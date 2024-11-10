@@ -11,4 +11,13 @@ module.exports = withPWA({
 		defaultLocale: "de",
 	},
 	output: "standalone",
+	images: {
+		remotePatterns: [
+			{
+				protocol: "https",
+				hostname: "parkfuchs.app",
+				port: "",
+			},
+		],
+	},
 });
