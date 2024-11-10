@@ -1,3 +1,5 @@
+"user server";
+
 import PocketBase, { RecordService } from "pocketbase";
 import type {
 	CityRepo,
@@ -17,7 +19,7 @@ pocketBase.autoCancellation(true);
 
 function toRecordToInboxCity(row: InboxCity): InboxCity {
 	const cityItem: CityRepo = row.expand.city as unknown as CityRepo;
-	const ret: InboxCity = {
+	return {
 		cityRef: {
 			id: cityItem.id,
 			name: cityItem.name,
@@ -44,8 +46,6 @@ function toRecordToInboxCity(row: InboxCity): InboxCity {
 		websiteExtras: row.websiteExtras,
 		updated: row.updated,
 	};
-
-	return ret;
 }
 
 function parseSearch(
@@ -74,9 +74,7 @@ export async function getEnabledInboxCities(
 				expand: "city",
 				sort: "-updated,city",
 			});
-		return resultList.items
-			.map(toRecordToInboxCity)
-			.filter((item) => item.approved);
+		return resultList.items.map(toRecordToInboxCity);
 	} catch (error: Error | any) {
 		console.error("[getNewestEnabledInboxCities]", error.message);
 	}
@@ -107,26 +105,15 @@ export async function getCityById(cityId: string): Promise<InboxCity | null> {
 }
 export async function getCitiesWithPrivileges(): Promise<InboxCity[]> {
 	try {
-		const resultList = await pocketBase
-			.collection("cityInbox")
-			.getFullList<InboxCity>({
-				filter: "approved=true",
-				expand: "city",
-			});
-		return resultList
-			.map(toRecordToInboxCity)
-			.filter(
-				({
-					freeParking,
-					parkingHours,
-					untilMaxMarkingHour,
-					useBusLane,
-				}) =>
-					freeParking === true ||
-					parkingHours > 0 ||
-					untilMaxMarkingHour === true ||
-					useBusLane === true
-			);
+		return await pocketBase.collection("cityInbox").getFullList<InboxCity>({
+			filter: `approved=true &&  
+						(freeParking = true ||
+						parkingHours > 0 ||
+						untilMaxMarkingHour = true ||
+						useBusLane = true)
+				`,
+			expand: "city",
+		});
 	} catch (error: Error | any) {
 		console.error("[getCityById]", error.message);
 	}
@@ -197,52 +184,59 @@ export async function autocomplete(
 	maxResults: number
 ): Promise<ResultCity[]> {
 	try {
-		const searchQuery = query ?? "";
+		const searchQuery = query?.trim() || "";
 		const collection = pocketBase.collection("cityRepo");
 		const complexQuery = parseSearch(searchQuery);
+		const filter = complexQuery
+			? createComplexFilter(complexQuery)
+			: createSimpleFilter(searchQuery);
 
-		let results;
-
-		if (complexQuery) {
-			const { postcode, cityName } = complexQuery;
-			results = await collection.getList(1, maxResults, {
-				filter: `name ~ '${cityName}%' && postcodes ~ '${postcode}'`,
-			});
-		} else {
-			results = await collection.getList(1, maxResults, {
-				filter: `name ~ '${searchQuery.trim()}%' || postcodes ~ '${searchQuery}'`,
-			});
-		}
-
+		const results = await collection.getList(1, maxResults, { filter });
 		const cityInbox = pocketBase.collection("cityInbox");
 
-		const promises = results.items.map(async (row) => {
-			return {
-				id: row.id,
-				name: row.name,
-				postcode: row.postcodes,
-				stateCode: row.stateCode,
-				state: row.state,
-				exists: await citAlreadyExists(cityInbox, row.id),
-			};
-		});
-		const list = await Promise.all(promises);
-		list.sort((a, b) => {
-			if (a.exists && !b.exists) {
-				return -1;
-			}
-			if (!a.exists && b.exists) {
-				return 1;
-			}
-			return 0;
-		});
-
-		return list;
+		const cities = await Promise.all(
+			results.items.map((row) => createCityResult(row, cityInbox))
+		);
+		return cities;
 	} catch (error: Error | any) {
-		console.log("[autocomplete]", error.message);
+		return [];
 	}
+}
 
-	return [];
+function createComplexFilter({
+	postcode,
+	cityName,
+}: {
+	postcode: string;
+	cityName: string;
+}): string {
+	return `name ~ '${cityName}%' && postcodes ~ '${postcode}'`;
+}
+
+function createSimpleFilter(searchQuery: string): string {
+	return `name ~ '${searchQuery}%' || postcodes ~ '${searchQuery}'`;
+}
+
+async function createCityResult(row: any, cityInbox: any): Promise<ResultCity> {
+	const exists = await citAlreadyExists(cityInbox, row.id);
+	return {
+		id: row.id,
+		name: row.name,
+		postcode: row.postcodes,
+		stateCode: row.stateCode,
+		state: row.state,
+		exists,
+	};
+}
+
+function sortCities(cities: ResultCity[]): ResultCity[] {
+	return cities.sort((a, b) => {
+		console.log("111111111");
+		if (a.exists !== b.exists) {
+			return a.exists ? -1 : 1;
+		}
+		return 0; // Keep the original order for cities that both exist or both don't
+	});
 }
 
 async function citAlreadyExists(

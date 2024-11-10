@@ -5,8 +5,8 @@ import {
 	faArrowRight,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import axios from "axios";
 import { JSX, useEffect, useRef } from "react";
+import { geolocation } from "../functions/geolocation";
 export interface Properties {
 	className?: string;
 	onChange: (value: string) => void;
@@ -42,18 +42,18 @@ export default function SearchInput({
 		navigator.geolocation.getCurrentPosition(async (position) => {
 			const { latitude, longitude } = position.coords;
 			try {
-				const { data } = await axios.post("/api/geolocation", {
+				const response = await geolocation({
 					latitude,
 					longitude,
 				});
 
-				if (!data) {
+				if (!response) {
 					return;
 				}
 
 				if (inputRef.current) {
-					onChange(`${data.postalCode}, ${data.cityName}`);
-					inputRef.current.value = `${data.postalCode}, ${data.cityName}`;
+					onChange(`${response.postalCode}, ${response.cityName}`);
+					inputRef.current.value = `${response.postalCode}, ${response.cityName}`;
 				}
 			} catch (error) {
 				console.error("[geolocation]", error);

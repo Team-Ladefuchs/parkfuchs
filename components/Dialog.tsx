@@ -1,8 +1,7 @@
 "use client";
-import axios from "axios";
 
 import { JSX, useContext, useEffect, useState } from "react";
-import { InboxCity, NewCity, Website } from "../db/types";
+import { NewCity, Website } from "../db/types";
 import AutoCompleteInput from "./AutoCompleteInput";
 import Image from "next/image";
 import parkfuchsLogo from "../public/parkfuchs.svg";
@@ -16,6 +15,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import Form from "./Form";
 import { AppContext } from "../context/appContext";
+import { getCityById, saveCity } from "../db/city";
 
 interface Properties {
 	isOpen: boolean;
@@ -44,19 +44,6 @@ export default function Dialog({
 	const [isResetForm, setIsResetForm] = useState(false);
 
 	const [search, setSearch] = useState("");
-
-	const getCityById = async (id: string) => {
-		try {
-			const { data } = await axios.get<InboxCity>(`/api/city/${id}`);
-
-			if (!data) {
-				return;
-			}
-			setEditCity(data);
-		} catch (error) {
-			console.error("[getCityById]", error);
-		}
-	};
 
 	useEffect(() => {
 		if (!isOpen) {
@@ -113,7 +100,7 @@ export default function Dialog({
 		console.info("saving new City", { toSave });
 		handleOnClose();
 		await toast.promise(
-			axios.post("/api/newCity", toSave),
+			saveCity(toSave),
 			{
 				loading: "Wird gespeichert …",
 				success: editCity
@@ -153,7 +140,7 @@ export default function Dialog({
 				className="mx-auto animate-show overflow-y-hidden backdrop:bg-red-300 relative top-16 bg-transparent max-w-2xl w-full px-4 md:px-0"
 			>
 				<div className="rounded-lg shadow mt-1 bg-white mx-auto">
-					<header className="flex bg-green rounded-t-lg items-start justify-between border-b align-start h-14">
+					<header className="flex bg-primaryGreen rounded-t-lg items-start justify-between border-b align-start h-14">
 						<Image
 							src={parkfuchsLogo}
 							height={64}
@@ -207,9 +194,15 @@ export default function Dialog({
 															selectedCity
 														);
 
-														await getCityById(
-															selectedCity.id
-														);
+														const city =
+															await getCityById(
+																selectedCity.id
+															);
+
+														if (!city) {
+															return;
+														}
+														setEditCity(city);
 													}}
 												>
 													Falsche Info melden

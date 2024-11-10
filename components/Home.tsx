@@ -2,7 +2,6 @@
 
 import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import axios from "axios";
 import { useState } from "react";
 import { CityStats, InboxCity } from "../db/types";
 import { useDebounce } from "../functions/debounce";
@@ -12,6 +11,7 @@ import LandingBox from "./LandingBox";
 import SearchInput from "./SearchInput";
 import { AppContextProvider } from "../context/appContext";
 import { useSearchParams } from "next/navigation";
+import { search as searchCity } from "../db/city";
 
 export default function Home({
 	cities,
@@ -40,8 +40,8 @@ export default function Home({
 			return;
 		}
 		setIsLoading(true);
-		const response = await axios.get(`/api/search/${searchTerm}`);
-		setResults(response.data);
+		const response = await searchCity(searchTerm, 15);
+		setResults(response);
 		setIsLoading(false);
 	};
 
@@ -78,7 +78,7 @@ export default function Home({
 							Oder
 						</div>
 						<button
-							className="bg-green max-md:w-full max-md:justify-center gap-2 flex items-center text-lg rounded-lg hover:bg-darkGreen text-black w-max py-2 px-4 justify-self-start"
+							className="bg-primaryGreen max-md:w-full max-md:justify-center gap-2 flex items-center text-lg rounded-lg hover:bg-darkGreen text-black w-max py-2 px-4 justify-self-start"
 							onClick={(_e) => setOpenDialog(true)}
 						>
 							<FontAwesomeIcon

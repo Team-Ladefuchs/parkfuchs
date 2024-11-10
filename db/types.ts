@@ -57,7 +57,7 @@ export interface ResultCity {
 	readonly name: string;
 	readonly stateCode: string;
 	readonly state: string;
-	readonly postcode: number[];
+	readonly postcode: string[];
 	readonly exists: boolean;
 }
 

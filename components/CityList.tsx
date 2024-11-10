@@ -105,20 +105,24 @@ export default function CityList({
 				</div>
 			)}
 
-			{items.map((item) => {
+			{items.map((item, index) => {
 				return (
 					<div
 						key={item.id}
-						className="accordion-item-wrapper bg-white w-full"
+						className="accordion-item-wrapper w-full"
 					>
 						<header className="accordion-header mb-0">
 							<h2
 								className={`accordion-button 
-						relative block items-center w-full py-4 px-5
-						text-base text-black text-left
-						bg-white transition focus:outline-none ${
-							isSelected(item.id) ? "accordion-button-open" : ""
-						}`}
+									relative block items-center w-full py-4 px-5
+									text-base text-black text-left
+									bg-white transition focus:outline-none ${
+										isSelected(item.id)
+											? "!bg-primaryGreen"
+											: ""
+									} ${index === 0 ? "rounded-t-md" : ""} ${
+									index === items.length ? "rounded-t-md" : ""
+								}`}
 								role="button"
 								aria-label="Ort ausklappen Button"
 								onClick={() => {
@@ -170,7 +174,7 @@ export default function CityList({
 							}`}
 							aria-labelledby={item.id}
 						>
-							<div className="accordion-body">
+							<div className="accordion-body bg-white">
 								<div
 									className="py-7 px-12 grid gap-4 max-md:px-5 max-md:py-4"
 									aria-label="Ort Information"
