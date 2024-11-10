@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { JSX, useEffect, useState } from "react";
 import { useDebounce } from "../functions/debounce";
 import SearchInput from "./SearchInput";
 import { SlimCity } from "./Dialog";

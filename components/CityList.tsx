@@ -4,7 +4,7 @@ import Url from "./Link";
 import Linkify from "linkify-react";
 import Link from "next/link";
 import { formatLink } from "../functions/utils";
-import { useContext, useEffect, useState } from "react";
+import { JSX, useContext, useEffect, useState } from "react";
 import { AppContext } from "../context/appContext";
 import { faArrowUpRightFromSquare } from "@fortawesome/free-solid-svg-icons";
 import germanStrings from "react-timeago/lib/language-strings/de";

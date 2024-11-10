@@ -1,5 +1,3 @@
-/** @type {import('next').NextConfig} */
-
 const withPWA = require("next-pwa")({
 	dest: "public",
 	skipWaiting: true,
@@ -8,7 +6,6 @@ const withPWA = require("next-pwa")({
 module.exports = withPWA({
 	reactStrictMode: true,
 	productionBrowserSourceMaps: true,
-	swcMinify: true,
 	i18n: {
 		locales: ["de"],
 		defaultLocale: "de",

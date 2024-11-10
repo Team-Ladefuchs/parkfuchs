@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
 import { CityStats } from "../db/types";
 import { bunqLink } from "./AppNav";
+import { JSX } from "react";
 
 interface Properties {
 	className?: string;
