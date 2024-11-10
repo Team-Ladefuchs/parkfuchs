@@ -1,10 +1,4 @@
-const withPWA = require("next-pwa")({
-	dest: "public",
-	skipWaiting: true,
-	disable: process.env.NODE_ENV === "development", // Disable PWA in development
-});
-
-module.exports = withPWA({
+module.exports = {
 	reactStrictMode: true,
 	productionBrowserSourceMaps: true,
 	i18n: {
@@ -22,7 +16,6 @@ module.exports = withPWA({
 		],
 	},
 	experimental: {
-		outputFileTracing: false, // Disable output file tracing
-		cache: false, // Disable disk caching
+		reactCompiler: true,
 	},
-});
+};

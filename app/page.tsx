@@ -5,10 +5,7 @@ import { getCityCount, getEnabledInboxCities } from "../db/city";
 import { getTGHLink } from "../db/config";
 import { JSX, Suspense } from "react";
 
-export const dynamic = "auto",
-	runtime = "nodejs",
-	revalidate = 0,
-	fetchCache = "auto";
+export const dynamic = "force-dynamic";
 
 export default async function Index() {
 	const [cities, thgLink, cityStates] = await Promise.all([
