@@ -1,8 +1,9 @@
-import axios from "axios";
 import { JSX, useEffect, useState } from "react";
 import { useDebounce } from "../functions/debounce";
 import SearchInput from "./SearchInput";
 import { SlimCity } from "./Dialog";
+import { autocomplete } from "../db/city";
+import { ResultCity } from "../db/types";
 
 export interface Properties {
 	onSelectedCity: (city: SlimCity) => void;
@@ -13,7 +14,7 @@ export default function AutoCompleteInput({
 	onSelectedCity,
 	initQuery = "",
 }: Properties): JSX.Element {
-	const [results, setResults] = useState<Array<SlimCity>>([]);
+	const [results, setResults] = useState<ResultCity[]>([]);
 
 	const [isSearching, setIsSearching] = useState(false);
 
@@ -41,12 +42,12 @@ export default function AutoCompleteInput({
 			return;
 		}
 		setIsSearching(true);
-		const response = await axios.get(`/api/autocomplete/${searchTerm}`);
-		setResults(response.data);
+		const response = await autocomplete(searchTerm, 20);
+		setResults(response);
 		setIsSearching(false);
 	};
 
-	const debouncedAutoCompleteCities = useDebounce(autoCompleteCities, 110);
+	const debouncedAutoCompleteCities = useDebounce(autoCompleteCities, 220);
 
 	return (
 		<>

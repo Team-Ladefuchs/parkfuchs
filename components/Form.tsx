@@ -393,7 +393,7 @@ export default function Form({
 					data-modal-toggle="defaultModal"
 					aria-label="Formular Speichern"
 					type="submit"
-					className="text-black bg-green hover:bg-darkGreen focus:ring-2 focus:outline-none font-medium rounded-lg text-md px-5 py-3 text-center disabled:opacity-50 disabled:hover:bg-green focus:ring-darkGreen"
+					className="text-black bg-primaryGreen hover:bg-darkGreen focus:ring-2 focus:outline-none font-medium rounded-lg text-md px-5 py-3 text-center disabled:opacity-50 disabled:hover:bg-primaryGreen focus:ring-darkGreen"
 				>
 					Speichern
 				</button>
@@ -402,7 +402,7 @@ export default function Form({
 					type="reset"
 					aria-label="dialog schließen"
 					onClick={onClose}
-					className="text-black bg-green hover:bg-darkGreen focus:ring-2 focus:outline-none font-medium rounded-lg text-md px-5 py-3 text-center focus:ring-darkGreen"
+					className="text-black bg-primaryGreen hover:bg-darkGreen focus:ring-2 focus:outline-none font-medium rounded-lg text-md px-5 py-3 text-center focus:ring-darkGreen"
 				>
 					Abbrechen
 				</button>

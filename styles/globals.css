@@ -92,10 +92,6 @@ nav {
 	grid-template-rows: 1fr;
 }
 
-.accordion-button-open {
-	background-color: #d1d9c0 !important;
-}
-
 .webkit-highlight-fix {
 	-webkit-tap-highlight-color: transparent !important;
 }

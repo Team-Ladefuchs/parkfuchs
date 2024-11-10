@@ -15,11 +15,11 @@
         parkfuchs = buildNpmPackage {
           src = ./.;
           npmBuild = "NEXT_TELEMETRY_DISABLED 1 npm run build";
-          npmFlags = [ "--ingore-scripts" "--legacy-peer-deps"];
+          npmFlags = [ "--ingore-scripts" "--legacy-peer-deps" ];
           pname = "parkfuchs";
           version =
             (builtins.fromJSON (builtins.readFile ./package.json)).version;
-          npmDepsHash = "sha256-IxgFQrNNJtFiu426TFxm/w5LjS/m2gKdhIrOqoMk0aA=";
+          npmDepsHash = "sha256-mVKJY1TgK67TGaEef8hQq05DTHPFf4xk3QZb7K/2s2o=";
           installPhase = ''
                         runHook preInstall
             			mkdir -p $out/.next

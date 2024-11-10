@@ -9,7 +9,7 @@ export const bunqLink = "https://bunq.me/parkfuchs";
 export default function AppNav() {
 	return (
 		<nav
-			className="p-3 w-device sticky top-0 left-0 right-0 bg-green w-full z-20 max-md:py-3 max-md:px-4"
+			className="p-3 w-device sticky top-0 left-0 right-0 bg-primaryGreen w-full z-20 max-md:py-3 max-md:px-4"
 			role="banner"
 			id="top"
 		>
