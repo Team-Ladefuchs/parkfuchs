@@ -16,8 +16,8 @@ export default async function Index() {
 		<>
 			<Suspense fallback={<Loading />}>
 				<Home cities={cities} cityStates={cityStates} />
+				<Banner link={thgLink} />
 			</Suspense>
-			<Banner link={thgLink} />
 
 			<footer className="left-1/2 text-center text-neutral-600 opacity-90 uppercase tracking-wide font-semibold text-xs pb-5 mb-16">
 				<p className="mb-1 mt-2">
@@ -38,6 +38,8 @@ export default async function Index() {
 
 function Loading(): JSX.Element {
 	return (
-		<p className="text-center text-2xl my-8 p-4">Der Fuchs aufgeladen...</p>
+		<p className="text-center text-2xl my-8 p-4 w-full">
+			Der Fuchs aufgeladen...
+		</p>
 	);
 }
