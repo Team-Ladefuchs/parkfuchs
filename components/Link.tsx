@@ -3,6 +3,7 @@ import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLink } from "@fortawesome/free-solid-svg-icons";
 import { formatLink } from "../functions/utils";
+import { JSX } from "react";
 
 export interface Properties {
 	link?: string | null;

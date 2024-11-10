@@ -1,5 +1,6 @@
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { JSX } from "react";
 import { UseFormRegister } from "react-hook-form";
 
 export const webKeyPattern = "website-extra-";

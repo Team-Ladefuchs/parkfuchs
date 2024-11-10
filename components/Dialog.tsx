@@ -1,7 +1,7 @@
 "use client";
 import axios from "axios";
 
-import { useContext, useEffect, useState } from "react";
+import { JSX, useContext, useEffect, useState } from "react";
 import { InboxCity, NewCity, Website } from "../db/types";
 import AutoCompleteInput from "./AutoCompleteInput";
 import Image from "next/image";

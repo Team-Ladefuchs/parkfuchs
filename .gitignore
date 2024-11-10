@@ -50,6 +50,7 @@ android
 *.keystore
 *.lockb
 
+*.env
 
 #nix 
 result

@@ -1,6 +1,6 @@
 "use client";
 
-import { useContext, useEffect, useState } from "react";
+import { JSX, useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
 import type { NewCity } from "../db/types";

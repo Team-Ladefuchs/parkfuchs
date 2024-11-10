@@ -1,3 +1,4 @@
+import { JSX } from "react";
 import { InboxCity } from "../db/types";
 
 export interface Properties {
