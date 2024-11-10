@@ -165,18 +165,25 @@ export async function search(
 }
 
 export async function getCityCount(): Promise<CityStats> {
-	const collection = pocketBase.collection("statistic");
+	try {
+		const collection = pocketBase.collection("statistic");
 
-	const result = await collection.getList<{ id: number; total: number }>(
-		1,
-		1
-	);
-	const { id, total } = result.items[0] ?? { id: 0, total: 0 };
+		const result = await collection.getList<{ id: number; total: number }>(
+			1,
+			1
+		);
+		const { id, total } = result.items[0] ?? { id: 0, total: 0 };
 
-	return {
-		count: total,
-		countWithPrivileges: id,
-	};
+		return {
+			count: total,
+			countWithPrivileges: id,
+		};
+	} catch (error) {
+		return {
+			count: 0,
+			countWithPrivileges: 0,
+		};
+	}
 }
 
 export async function autocomplete(
