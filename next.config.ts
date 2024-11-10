@@ -4,9 +4,6 @@ const withPWA = require("next-pwa")({
 });
 
 module.exports = withPWA({
-	experimental: {
-		reactCompiler: true,
-	},
 	reactStrictMode: true,
 	productionBrowserSourceMaps: true,
 	i18n: {
