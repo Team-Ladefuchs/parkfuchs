@@ -1,3 +1,4 @@
+"use server";
 import PocketBase, { RecordService } from "pocketbase";
 import type {
 	CityRepo,
@@ -8,12 +9,18 @@ import type {
 } from "./types";
 import h2p from "html2plaintext";
 
-const dbHost = process.env.DB_HOST ?? "http://127.0.0.1:8090";
-export const pocketBase = new PocketBase(dbHost);
+let pbInstance: PocketBase | null = null;
 
-console.log("Using (DB_HOST) for pocketbase:", dbHost);
-
-pocketBase.autoCancellation(true);
+export async function pocketBaseInstance() {
+	if (pbInstance) {
+		return pbInstance;
+	}
+	const dbHost = process.env.DB_HOST ?? "http://127.0.0.1:8090";
+	console.log("Using (DB_HOST) for pocketbase:", dbHost);
+	pbInstance = new PocketBase(dbHost);
+	pbInstance.autoCancellation(true);
+	return pbInstance;
+}
 
 function toRecordToInboxCity(row: InboxCity): InboxCity {
 	const cityItem: CityRepo = row.expand.city as unknown as CityRepo;
@@ -65,6 +72,7 @@ export async function getEnabledInboxCities(
 	maxResults = 16
 ): Promise<InboxCity[]> {
 	try {
+		const pocketBase = await pocketBaseInstance();
 		const resultList = await pocketBase
 			.collection("cityInbox")
 			.getList<InboxCity>(1, maxResults, {
@@ -82,6 +90,7 @@ export async function getEnabledInboxCities(
 
 export async function getCityById(cityId: string): Promise<InboxCity | null> {
 	try {
+		const pocketBase = await pocketBaseInstance();
 		const result = await pocketBase
 			.collection("cityInbox")
 			.getFirstListItem<InboxCity>(
@@ -103,6 +112,7 @@ export async function getCityById(cityId: string): Promise<InboxCity | null> {
 }
 export async function getCitiesWithPrivileges(): Promise<InboxCity[]> {
 	try {
+		const pocketBase = await pocketBaseInstance();
 		return await pocketBase.collection("cityInbox").getFullList<InboxCity>({
 			filter: `approved=true &&  
 						(freeParking = true ||
@@ -127,12 +137,13 @@ export async function search(
 		const searchQuery = query ?? "";
 
 		const complexQuery = parseSearch(searchQuery);
+		const pocketBase = await pocketBaseInstance();
 
 		const collection = pocketBase.collection("cityInbox");
 
 		if (complexQuery) {
 			const { postcode, cityName } = complexQuery;
-			const resultList = await collection.getList<InboxCity>(
+			const resultList = await collection?.getList<InboxCity>(
 				1,
 				maxResults,
 				{
@@ -141,7 +152,7 @@ export async function search(
 					sort: "-updated,+city",
 				}
 			);
-			return resultList.items
+			return resultList?.items
 				.map(toRecordToInboxCity)
 				.filter((item) => item.approved);
 		}
@@ -164,6 +175,7 @@ export async function search(
 
 export async function getCityCount(): Promise<CityStats> {
 	try {
+		const pocketBase = await pocketBaseInstance();
 		const collection = pocketBase.collection("statistic");
 
 		const result = await collection.getList<{ id: number; total: number }>(
@@ -190,6 +202,7 @@ export async function autocomplete(
 ): Promise<ResultCity[]> {
 	try {
 		const searchQuery = query?.trim() || "";
+		const pocketBase = await pocketBaseInstance();
 		const collection = pocketBase.collection("cityRepo");
 		const complexQuery = parseSearch(searchQuery);
 		const filter = complexQuery
@@ -234,16 +247,6 @@ async function createCityResult(row: any, cityInbox: any): Promise<ResultCity> {
 	};
 }
 
-function sortCities(cities: ResultCity[]): ResultCity[] {
-	return cities.sort((a, b) => {
-		console.log("111111111");
-		if (a.exists !== b.exists) {
-			return a.exists ? -1 : 1;
-		}
-		return 0; // Keep the original order for cities that both exist or both don't
-	});
-}
-
 async function citAlreadyExists(
 	cityInbox: RecordService,
 	cityId: string
@@ -261,7 +264,7 @@ async function citAlreadyExists(
 	return false;
 }
 
-function parseInput(newCity: NewCity): NewCity {
+async function parseInput(newCity: NewCity): Promise<NewCity> {
 	const information = h2p(newCity.information.trim());
 
 	if (newCity.nonePrivileges) {
@@ -294,9 +297,10 @@ function parseInput(newCity: NewCity): NewCity {
 }
 
 export async function saveCity(newCity: NewCity): Promise<InboxCity> {
-	const cityToSave = { ...parseInput(newCity), approved: false };
+	const cityToSave = { ...(await parseInput(newCity)), approved: false };
 	console.log("saveCity", cityToSave);
 
+	const pocketBase = await pocketBaseInstance();
 	const record = await pocketBase
 		.collection("cityInbox")
 		.create<InboxCity>(cityToSave);
