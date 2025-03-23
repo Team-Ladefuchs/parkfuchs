@@ -1,4 +1,4 @@
-"use-server";
+"use server";
 
 import axios, { type AxiosError } from "axios";
 
