@@ -5,21 +5,31 @@
     flake-utils.url = "github:numtide/flake-utils";
   };
 
-  outputs = { self, nixpkgs, flake-utils, ... }:
+  outputs =
+    {
+      self,
+      nixpkgs,
+      flake-utils,
+      ...
+    }:
     {
       nixosModules.parkfuchs = import ./nix { inherit self nixpkgs; };
-    } // flake-utils.lib.eachDefaultSystem (system:
+    }
+    // flake-utils.lib.eachDefaultSystem (
+      system:
       let
         pkgs = import nixpkgs { inherit system; };
         inherit (pkgs) buildNpmPackage nodejs_20;
         parkfuchs = buildNpmPackage {
           src = ./.;
           npmBuild = "NEXT_TELEMETRY_DISABLED 1 npm run build";
-          npmFlags = [ "--ingore-scripts" "--legacy-peer-deps" ];
+          npmFlags = [
+            "--ingore-scripts"
+            "--legacy-peer-deps"
+          ];
           pname = "parkfuchs";
-          version =
-            (builtins.fromJSON (builtins.readFile ./package.json)).version;
-          npmDepsHash = "sha256-mVKJY1TgK67TGaEef8hQq05DTHPFf4xk3QZb7K/2s2o=";
+          version = (builtins.fromJSON (builtins.readFile ./package.json)).version;
+          npmDepsHash = "sha256-Nf+KcgXn+pdz7C7cus8k0BF08fGkYEtaFevJ+sADiFQ=";
           installPhase = ''
                         runHook preInstall
             			mkdir -p $out/.next
@@ -28,9 +38,11 @@
             			cp -r ./public $out/
             			runHook postInstall'';
         };
-      in {
+      in
+      {
         defaultPackage = parkfuchs;
         packages = { inherit parkfuchs; };
         devShell = pkgs.mkShell { buildInputs = [ nodejs_20 ]; };
-      });
+      }
+    );
 }

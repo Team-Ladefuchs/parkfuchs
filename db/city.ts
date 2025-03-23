@@ -1,5 +1,3 @@
-"user server";
-
 import PocketBase, { RecordService } from "pocketbase";
 import type {
 	CityRepo,
