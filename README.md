@@ -43,13 +43,13 @@ TOMTOM_KEY=djahdi1xxxxxxxxx
 nix build .#parkfuchs
 ```
 
-**Update flake**
+**Update flake and Pocketbase**
 
 ```nix
 nix flake update
 ```
 
-**Docker**c
+**Docker**
 
 ```nix
 docker build -t parkfuchs:latest
