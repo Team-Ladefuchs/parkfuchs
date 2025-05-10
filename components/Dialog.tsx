@@ -190,14 +190,13 @@ export default function Dialog({
 												<div
 													className="underline cursor-pointer mt-2"
 													onClick={async () => {
-														console.log(
-															selectedCity
-														);
-
 														const city =
 															await getCityById(
 																selectedCity.id
 															);
+														console.log(
+															selectedCity.id
+														);
 
 														if (!city) {
 															return;

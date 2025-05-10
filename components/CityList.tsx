@@ -14,6 +14,7 @@ const formatter = buildFormatter(germanStrings);
 
 import TimeAgo from "react-timeago";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { getCityById } from "../db/city";
 
 export interface Properties {
 	items: InboxCity[];
@@ -230,8 +231,15 @@ export default function CityList({
 										</div>
 										<button
 											className="min-w-max underline flex relative bottom-1"
-											onClick={(_e) => {
-												setEditCity(item);
+											onClick={async () => {
+												const city = await getCityById(
+													item.city
+												);
+												console.log("aaaaaaaa", item);
+												if (!city) {
+													return;
+												}
+												setEditCity(city);
 												openDialog();
 											}}
 										>
