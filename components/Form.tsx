@@ -46,9 +46,7 @@ export default function Form({
 				website: null,
 			};
 		}
-		return {
-			...Object.assign({}, editCity),
-		};
+		return Object.assign({}, editCity);
 	};
 
 	const { register, handleSubmit, reset, getValues, setValue, watch } =
@@ -109,6 +107,7 @@ export default function Form({
 			untilMaxMarkingHour,
 			nonePrivileges,
 			whileCharging,
+			parkingHours,
 			freeParking,
 		} = getValues();
 
@@ -143,6 +142,8 @@ export default function Form({
 			if (untilMaxMarkingHour) {
 				setValue("freeParking", true);
 				setValue("parkingHours", 0);
+			} else if (!parkingHours) {
+				setValue("parkingHours", 3);
 			}
 		} else {
 			setValue("parkingHours", 0);
@@ -216,8 +217,9 @@ export default function Form({
 										<input
 											className="form-check-input border-none p-1 rounded border-gray-300 focus:ring-green focus:ring-2 cursor-pointer disabled:opacity-50 text-black max-w-[4em]"
 											disabled={
-												formValue.untilMaxMarkingHour ||
-												formValue.nonePrivileges
+												!editCity &&
+												(formValue.untilMaxMarkingHour ||
+													formValue.nonePrivileges)
 											}
 											id="parkinHours"
 											type="number"
