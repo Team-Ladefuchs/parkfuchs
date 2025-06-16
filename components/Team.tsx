@@ -34,8 +34,8 @@ const members = [
 		title: "Veteranfuchs",
 		image: "kay.jpg",
 		social: {
-			url: "https://twitter.com/4lau5",
-			text: "4lau.bsky.social",
+			url: "https://4lau.bsky.social",
+			text: "Bluesky",
 		},
 	},
 ];
