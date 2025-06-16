@@ -21,21 +21,21 @@ const members = [
 		},
 	},
 	{
-		name: "Kay",
-		title: "Moderatorfuchs",
-		image: "kay.jpg",
-		social: {
-			url: "https://twitter.com/4lau5",
-			text: "@4lau5",
-		},
-	},
-	{
 		name: "Sven",
 		title: "Moderatorfuchs",
 		image: "sven.jpg",
 		social: {
 			url: "https://chaos.social/@svenraskin",
 			text: "@svenraskin@chaos.social",
+		},
+	},
+	{
+		name: "Kay",
+		title: "Veteranfuchs",
+		image: "kay.jpg",
+		social: {
+			url: "https://twitter.com/4lau5",
+			text: "4lau.bsky.social",
 		},
 	},
 ];
