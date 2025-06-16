@@ -7,6 +7,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { JSX, useEffect, useRef } from "react";
 import { geolocation } from "../functions/geolocation";
+
 export interface Properties {
 	className?: string;
 	onChange: (value: string) => void;

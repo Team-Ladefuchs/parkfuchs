@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import localFont from "next/font/local";
 import Head from "next/head";
 import { Toaster } from "react-hot-toast";
 import AppNav from "../components/AppNav";
@@ -101,21 +102,25 @@ export const metadata: Metadata = {
 	},
 };
 
+const bitterItalic = localFont({
+	src: "../public/fonts/bitter-v25-latin-ext_latin-500italic.woff2",
+	weight: "500",
+	style: "italic",
+	display: "swap",
+	preload: true,
+});
+
+const robotoBold = localFont({
+	src: "../public/fonts/roboto-v29-latin-900.woff2",
+	weight: "900",
+	style: "normal",
+	display: "swap",
+	preload: true,
+});
+
 export default function RootLayout({ children }) {
 	return (
 		<html lang="de">
-			<Head>
-				<link
-					rel="/font/bitter-v25-latin-ext_latin-500italic.woff2"
-					type="font/woff2"
-					as="font"
-				></link>
-				<link
-					rel="/font/roboto-v29-latin-900.woff2"
-					type="font/woff2"
-					as="font"
-				></link>
-			</Head>
 			<body>
 				<AppNav />
 				<main className="w-full py-6 max-md:px-4 max-md:pt-5">
