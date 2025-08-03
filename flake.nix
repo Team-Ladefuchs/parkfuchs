@@ -19,7 +19,7 @@
       system:
       let
         pkgs = import nixpkgs { inherit system; };
-        inherit (pkgs) buildNpmPackage nodejs_20;
+        inherit (pkgs) buildNpmPackage nodejs_22;
         parkfuchs = buildNpmPackage {
           src = ./.;
           npmBuild = "NEXT_TELEMETRY_DISABLED 1 npm run build";
@@ -42,7 +42,7 @@
       {
         defaultPackage = parkfuchs;
         packages = { inherit parkfuchs; };
-        devShell = pkgs.mkShell { buildInputs = [ nodejs_20 ]; };
+        devShell = pkgs.mkShell { buildInputs = [ nodejs_22 ]; };
       }
     );
 }
