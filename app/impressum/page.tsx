@@ -194,7 +194,7 @@ export default function Impressum() {
 					<h2 id="m3" className="font-bold mb-2">
 						Verantwortlicher
 					</h2>
-					<address className="!font-normal">
+					<address className="font-normal!">
 						Malik Aziz<br></br>
 						Stephanstraße 43-45<br></br>
 						52064 Aachen

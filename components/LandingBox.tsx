@@ -21,7 +21,7 @@ export default function LandingBox({
 	}
 	return (
 		<section
-			className={`bg-primaryGreen rounded-lg p-4 px-6 h-fit opacity-75 grid grid-cols-[28px_1fr] gap-2 max-md:gap-3 max-md:gap-y-2 max-md:p-4 ${className}`}
+			className={`bg-green-normal rounded-lg p-4 px-6 h-fit opacity-75 grid grid-cols-[28px_1fr] gap-2 max-md:gap-3 max-md:gap-y-2 max-md:p-4 ${className}`}
 		>
 			<FontAwesomeIcon
 				icon={faTreeCity}
@@ -34,10 +34,10 @@ export default function LandingBox({
 			</p>
 			<FontAwesomeIcon
 				icon={faMugHot}
-				className="w-[22px] h-[22px] ml-1 max-md:mt-[-1px] md:!hidden"
+				className="w-[22px] h-[22px] ml-1 max-md:-mt-px md:hidden!"
 			/>
 			<Link
-				className="leading-5 underline md:!hidden"
+				className="leading-5 underline md:hidden!"
 				href={bunqLink}
 				target="_blank"
 				prefetch={false}

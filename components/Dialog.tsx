@@ -140,7 +140,7 @@ export default function Dialog({
 				className="mx-auto animate-show overflow-y-hidden backdrop:bg-red-300 relative top-16 bg-transparent max-w-2xl w-full px-4 md:px-0"
 			>
 				<div className="rounded-lg shadow mt-1 bg-white mx-auto">
-					<header className="flex bg-primaryGreen rounded-t-lg items-start justify-between border-b align-start h-14">
+					<header className="flex bg-green-normal rounded-t-lg items-start justify-between border-b align-start h-14">
 						<Image
 							src={parkfuchsLogo}
 							height={64}
@@ -175,7 +175,7 @@ export default function Dialog({
 										onSelectedCity={handleSelectedCity}
 									/>
 									{selectedCity?.exists && (
-										<div className="bg-lightGreen p-3 rounded-lg text-black flex gap-4 items-center ">
+										<div className="bg-green-light p-3 rounded-lg text-black flex gap-4 items-center ">
 											<FontAwesomeIcon
 												size="2xl"
 												icon={faCircleExclamation}

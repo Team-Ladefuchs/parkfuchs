@@ -73,7 +73,7 @@ export default function AutoCompleteInput({
 										exists: item.exists,
 									});
 								}}
-								className="pl-6 group pt-3 pb-3 first:rounded-t-lg cursor-pointer hover:bg-lightGreen border-b border-gray-200 last:border-0"
+								className="pl-6 group pt-3 pb-3 first:rounded-t-lg cursor-pointer hover:bg-green-light border-b border-gray-200 last:border-0"
 							>
 								<div className="flex gap-1 items-baseline">
 									<div>{item.name}</div>

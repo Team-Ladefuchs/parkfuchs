@@ -112,14 +112,14 @@ export default function CityList({
 						key={item.id}
 						className="accordion-item-wrapper w-full"
 					>
-						<header className="accordion-header mb-0">
+						<header className="accordion-header mb-0 cursor-pointer">
 							<h2
 								className={`accordion-button 
 									relative block items-center w-full py-4 px-5
 									text-base text-black text-left
 									bg-white transition focus:outline-none ${
 										isSelected(item.id)
-											? "!bg-primaryGreen"
+											? "!bg-green-normal"
 											: ""
 									} ${index === 0 ? "rounded-t-md" : ""} ${
 									index === items.length ? "rounded-t-md" : ""
@@ -146,7 +146,7 @@ export default function CityList({
 									{shareIsSupported &&
 										isSelected(item.id) && (
 											<button
-												className="p-2 active:!outline-none  webkit-highlight-fix"
+												className="p-2 active:outline-none!  webkit-highlight-fix"
 												onClick={async (event) => {
 													event.stopPropagation();
 													await shareCity(

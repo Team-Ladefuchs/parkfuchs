@@ -9,7 +9,7 @@ export const bunqLink = "https://bunq.me/parkfuchs";
 export default function AppNav() {
 	return (
 		<nav
-			className="p-3 w-device sticky top-0 left-0 right-0 bg-primaryGreen w-full z-20 max-md:py-3 max-md:px-4"
+			className="p-3 w-device sticky top-0 left-0 right-0 bg-green-normal w-full z-20 max-md:py-3 max-md:px-4"
 			role="banner"
 			id="top"
 		>
@@ -18,7 +18,7 @@ export default function AppNav() {
 					<Logo />
 					<div>
 						<h1
-							className="font-extrabold sm:text-md text-red text-[26px] leading-9 line max-md:text-2xl break-words uppercase roboto-900"
+							className="font-extrabold sm:text-md text-red-normal text-[26px] leading-9 line max-md:text-2xl break-words uppercase roboto-900"
 							role="heading"
 						>
 							Parkfuchs
@@ -29,7 +29,7 @@ export default function AppNav() {
 					</div>
 				</Link>
 				<Link
-					className="bg-darkGreen font-semibold tracking-wider text-xs p-2 px-3 pt-[10px] rounded-lg uppercase hover:opacity-75 flex gap-2 max-md:hidden items-center"
+					className="bg-green-dark font-semibold tracking-wider text-xs p-2 px-3 pt-[10px] rounded-lg uppercase hover:opacity-75 flex gap-2 max-md:hidden items-center"
 					target="_blank"
 					href={bunqLink}
 					prefetch={false}
