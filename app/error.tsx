@@ -24,7 +24,7 @@ export default function Error({
 				bereits informiert.
 			</p>
 			<button
-				className="bg-primaryGreen max-md:justify-center gap-2 flex items-center text-lg rounded-lg hover:bg-darkGreen text-black w-max py-2 px-4 justify-self-start mx-auto"
+				className="bg-green-normal max-md:justify-center gap-2 flex items-center text-lg rounded-lg hover:bg-green-dark text-black w-max py-2 px-4 justify-self-start mx-auto"
 				onClick={() => window.location.reload()}
 			>
 				Probier es nochmal

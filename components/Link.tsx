@@ -12,12 +12,12 @@ export interface Properties {
 
 export default function Url({ link, label }: Properties): JSX.Element {
 	if (!link) {
-		return <></>;
+		return <div className="hidden"></div>;
 	}
 
 	return (
 		<Link
-			className="underline max-w-xl max-sm:w-[275px] max-xs:[280px] text-red break-words max-md:mb-2 last:mb-0 w-full"
+			className="underline max-w-xl max-sm:w-[275px] max-xs:[280px] text-red-normal break-words max-md:mb-2 last:mb-0 w-full"
 			target="_blank"
 			href={link}
 		>

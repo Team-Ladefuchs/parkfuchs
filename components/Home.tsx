@@ -58,10 +58,7 @@ export default function Home({
 
 	return (
 		<AppContextProvider>
-			<div
-				className="mx-auto w-full max-w-[750px] min-h-[28rem]"
-				role="main"
-			>
+			<div className="mx-auto w-full max-w-[750px] min-h-112" role="main">
 				<Dialog
 					isOpen={openDialog}
 					onClose={handleOnClose}
@@ -78,7 +75,7 @@ export default function Home({
 							Oder
 						</div>
 						<button
-							className="bg-primaryGreen max-md:w-full max-md:justify-center gap-2 flex items-center text-lg rounded-lg hover:bg-darkGreen text-black w-max py-2 px-4 justify-self-start"
+							className="bg-green-normal max-md:w-full max-md:justify-center gap-2 flex items-center text-lg rounded-lg hover:bg-green-dark text-black w-max py-2 px-4 justify-self-start"
 							onClick={(_e) => setOpenDialog(true)}
 						>
 							<FontAwesomeIcon
@@ -94,7 +91,7 @@ export default function Home({
 					/>
 					<section>
 						<CityList
-							className="min-h-[21rem]"
+							className="min-h-84"
 							items={getItems()}
 							isEmpty={listIsEmpty}
 							onOpenDialog={() => setOpenDialog(true)}

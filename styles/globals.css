@@ -1,22 +1,62 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
-@layer base {
-	:root {
-		--green-dark: #b0bd92;
-		--normal-green: #d1d9c0;
-		--primary-bg: #ece9e1;
+@plugin "@tailwindcss/forms";
+
+@theme {
+	--color-green-dark: #b0bd92;
+	--color-green-darker: "#B0BD92";
+	--color-green-normal: #d1d9c0;
+	--color-primary-bg: #ece9e1;
+	--color-green-light: #e9ece0;
+	--color-red-normal: #d53d25;
+
+	@keyframes fadeIn {
+		0% {
+			opacity: 0;
+		}
+		100% {
+			opacity: 1;
+		}
 	}
 
+	@keyframes show {
+		from {
+			transform: translateY(-110%);
+		}
+		to {
+			transform: translateY(0%);
+		}
+	}
+
+	@keyframes bounceX {
+		0%,
+		100% {
+			transform: translateX(-25%);
+			animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
+		}
+		50% {
+			transform: translateY(0);
+			animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+		}
+	}
+
+	--animate-fade: fadeIn 200ms ease-in-out;
+	--animate-show: show 380ms ease normal;
+	--animate-bounceX: animation: bounceX 1.8s infinite
+}
+
+@layer base {
 	input[type="number"]::-webkit-inner-spin-button,
 	input[type="number"]::-webkit-outer-spin-button {
 		opacity: 1;
 		position: relative;
 		left: 4px;
 	}
+	input[type="number"] button {
+		cursor: pointer;
+	}
 	body {
-		background-color: var(--primary-bg);
+		background-color: var(--color-primary-bg);
 		overflow-x: hidden;
 		overflow-y: scroll;
 	}
@@ -34,7 +74,7 @@
 
 	/* Handle */
 	::-webkit-scrollbar-thumb {
-		background: var(--green-dark);
+		background: var(--color-green-dark);
 		opacity: 0.7;
 		border-radius: 2px;
 	}
