@@ -1,6 +1,6 @@
 {
 	"name": "parkfuchs",
-	"version": "1.9.2",
+	"version": "1.9.3",
 	"private": true,
 	"scripts": {
 		"dev": "next dev",
@@ -22,7 +22,7 @@
 		"linkify-react": "^4.3.2",
 		"linkifyjs": "^4.3.2",
 		"lottie-react": "^2.4.1",
-		"next": "15.4.5",
+		"next": "15.4.6",
 		"next-pwa": "^5.6.0",
 		"pocketbase": "^0.26.2",
 		"react": "19.1.1",
@@ -38,7 +38,7 @@
 		"autoprefixer": "^10.4.21",
 		"@types/node": "^24.1.0",
 		"eslint": "9.32.0",
-		"eslint-config-next": "15.4.5",
+		"eslint-config-next": "15.4.6",
 		"eslint-plugin-unused-imports": "~4.1.4",
 		"postcss": "^8.5.6",
 		"tailwindcss": "^3.4.17",
