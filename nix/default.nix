@@ -75,6 +75,7 @@ in
         RestartSec = "5s";
         Group = "parkfuchs";
         StateDirectory = stateDir;
+        Environment = "/var/lib/${stateDir}/next-cache";
         # Starts the web server (default to 127.0.0.1:8090 if no domain is specified)
         ExecStart = "${
           nixpkgs.legacyPackages.${pkgs.system}.pocketbase
@@ -99,7 +100,7 @@ in
         Type = "simple";
         User = "parkfuchs";
         Group = "parkfuchs";
-        ExecStart = "${pkgs.nodejs_22}/bin/node ${self.packages.${pkgs.system}.parkfuchs}/server.js ";
+        ExecStart = "${pkgs.bun}/bin/bun ${self.packages.${pkgs.system}.parkfuchs}/server.js ";
       };
     };
   };
