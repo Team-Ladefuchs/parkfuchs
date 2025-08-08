@@ -29,7 +29,7 @@
           ];
           pname = "parkfuchs";
           version = (builtins.fromJSON (builtins.readFile ./package.json)).version;
-          npmDepsHash = "sha256-GxaM0BWhqeQCsLGUsuGccGrjRrFeDktnrv9acY5NWm0=";
+          npmDepsHash = "sha256-SX+QE2ReHUuAmQEbPM9IlJyEsfe02UlJuYX5a3hjHPQ=";
           installPhase = ''
                         runHook preInstall
             			mkdir -p $out/.next
