@@ -1,6 +1,6 @@
 {
 	"name": "parkfuchs",
-	"version": "1.10.2",
+	"version": "1.10.3",
 	"private": true,
 	"scripts": {
 		"dev": "next dev",
@@ -34,13 +34,12 @@
 	},
 	"devDependencies": {
 		"@tailwindcss/postcss": "^4.1.11",
-		"@types/node": "^24.1.0",
 		"@types/react-list": "^0.8.12",
 		"eslint": "9.32.0",
 		"eslint-config-next": "15.4.6",
 		"eslint-plugin-unused-imports": "~4.1.4",
 		"tailwindcss": "^4.1.11",
-		"typescript": "5.8.3",
+		"typescript": "5.9.2",
 		"webpack": "^5.101.0"
 	}
 }

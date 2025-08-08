@@ -92,7 +92,7 @@ in
       environment = {
         ADDR = cfg.addr;
         PORT = toString cfg.port;
-        NEXT_CACHE_DIR = "/var/lib/${stateDir}/next-cache";
+        NEXT_CACHE_DIR = "/tmp/next-cache";
         TOMTOM_KEY = cfg.tomtomKey;
         DB_HOST = "http://127.0.0.1:${toString cfg.pocketBasePort}";
       };
