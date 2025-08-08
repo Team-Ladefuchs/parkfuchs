@@ -75,7 +75,6 @@ in
         RestartSec = "5s";
         Group = "parkfuchs";
         StateDirectory = stateDir;
-        Environment = "/var/lib/${stateDir}/next-cache";
         # Starts the web server (default to 127.0.0.1:8090 if no domain is specified)
         ExecStart = "${
           nixpkgs.legacyPackages.${pkgs.system}.pocketbase
@@ -93,6 +92,7 @@ in
       environment = {
         ADDR = cfg.addr;
         PORT = toString cfg.port;
+        NEXT_CACHE_DIR = "/var/lib/${stateDir}/next-cache";
         TOMTOM_KEY = cfg.tomtomKey;
         DB_HOST = "http://127.0.0.1:${toString cfg.pocketBasePort}";
       };
