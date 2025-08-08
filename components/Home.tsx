@@ -67,6 +67,7 @@ export default function Home({
 				<section className="pb-12 flex flex-col space-y-6 max-md:space-y-4">
 					<div className="flex gap-5 max-md:gap-2 items-center justify-between max-md:flex-col">
 						<SearchInput
+							id={"mainSearchCityInput"}
 							className="grow max-md:w-full"
 							initValue={searchParams.get("query") ?? ""}
 							onChange={debouncedOnCitySearch}

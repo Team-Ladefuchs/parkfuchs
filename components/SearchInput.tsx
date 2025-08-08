@@ -12,12 +12,14 @@ export interface Properties {
 	className?: string;
 	onChange: (value: string) => void;
 	initValue?: string;
+	id: string;
 }
 
 export default function SearchInput({
 	onChange,
 	className = "",
 	initValue = "",
+	id,
 }: Properties): JSX.Element {
 	const inputRef = useRef<HTMLInputElement | null>(null);
 
@@ -71,11 +73,11 @@ export default function SearchInput({
 
 			<input
 				ref={inputRef}
-				type="type"
+				type="text"
 				autoComplete="off"
 				autoCorrect="off"
 				autoFocus
-				role="search"
+				id={id}
 				aria-label="Eingabefeld zum suchen nach einem Ort via Name oder Postleitzahl"
 				onChange={(e) => {
 					onChange(e.target.value);
@@ -84,7 +86,10 @@ export default function SearchInput({
 				placeholder="Ort, PLZ oder lokale Position"
 			/>
 			{showClearButton && (
-				<button className="active:outline-none webkit-highlight-fix">
+				<button
+					className="active:outline-none webkit-highlight-fix"
+					aria-label="Eingabefeld leeren"
+				>
 					<FontAwesomeIcon
 						onClick={() => {
 							if (!inputRef.current) {
@@ -108,7 +113,10 @@ export default function SearchInput({
 						className="absolute right-[38px] w-5 h-5 top-[13px] text-[rgb(170,170,170)] animate-bounceX active:outline-none webkit-highlight-fix"
 					/>
 
-					<button className="active:outline-none webkit-highlight-fix">
+					<button
+						className="active:outline-none webkit-highlight-fix"
+						aria-label="Aktuelle Position verwenden"
+					>
 						<FontAwesomeIcon
 							onClick={() => getLocation()}
 							icon={faLocationCrosshairs}
