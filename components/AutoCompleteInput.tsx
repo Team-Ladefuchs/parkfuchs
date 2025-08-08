@@ -54,6 +54,7 @@ export default function AutoCompleteInput({
 			<SearchInput
 				onChange={debouncedAutoCompleteCities}
 				initValue={initQuery}
+				id="autoCompleteSearchCityInput"
 			/>
 			{results.length > 0 && (
 				<ul className="bg-neutral-100 rounded-lg w-full max-h-80 overflow-y-auto list">

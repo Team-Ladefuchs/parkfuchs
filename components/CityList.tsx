@@ -113,7 +113,7 @@ export default function CityList({
 						className="accordion-item-wrapper w-full"
 					>
 						<header className="accordion-header mb-0 cursor-pointer">
-							<h2
+							<button
 								className={`accordion-button 
 									relative block items-center w-full py-4 px-5
 									text-base text-black text-left
@@ -124,8 +124,9 @@ export default function CityList({
 									} ${index === 0 ? "rounded-t-md" : ""} ${
 									index === items.length ? "rounded-t-md" : ""
 								}`}
-								role="button"
+								type="button"
 								aria-label="Ort ausklappen Button"
+								aria-expanded={isSelected(item.id)}
 								onClick={() => {
 									if (isSelected(item.id)) {
 										setSelectedID("");
@@ -165,7 +166,7 @@ export default function CityList({
 											</button>
 										)}
 								</div>
-							</h2>
+							</button>
 						</header>
 						<div
 							className={`accordion-content ${
