@@ -25,31 +25,10 @@ export async function pocketBaseInstance() {
 function toRecordToInboxCity(row: InboxCity): InboxCity {
 	const cityItem: CityRepo = row.expand.city as unknown as CityRepo;
 	return {
-		cityRef: {
-			id: cityItem.id,
-			name: cityItem.name,
-			postcodes: cityItem.postcodes,
-			community: cityItem.community,
-			state: cityItem.state,
-			stateCode: cityItem.stateCode,
-			latitude: cityItem.latitude,
-			longitude: cityItem.longitude,
-		},
+		...row,
+		cityRef: cityItem,
 		id: row.id,
 		city: cityItem.id,
-		approved: row.approved,
-		useBusLane: row.useBusLane,
-		untilMaxMarkingHour: row.untilMaxMarkingHour,
-		freeParking: row.freeParking,
-		withEMark: row.withEMark,
-		information: row.information,
-		website: row.website,
-		parkingDisk: row.parkingDisk,
-		nonePrivileges: row.nonePrivileges,
-		parkingHours: row.parkingHours,
-		whileCharging: row.whileCharging,
-		websiteExtras: row.websiteExtras,
-		updated: row.updated,
 	};
 }
 
