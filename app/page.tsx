@@ -1,16 +1,13 @@
 import Link from "next/link";
-import Banner from "../components/Banner";
 import Home from "../components/Home";
 import { getCityCount, getEnabledInboxCities } from "../db/city";
-import { getTGHLink } from "../db/config";
 import { JSX, Suspense } from "react";
 
 export const dynamic = "force-dynamic";
 
 export default async function Index() {
-	const [cities, thgLink, cityStates] = await Promise.all([
+	const [cities, cityStates] = await Promise.all([
 		getEnabledInboxCities(),
-		getTGHLink(),
 		getCityCount(),
 	]);
 
@@ -19,7 +16,6 @@ export default async function Index() {
 			<Suspense fallback={<Loading />}>
 				<Home cities={cities} cityStates={cityStates} />
 			</Suspense>
-			<Banner link={thgLink} />
 
 			<footer className="left-1/2 text-center text-neutral-600 opacity-90 uppercase tracking-wide font-semibold text-xs pb-5 mb-16">
 				<p className="mb-1 mt-2">
