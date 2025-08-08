@@ -19,7 +19,7 @@
       system:
       let
         pkgs = import nixpkgs { inherit system; };
-        inherit (pkgs) buildNpmPackage nodejs_22;
+        inherit (pkgs) buildNpmPackage bun;
         parkfuchs = buildNpmPackage {
           src = ./.;
           npmBuild = "NEXT_TELEMETRY_DISABLED 1 npm run build";
@@ -29,7 +29,7 @@
           ];
           pname = "parkfuchs";
           version = (builtins.fromJSON (builtins.readFile ./package.json)).version;
-          npmDepsHash = "sha256-VWtEM8+qvL8FQP8cQ0dd/GF5xr8oD3KW31/7DcyEwEg=";
+          npmDepsHash = "sha256-GxaM0BWhqeQCsLGUsuGccGrjRrFeDktnrv9acY5NWm0=";
           installPhase = ''
                         runHook preInstall
             			mkdir -p $out/.next
@@ -42,7 +42,7 @@
       {
         defaultPackage = parkfuchs;
         packages = { inherit parkfuchs; };
-        devShell = pkgs.mkShell { buildInputs = [ nodejs_22 ]; };
+        devShell = pkgs.mkShell { buildInputs = [ bun ]; };
       }
     );
 }
