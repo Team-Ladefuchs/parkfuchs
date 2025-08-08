@@ -80,7 +80,7 @@ export default function SearchInput({
 				onChange={(e) => {
 					onChange(e.target.value);
 				}}
-				className="p-2 pl-10 pr-16 rounded-lg border text-lg border-gray-200 bg-white focus:bg-white focus:ring-2 focus:ring-green focus:border-green w-full focus:outline-none"
+				className="p-2 pl-10 pr-16 rounded-lg border text-lg border-gray-200 bg-white focus:bg-white focus:ring-2 focus:ring-green-dark focus:border-green-dark w-full focus:outline-none"
 				placeholder="Ort, PLZ oder lokale Position"
 			/>
 			{showClearButton && (
