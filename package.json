@@ -1,6 +1,6 @@
 {
 	"name": "parkfuchs",
-	"version": "1.12.0",
+	"version": "1.13.0",
 	"private": true,
 	"scripts": {
 		"dev": "next dev --turbo",
@@ -13,32 +13,32 @@
 		"@fortawesome/free-brands-svg-icons": "^7.1.0",
 		"@fortawesome/free-solid-svg-icons": "^7.1.0",
 		"@fortawesome/react-fontawesome": "^3.1.1",
-		"@tailwindcss/forms": "^0.5.10",
-		"axios": "^1.13.2",
+		"@tailwindcss/forms": "^0.5.11",
+		"axios": "^1.13.5",
 		"html2plaintext": "^2.1.4",
 		"javascript-time-ago": "^2.5.12",
 		"linkify-react": "^4.3.2",
 		"linkifyjs": "^4.3.2",
 		"lottie-react": "^2.4.1",
-		"next": "16.0.10",
+		"next": "16.1.6",
 		"next-pwa": "^5.6.0",
-		"pocketbase": "^0.26.5",
+		"pocketbase": "^0.26.8",
 		"react": "19.2.3",
 		"react-dom": "19.2.3",
-		"react-hook-form": "^7.68.0",
+		"react-hook-form": "^7.71.2",
 		"react-hot-toast": "^2.6.0",
 		"react-timeago": "^8.3.0",
-		"sanitize-html": "^2.17.0",
+		"sanitize-html": "^2.17.1",
 		"sharp": "^0.34.5"
 	},
 	"devDependencies": {
-		"@tailwindcss/postcss": "^4.1.18",
+		"@tailwindcss/postcss": "^4.2.0",
 		"@types/react-list": "^0.8.12",
 		"eslint": "9.39.1",
-		"eslint-config-next": "16.0.10",
-		"eslint-plugin-unused-imports": "~4.3.0",
-		"tailwindcss": "^4.1.18",
+		"eslint-config-next": "16.1.6",
+		"eslint-plugin-unused-imports": "~4.4.1",
+		"tailwindcss": "^4.2.0",
 		"typescript": "5.9.3",
-		"webpack": "^5.103.0"
+		"webpack": "^5.105.2"
 	}
 }
