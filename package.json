@@ -9,14 +9,14 @@
 	},
 	"bin": ".next/standalone/server.js",
 	"dependencies": {
-		"@fortawesome/fontawesome-svg-core": "^7.1.0",
-		"@fortawesome/free-brands-svg-icons": "^7.1.0",
-		"@fortawesome/free-solid-svg-icons": "^7.1.0",
-		"@fortawesome/react-fontawesome": "^3.1.1",
+		"@fortawesome/fontawesome-svg-core": "^7.2.0",
+		"@fortawesome/free-brands-svg-icons": "^7.2.0",
+		"@fortawesome/free-solid-svg-icons": "^7.2.0",
+		"@fortawesome/react-fontawesome": "^3.2.0",
 		"@tailwindcss/forms": "^0.5.11",
 		"axios": "^1.13.5",
 		"html2plaintext": "^2.1.4",
-		"javascript-time-ago": "^2.5.12",
+		"javascript-time-ago": "^2.6.2",
 		"linkify-react": "^4.3.2",
 		"linkifyjs": "^4.3.2",
 		"lottie-react": "^2.4.1",
@@ -32,12 +32,12 @@
 		"sharp": "^0.34.5"
 	},
 	"devDependencies": {
-		"@tailwindcss/postcss": "^4.2.0",
+		"@tailwindcss/postcss": "^4.2.1",
 		"@types/react-list": "^0.8.12",
-		"eslint": "9.39.1",
-		"eslint-config-next": "16.1.6",
+		"eslint": "^10.0.2",
+		"eslint-config-next": "^16.1.6",
 		"eslint-plugin-unused-imports": "~4.4.1",
-		"tailwindcss": "^4.2.0",
+		"tailwindcss": "^4.2.1",
 		"typescript": "5.9.3",
 		"webpack": "^5.105.2"
 	}

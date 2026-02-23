@@ -25,10 +25,11 @@
           npmBuild = "NEXT_TELEMETRY_DISABLED 1 npm run build";
           npmFlags = [
             "--ingore-scripts"
+            "--legacy-peer-deps"
           ];
           pname = "parkfuchs";
           version = (builtins.fromJSON (builtins.readFile ./package.json)).version;
-          npmDepsHash = "sha256-34I/0nYjLxwTm8BwRtorTAHZH0YV0JoSKFPXULj0C8g=";
+          npmDepsHash = "sha256-HMjovgty6cJwAfFm02BCTESc1ISxZhbb+zLccnpO/80=";
           installPhase = ''
                         runHook preInstall
             			mkdir -p $out/.next
