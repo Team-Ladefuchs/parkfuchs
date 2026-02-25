@@ -24,12 +24,15 @@
           src = ./.;
           npmBuild = "NEXT_TELEMETRY_DISABLED 1 npm run build";
           npmFlags = [
-            "--ingore-scripts"
+            "--ignore-scripts"
             "--legacy-peer-deps"
           ];
           pname = "parkfuchs";
+          nodejs = pkgs.nodejs_22;
+          npmDepsFetcherVersion = 2;
+          makeCacheWritable = true;
           version = (builtins.fromJSON (builtins.readFile ./package.json)).version;
-          npmDepsHash = "sha256-HMjovgty6cJwAfFm02BCTESc1ISxZhbb+zLccnpO/80=";
+          npmDepsHash = "sha256-+FTXdoX6sWs2SxOQ1yd9w1eteyzp7rSvyWBMQIq2dcY=";
           installPhase = ''
                         runHook preInstall
             			mkdir -p $out/.next
