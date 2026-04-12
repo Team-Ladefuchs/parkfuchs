@@ -14,7 +14,7 @@
 		"@fortawesome/free-solid-svg-icons": "^7.2.0",
 		"@fortawesome/react-fontawesome": "^3.2.0",
 		"@tailwindcss/forms": "^0.5.11",
-		"axios": "^1.13.6",
+		"axios": "^1.15.0",
 		"html2plaintext": "^2.1.4",
 		"javascript-time-ago": "2.6.4",
 		"linkify-react": "^4.3.2",
