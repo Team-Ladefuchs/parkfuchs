@@ -32,7 +32,7 @@
           npmDepsFetcherVersion = 2;
           makeCacheWritable = true;
           version = (builtins.fromJSON (builtins.readFile ./package.json)).version;
-          npmDepsHash = "sha256-5w2K9G1K/+mpTdj/fSOGkeilEWPsApR39xjmragUqk4=";
+          npmDepsHash = "sha256-Y7WzQcu104n1+Eq6ev3vHz40zRLyKLD42eRYvqkGRjk=";
           installPhase = ''
                         runHook preInstall
             			mkdir -p $out/.next
