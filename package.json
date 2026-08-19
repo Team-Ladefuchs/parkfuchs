@@ -20,7 +20,7 @@
 		"linkify-react": "^4.3.3",
 		"linkifyjs": "^4.3.3",
 		"lottie-react": "^2.4.1",
-		"next": "16.2.6",
+		"next": "16.2.11",
 		"pocketbase": "^0.26.9",
 		"react": "19.2.6",
 		"react-dom": "19.2.6",
