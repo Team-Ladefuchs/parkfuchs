@@ -1,0 +1,10 @@
+version: "3.8"
+
+services:
+  pocketbase:
+    image: spectado/pocketbase:latest
+    restart: unless-stopped
+    ports:
+      - 8090:80
+    volumes:
+      - ./pocketbase-db:/pb_data
