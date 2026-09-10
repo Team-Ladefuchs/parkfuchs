@@ -1,4 +1,9 @@
-import { HeadContent, Outlet, Scripts, createRootRoute } from "@tanstack/react-router";
+import {
+	HeadContent,
+	Outlet,
+	Scripts,
+	createRootRoute,
+} from "@tanstack/react-router";
 import { Toaster } from "react-hot-toast";
 import AppNav from "@/components/AppNav";
 import { AppContextProvider } from "@/context/appContext";
