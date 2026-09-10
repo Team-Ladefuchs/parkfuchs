@@ -6,60 +6,53 @@
 
 ## Getting Started
 
-First, run the development server:
+Install dependencies and run the development server:
 
 ```bash
-npm run dev
+pnpm install
+pnpm dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-Using Next.js 13+.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-The `app` directory is mapped to `app/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+Built with [TanStack Start](https://tanstack.com/start) (TanStack Router + Vite + Nitro).
+Routes live in `src/app`, server functions in `src/db/*.functions.ts` (backed by
+`src/db/*.server.ts`), and the public `GET /api/city` endpoint in `src/app/api/city.ts`.
 
 ## Setup
 
-Create a `.env` file
+Create a `.env` file:
 
 ```bash
 # Pocketbase server URI
-DB_HOST=localhost:8080
+DB_HOST=http://localhost:8090
 
 # Your TomTom API key
 TOMTOM_KEY=djahdi1xxxxxxxxx
-
 ```
 
-# Build
+## Build
+
+```bash
+pnpm build
+pnpm start
+```
+
+The production output is generated in `.output/` and served with
+`node .output/server/index.mjs`.
 
 ## Nix
 
-**Package**
+A dev shell with Node.js and pnpm is available:
 
-```nix
+```bash
+nix develop
+```
+
+Build the package:
+
+```bash
 nix build .#parkfuchs
 ```
 
-**Update flake and Pocketbase**
-
-```nix
-nix flake update
-```
-
-**Docker**
-
-```nix
-docker build -t parkfuchs:latest
-```
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
--   [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
--   [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+The NixOS module is exposed as `nixosModules.default` (`services.parkfuchs`).

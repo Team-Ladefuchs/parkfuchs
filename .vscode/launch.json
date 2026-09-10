@@ -2,24 +2,24 @@
 	"version": "0.2.0",
 	"configurations": [
 		{
-			"name": "Next.js: debug server-side",
+			"name": "TanStack Start: debug server-side",
 			"type": "node-terminal",
 			"request": "launch",
-			"command": "npm run dev"
+			"command": "pnpm run dev"
 		},
 		{
-			"name": "Next.js: debug client-side",
+			"name": "TanStack Start: debug client-side",
 			"type": "chrome",
 			"request": "launch",
 			"url": "http://localhost:3000"
 		},
 		{
-			"name": "Next.js: debug full stack",
+			"name": "TanStack Start: debug full stack",
 			"type": "node-terminal",
 			"request": "launch",
-			"command": "npm run dev",
+			"command": "pnpm run dev",
 			"serverReadyAction": {
-				"pattern": "started server on .+, url: (https?://.+)",
+				"pattern": "Local:.+(https?://.+)",
 				"uriFormat": "%s",
 				"action": "debugWithChrome"
 			}

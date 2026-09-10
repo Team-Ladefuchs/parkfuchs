@@ -13,39 +13,83 @@
       ...
     }:
     {
-      nixosModules.parkfuchs = import ./nix { inherit self nixpkgs; };
+      nixosModules.default =
+        {
+          pkgs,
+          lib,
+          ...
+        }:
+        {
+          imports = [ ./nix/default.nix ];
+          services.parkfuchs.package = lib.mkDefault self.packages.${pkgs.system}.parkfuchs;
+        };
     }
     // flake-utils.lib.eachDefaultSystem (
       system:
       let
         pkgs = import nixpkgs { inherit system; };
-        inherit (pkgs) buildNpmPackage;
-        parkfuchs = buildNpmPackage {
-          src = ./.;
-          npmBuild = "NEXT_TELEMETRY_DISABLED 1 npm run build";
-          npmFlags = [
-            "--ignore-scripts"
-            "--legacy-peer-deps"
-          ];
+        pnpm = pkgs.pnpm;
+        parkfuchs = pkgs.stdenv.mkDerivation (finalAttrs: {
           pname = "parkfuchs";
-          nodejs = pkgs.nodejs_22;
-          npmDepsFetcherVersion = 2;
-          makeCacheWritable = true;
           version = (builtins.fromJSON (builtins.readFile ./package.json)).version;
-          npmDepsHash = "sha256-Y7WzQcu104n1+Eq6ev3vHz40zRLyKLD42eRYvqkGRjk=";
+          src =
+            let
+              lib = nixpkgs.lib;
+              root = toString ./.;
+            in
+            lib.cleanSourceWith {
+              src = lib.cleanSource ./.;
+              filter =
+                path: _type:
+                !(lib.hasPrefix "${root}/nix" path)
+                && !(lib.hasPrefix "${root}/.github" path)
+                && !(lib.hasPrefix "${root}/android" path)
+                && !(lib.hasPrefix "${root}/pocketbase-db" path)
+                && !(lib.hasPrefix "${root}/node_modules" path)
+                && !(lib.hasPrefix "${root}/.output" path)
+                && !(lib.hasPrefix "${root}/.next" path)
+                && !lib.elem (baseNameOf path) [
+                  "flake.nix"
+                  "flake.lock"
+                  "README.md"
+                ];
+            };
+          nativeBuildInputs = [
+            pkgs.nodejs_24
+            pnpm
+            pkgs.pnpmConfigHook
+          ];
+          pnpmDeps = pkgs.fetchPnpmDeps {
+            inherit (finalAttrs) pname src;
+            inherit pnpm;
+            fetcherVersion = 4;
+            hash = "sha256-SnfuK+C83/FlDD6Vsa8x01rAOokKsRWL22BGy0PUHoI=";
+          };
+          buildPhase = ''
+            runHook preBuild
+            pnpm run build
+            runHook postBuild
+          '';
           installPhase = ''
-                        runHook preInstall
-            			mkdir -p $out/.next
-            			cp -r .next/standalone/. $out/
-            			cp -r .next/static $out/.next/
-            			cp -r ./public $out/
-            			runHook postInstall'';
-        };
+            runHook preInstall
+            mkdir -p $out
+            cp -r .output/. $out/
+            runHook postInstall
+          '';
+        });
       in
       {
         defaultPackage = parkfuchs;
         packages = { inherit parkfuchs; };
-        devShell = pkgs.mkShell { buildInputs = [ ]; };
+        devShells.default = pkgs.mkShell {
+          packages = with pkgs; [
+            nodejs_24
+            pnpm
+          ];
+          shellHook = ''
+            echo "parkfuchs dev ready ($(node --version), pnpm $(pnpm --version))"
+          '';
+        };
       }
     );
 }

@@ -1,4 +1,3 @@
-{ self, nixpkgs }:
 {
   pkgs,
   lib,
@@ -13,6 +12,13 @@ in
   options = with lib; {
     services.parkfuchs = {
       enable = lib.mkEnableOption "parkfuchs";
+      package = lib.mkOption {
+        type = types.package;
+        description = ''
+          The parkfuchs web app package to run.
+        '';
+      };
+
       addr = lib.mkOption {
         type = types.str;
         default = "127.0.0.1";
@@ -76,9 +82,7 @@ in
         Group = "parkfuchs";
         StateDirectory = stateDir;
         # Starts the web server (default to 127.0.0.1:8090 if no domain is specified)
-        ExecStart = "${
-          nixpkgs.legacyPackages.${pkgs.system}.pocketbase
-        }/bin/pocketbase serve --http='${cfg.pocketBaseAddr}:${toString cfg.pocketBasePort}' --dir=/var/lib/${stateDir}";
+        ExecStart = "${pkgs.pocketbase}/bin/pocketbase serve --http='${cfg.pocketBaseAddr}:${toString cfg.pocketBasePort}' --dir=/var/lib/${stateDir}";
       };
     };
 
@@ -92,7 +96,6 @@ in
       environment = {
         ADDR = cfg.addr;
         PORT = toString cfg.port;
-        NEXT_CACHE_DIR = "/tmp/next-cache";
         TOMTOM_KEY = cfg.tomtomKey;
         DB_HOST = "http://127.0.0.1:${toString cfg.pocketBasePort}";
       };
@@ -100,7 +103,7 @@ in
         Type = "simple";
         User = "parkfuchs";
         Group = "parkfuchs";
-        ExecStart = "${pkgs.bun}/bin/bun ${self.packages.${pkgs.system}.parkfuchs}/server.js ";
+        ExecStart = "${pkgs.nodejs_24}/bin/node ${cfg.package}/server/index.mjs";
       };
     };
   };
