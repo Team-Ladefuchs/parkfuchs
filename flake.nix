@@ -13,16 +13,19 @@
       ...
     }:
     {
-      nixosModules.default =
-        {
-          pkgs,
-          lib,
-          ...
-        }:
-        {
-          imports = [ ./nix/default.nix ];
-          services.parkfuchs.package = lib.mkDefault self.packages.${pkgs.system}.parkfuchs;
-        };
+      nixosModules = rec {
+        parkfuchs =
+          {
+            pkgs,
+            lib,
+            ...
+          }:
+          {
+            imports = [ ./nix/default.nix ];
+            services.parkfuchs.package = lib.mkDefault self.packages.${pkgs.system}.parkfuchs;
+          };
+        default = parkfuchs;
+      };
     }
     // flake-utils.lib.eachDefaultSystem (
       system:
