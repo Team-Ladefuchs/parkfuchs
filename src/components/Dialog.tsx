@@ -1,8 +1,11 @@
 import { type JSX, useContext, useEffect, useState } from "react";
-import toast from "react-hot-toast";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircleExclamation, faXmark } from "@fortawesome/free-solid-svg-icons";
+import {
+	faCircleCheck,
+	faCircleExclamation,
+	faXmark,
+} from "@fortawesome/free-solid-svg-icons";
 import { AppContext } from "@/context/appContext";
 import { getCityById, saveCity } from "@/db/city.functions";
 import Form from "@/components/Form";
@@ -27,6 +30,11 @@ export interface SlimCity {
 	exists: boolean;
 }
 
+interface Submission {
+	cityName: string;
+	isCorrection: boolean;
+}
+
 export default function Dialog({
 	isOpen,
 	onClose,
@@ -36,6 +44,9 @@ export default function Dialog({
 	const { editCity, setEditCity } = useContext(AppContext);
 
 	const [isResetForm, setIsResetForm] = useState(false);
+	const [isSubmitting, setIsSubmitting] = useState(false);
+	const [submitError, setSubmitError] = useState<string | null>(null);
+	const [submission, setSubmission] = useState<Submission | null>(null);
 
 	const [search, setSearch] = useState("");
 
@@ -75,6 +86,12 @@ export default function Dialog({
 		if (!selectedCity || !formData) {
 			return;
 		}
+		if (isSubmitting) {
+			return;
+		}
+
+		const submittedCity = selectedCity;
+		const isCorrection = Boolean(editCity);
 
 		const toSave: NewCity = {
 			parkingHours: parseFloat(formData.parkingHours?.toString() ?? "0"),
@@ -92,18 +109,24 @@ export default function Dialog({
 			currentCity: editCity?.id ?? null,
 		};
 		console.info("saving new City", { toSave });
-		handleOnClose();
-		await toast.promise(
-			saveCity({ data: toSave }),
-			{
-				loading: "Wird gespeichert …",
-				success: editCity
-					? `Danke für deine Meldung. ${selectedCity.name} wird geprüft und falls nötig korrigiert`
-					: `Vielen Dank, ${selectedCity.name} wird geprüft und bald freigegeben.`,
-				error: "Ouch! Es ist ein Fehler aufgetreten. Techniker ist informiert.",
-			},
-			{ duration: 3200 }
-		);
+		setIsSubmitting(true);
+		setSubmitError(null);
+
+		try {
+			await saveCity({ data: toSave });
+			setSubmission({
+				cityName: submittedCity.name,
+				isCorrection,
+			});
+			resetFields();
+		} catch (error) {
+			console.error("city could not be saved", error);
+			setSubmitError(
+				"Das hat leider nicht geklappt. Bitte versuche es noch einmal."
+			);
+		} finally {
+			setIsSubmitting(false);
+		}
 	};
 
 	const resetFields = () => {
@@ -118,6 +141,12 @@ export default function Dialog({
 	};
 
 	const handleOnClose = () => {
+		if (isSubmitting) {
+			return;
+		}
+
+		setSubmission(null);
+		setSubmitError(null);
 		resetFields();
 		onClose();
 	};
@@ -130,7 +159,11 @@ export default function Dialog({
 			<dialog
 				open={isOpen}
 				id="dialog"
-				aria-label="Formular zum hinzufügen eines neuen Ortes"
+				aria-label={
+					submission
+						? "Bestätigung der Einsendung"
+						: "Formular zum Hinzufügen eines neuen Ortes"
+				}
 				className="mx-auto animate-show overflow-y-hidden backdrop:bg-red-300 relative top-16 bg-transparent max-w-2xl w-full px-4 md:px-0"
 			>
 				<div className="rounded-lg shadow mt-1 bg-white mx-auto">
@@ -145,22 +178,60 @@ export default function Dialog({
 						/>
 						<div className="w-full p-2 pt-4 ml-1 relative">
 							<h3 className="text-xl font-semibold text-gray-900">
-								{editCity
+								{submission
+									? submission.isCorrection
+										? "Danke für deinen Hinweis!"
+										: "Danke, du Spürfuchs!"
+									: editCity
 									? "Falsche Info melden"
 									: "Ort hinzufügen"}
 							</h3>
 							<button
 								type="button"
 								onClick={() => handleOnClose()}
+								disabled={isSubmitting}
 								aria-label="dialog schließen"
-								className="text-gray-600 bg-transparent hover:text-gray-900 rounded-lg text-md p-1.5 m-1 ml-auto absolute top-[-4px] right-0"
+								className="text-gray-600 bg-transparent hover:text-gray-900 rounded-lg text-md p-1.5 m-1 ml-auto absolute top-[-4px] right-0 disabled:cursor-not-allowed disabled:opacity-40"
 							>
 								<FontAwesomeIcon icon={faXmark} size="xl" />
 							</button>
 						</div>
 					</header>
 
-					{isOpen && (
+					{isOpen && submission ? (
+						<div className="px-6 py-10 max-md:px-5 text-center">
+							<div className="mx-auto mb-5 flex h-20 w-20 items-center justify-center rounded-full bg-green-light text-green-dark">
+								<FontAwesomeIcon icon={faCircleCheck} size="3x" />
+							</div>
+							<p className="mx-auto max-w-lg text-lg leading-relaxed text-gray-800">
+								{submission.isCorrection ? (
+									<>
+										Deine Meldung zu <b>{submission.cityName}</b> ist
+										 sicher im Fuchsbau angekommen. Ein Mensch aus
+										 unserem Team prüft nun, was korrigiert werden
+										 muss.
+									</>
+								) : (
+									<>
+										Dein Vorschlag für <b>{submission.cityName}</b> ist
+										 sicher im Fuchsbau angekommen. Bevor der Ort im
+										 Verzeichnis erscheint, schaut ein Mensch aus
+										 unserem Team in Ruhe darüber.
+									</>
+								)}
+							</p>
+							<p className="mt-4 text-gray-600">
+								Das kann ein bisschen dauern. Danke für deine Geduld!
+							</p>
+							<button
+								type="button"
+								onClick={handleOnClose}
+								className="mt-7 rounded-lg bg-green-normal px-6 py-3 font-medium text-black hover:bg-green-dark focus:outline-none focus:ring-2 focus:ring-green-dark"
+							>
+								Alles klar
+							</button>
+						</div>
+					) : isOpen ? (
 						<div className="p-6 pt-4 max-md:px-3 overflow-y-auto space-y-6 max-h-[85vh]">
 							{!editCity && (
 								<>
@@ -208,11 +279,13 @@ export default function Dialog({
 							<Form
 								selectedCity={selectedCity}
 								doReset={isResetForm}
+								isSubmitting={isSubmitting}
+								submitError={submitError}
 								onSubmit={onSubmit}
 								onClose={handleOnClose}
 							/>
 						</div>
-					)}
+					) : null}
 				</div>
 			</dialog>
 		</div>

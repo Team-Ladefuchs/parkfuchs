@@ -1,6 +1,6 @@
 {
 	"name": "parkfuchs",
-	"version": "2.0.0",
+	"version": "2.0.1",
 	"private": true,
 	"type": "module",
 	"scripts": {
@@ -27,7 +27,6 @@
 		"react": "19.3.0",
 		"react-dom": "19.3.0",
 		"react-hook-form": "^7.87.0",
-		"react-hot-toast": "^2.6.0",
 		"react-timeago": "^8.3.0",
 		"zod": "^4.6.0"
 	},

@@ -4,7 +4,6 @@ import {
 	Scripts,
 	createRootRoute,
 } from "@tanstack/react-router";
-import { Toaster } from "react-hot-toast";
 import AppNav from "@/components/AppNav";
 import { AppContextProvider } from "@/context/appContext";
 import ErrorPage from "@/components/ErrorPage";
@@ -131,12 +130,6 @@ function RootLayout() {
 					<main className="w-full py-6 max-md:px-4 max-md:pt-5">
 						<Outlet />
 					</main>
-
-					<Toaster
-						position="top-center"
-						containerStyle={{ top: "14%" }}
-						reverseOrder={false}
-					/>
 				</AppContextProvider>
 				<Scripts />
 			</body>

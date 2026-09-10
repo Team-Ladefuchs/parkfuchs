@@ -12,6 +12,8 @@ export interface Properties {
 	selectedCity: SlimCity | null;
 	onSubmit: (city: NewCity) => Promise<void>;
 	doReset: boolean;
+	isSubmitting: boolean;
+	submitError: string | null;
 	onClose: () => void;
 }
 
@@ -23,6 +25,8 @@ export default function Form({
 	selectedCity,
 	onSubmit,
 	doReset,
+	isSubmitting,
+	submitError,
 	onClose,
 }: Properties): JSX.Element {
 	const { editCity } = useContext(AppContext);
@@ -389,22 +393,31 @@ export default function Form({
 					</div>
 				</>
 			)}
+			{submitError && (
+				<p
+					role="alert"
+					className="rounded-lg border border-red bg-red/10 p-3 text-sm text-gray-900"
+				>
+					{submitError}
+				</p>
+			)}
 			<div className="flex gap-2 items-center space-x-2">
 				<button
-					disabled={!formValid}
+					disabled={!formValid || isSubmitting}
 					data-modal-toggle="defaultModal"
 					aria-label="Formular Speichern"
 					type="submit"
 					className="text-black bg-green-normal hover:bg-green-dark focus:ring-2 focus:outline-none font-medium rounded-lg text-md px-5 py-3 text-center disabled:opacity-50 disabled:hover:bg-green-normal focus:ring-green-dark"
 				>
-					Speichern
+					{isSubmitting ? "Wird gespeichert …" : "Speichern"}
 				</button>
 				<button
+					disabled={isSubmitting}
 					data-modal-toggle="defaultModal"
 					type="reset"
 					aria-label="dialog schließen"
 					onClick={onClose}
-					className="text-black bg-green-normal hover:bg-green-dark focus:ring-2 focus:outline-none font-medium rounded-lg text-md px-5 py-3 text-center focus:ring-green-dark"
+					className="text-black bg-green-normal hover:bg-green-dark focus:ring-2 focus:outline-none font-medium rounded-lg text-md px-5 py-3 text-center focus:ring-green-dark disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-green-normal"
 				>
 					Abbrechen
 				</button>
