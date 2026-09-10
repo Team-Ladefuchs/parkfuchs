@@ -63,7 +63,7 @@
             inherit (finalAttrs) pname src;
             inherit pnpm;
             fetcherVersion = 4;
-            hash = "sha256-SnfuK+C83/FlDD6Vsa8x01rAOokKsRWL22BGy0PUHoI=";
+            hash = "sha256-nBXYuFOEvkrfMQyGotA9JzSvJ+bYv3fIvBDjfT+iztg=";
           };
           buildPhase = ''
             runHook preBuild

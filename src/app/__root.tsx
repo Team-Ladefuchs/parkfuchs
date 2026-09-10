@@ -24,7 +24,7 @@ export const Route = createRootRoute({
 			{ name: "theme-color", content: "#D1D9C0B8" },
 			{ title: "Parkfuchs" },
 			{ name: "description", content: "Schlau elektrisch parken" },
-			{ name: "apple-mobile-web-app-capable", content: "yes" },
+			{ name: "mobile-web-app-capable", content: "yes" },
 			{
 				name: "apple-mobile-web-app-status-bar-style",
 				content: "default",
