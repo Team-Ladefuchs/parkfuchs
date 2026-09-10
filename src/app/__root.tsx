@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import {
 	HeadContent,
 	Outlet,
@@ -119,10 +120,45 @@ export const Route = createRootRoute({
 	component: RootLayout,
 });
 
+declare global {
+	interface Window {
+		__extensionAttrCleanup?: () => void;
+	}
+}
+
+// Browser extensions (e.g. LanguageTool) inject attributes like
+// `data-lt-installed` onto <html> before React hydrates, which trips the
+// hydration diff. This script strips the known attributes immediately and
+// keeps stripping them until React has taken over the tree.
+const extensionAttrCleanup = `(function () {
+	var attrs = ["data-lt-installed", "suppresshydrationwarning"];
+	function clean() {
+		attrs.forEach(function (name) {
+			document.documentElement.removeAttribute(name);
+		});
+	}
+	clean();
+	var observer = new MutationObserver(clean);
+	observer.observe(document.documentElement, {
+		attributes: true,
+		attributeFilter: attrs,
+	});
+	window.__extensionAttrCleanup = function () {
+		observer.disconnect();
+	};
+})();`;
+
 function RootLayout() {
+	useEffect(() => {
+		window.__extensionAttrCleanup?.();
+	}, []);
+
 	return (
-		<html lang="de" suppressHydrationWarning>
+		<html lang="de">
 			<head>
+				<script
+					dangerouslySetInnerHTML={{ __html: extensionAttrCleanup }}
+				/>
 				<HeadContent />
 			</head>
 			<body>
