@@ -2,13 +2,13 @@ import { type JSX, useContext, useEffect, useState } from "react";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-	faCircleCheck,
 	faCircleExclamation,
 	faXmark,
 } from "@fortawesome/free-solid-svg-icons";
 import { AppContext } from "@/context/appContext";
 import { getCityById, saveCity } from "@/db/city.functions";
 import Form from "@/components/Form";
+import SubmissionSuccess from "@/components/SubmissionSuccess";
 import { webKeyPattern } from "@/components/WebsiteAddField";
 import AutoCompleteInput from "@/components/AutoCompleteInput";
 
@@ -17,9 +17,10 @@ import { type NewCity, type Website } from "@/db/types";
 interface Properties {
 	isOpen: boolean;
 	initQuery: string;
+	hideXButton?: boolean;
 	onClose: () => void;
 }
-// TODO fix me/delete me
+
 export interface SlimCity {
 	id: string;
 	name: string;
@@ -78,8 +79,9 @@ export default function Dialog({
 	const onSubmit = async (formData: NewCity) => {
 		const websiteExtras: Array<Website> = Object.entries(formData)
 			.filter(([key]) => key.startsWith(webKeyPattern))
-			.filter((entry): entry is [string, string] =>
-				typeof entry[1] === "string"
+			.filter(
+				(entry): entry is [string, string] =>
+					typeof entry[1] === "string",
 			)
 			.map(([_key, url]) => ({ url }));
 
@@ -122,7 +124,7 @@ export default function Dialog({
 		} catch (error) {
 			console.error("city could not be saved", error);
 			setSubmitError(
-				"Das hat leider nicht geklappt. Bitte versuche es noch einmal."
+				"Das hat leider nicht geklappt. Bitte versuche es noch einmal.",
 			);
 		} finally {
 			setIsSubmitting(false);
@@ -139,6 +141,8 @@ export default function Dialog({
 	const handleSelectedCity = (city: SlimCity): void => {
 		setSelectedCity(city);
 	};
+
+	const submissionDone = () => isOpen && submission;
 
 	const handleOnClose = () => {
 		if (isSubmitting) {
@@ -183,54 +187,29 @@ export default function Dialog({
 										? "Danke für deinen Hinweis!"
 										: "Danke, du Spürfuchs!"
 									: editCity
-									? "Falsche Info melden"
-									: "Ort hinzufügen"}
+										? "Falsche Info melden"
+										: "Ort hinzufügen"}
 							</h3>
-							<button
-								type="button"
-								onClick={() => handleOnClose()}
-								disabled={isSubmitting}
-								aria-label="dialog schließen"
-								className="text-gray-600 bg-transparent hover:text-gray-900 rounded-lg text-md p-1.5 m-1 ml-auto absolute top-[-4px] right-0 disabled:cursor-not-allowed disabled:opacity-40"
-							>
-								<FontAwesomeIcon icon={faXmark} size="xl" />
-							</button>
+							{!submissionDone() && (
+								<button
+									type="button"
+									onClick={() => handleOnClose()}
+									disabled={isSubmitting}
+									aria-label="dialog schließen"
+									className="text-gray-600 bg-transparent hover:text-gray-900 rounded-lg text-md p-1.5 m-1 ml-auto absolute top-[-4px] right-0 disabled:cursor-not-allowed disabled:opacity-40"
+								>
+									<FontAwesomeIcon icon={faXmark} size="xl" />
+								</button>
+							)}
 						</div>
 					</header>
 
-					{isOpen && submission ? (
-						<div className="px-6 py-10 max-md:px-5 text-center">
-							<div className="mx-auto mb-5 flex h-20 w-20 items-center justify-center rounded-full bg-green-light text-green-dark">
-								<FontAwesomeIcon icon={faCircleCheck} size="3x" />
-							</div>
-							<p className="mx-auto max-w-lg text-lg leading-relaxed text-gray-800">
-								{submission.isCorrection ? (
-									<>
-										Deine Meldung zu <b>{submission.cityName}</b> ist
-										 sicher im Fuchsbau angekommen. Ein Mensch aus
-										 unserem Team prüft nun, was korrigiert werden
-										 muss.
-									</>
-								) : (
-									<>
-										Dein Vorschlag für <b>{submission.cityName}</b> ist
-										 sicher im Fuchsbau angekommen. Bevor der Ort im
-										 Verzeichnis erscheint, schaut ein Mensch aus
-										 unserem Team in Ruhe darüber.
-									</>
-								)}
-							</p>
-							<p className="mt-4 text-gray-600">
-								Das kann ein bisschen dauern. Danke für deine Geduld!
-							</p>
-							<button
-								type="button"
-								onClick={handleOnClose}
-								className="mt-7 rounded-lg bg-green-normal px-6 py-3 font-medium text-black hover:bg-green-dark focus:outline-none focus:ring-2 focus:ring-green-dark"
-							>
-								Alles klar
-							</button>
-						</div>
+					{submissionDone() ? (
+						<SubmissionSuccess
+							cityName={submission!.cityName}
+							isCorrection={submission!.isCorrection}
+							onClose={handleOnClose}
+						/>
 					) : isOpen ? (
 						<div className="p-6 pt-4 max-md:px-3 overflow-y-auto space-y-6 max-h-[85vh]">
 							{!editCity && (
