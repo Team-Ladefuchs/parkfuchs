@@ -55,7 +55,7 @@ export default function Home({
 		!isLoading && getItems().length === 0 && searchQuery.length > 0;
 
 	return (
-		<div className="mx-auto w-full max-w-[750px] min-h-112" role="main">
+		<div className="mx-auto w-full max-w-187.5 min-h-112" role="main">
 			<Dialog
 				isOpen={openDialog}
 				onClose={handleOnClose}
