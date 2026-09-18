@@ -1,19 +1,17 @@
-import PocketBase, { type AuthRecord, type RecordModel } from "pocketbase";
 import {
 	getRequestHeader,
 	getRequestUrl,
 	setResponseHeader,
 } from "@tanstack/react-start/server";
+import { type AuthRecord, type RecordModel } from "pocketbase";
+import type PocketBase from "pocketbase";
+import { createPocketBaseClient } from "@/db/pocketbase.server";
 
 const cookieName = "pb_auth";
 const cookieMaxAge = 60 * 60 * 24 * 7;
 
 function createPocketBase() {
-	const pocketBase = new PocketBase(
-		process.env.DB_HOST ?? "http://127.0.0.1:8090",
-	);
-	pocketBase.autoCancellation(false);
-	return pocketBase;
+	return createPocketBaseClient({ autoCancellation: false });
 }
 
 export function assertSameOrigin() {

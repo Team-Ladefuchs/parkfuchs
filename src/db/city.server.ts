@@ -1,18 +1,16 @@
-import PocketBase, { type RecordService } from "pocketbase";
 import h2p from "html2plaintext";
+import { type RecordService } from "pocketbase";
 
 import { type CityRepo, type CityStats, type InboxCity, type NewCity, type RawCity, type ResultCity } from "@/db/types";
+import { createPocketBaseClient } from "@/db/pocketbase.server";
 
-let pbInstance: PocketBase | null = null;
+let pbInstance: ReturnType<typeof createPocketBaseClient> | null = null;
 
 export async function pocketBaseInstance() {
 	if (pbInstance) {
 		return pbInstance;
 	}
-	const dbHost = process.env.DB_HOST ?? "http://127.0.0.1:8090";
-	console.log("Using (DB_HOST) for pocketbase:", dbHost);
-	pbInstance = new PocketBase(dbHost);
-	pbInstance.autoCancellation(true);
+	pbInstance = createPocketBaseClient({ autoCancellation: true });
 	return pbInstance;
 }
 

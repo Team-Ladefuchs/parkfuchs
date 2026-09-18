@@ -40,6 +40,18 @@ in
         default = "";
         description = ''
           TOMTOM API key to run parkfuchs on.
+
+          Prefer `tomtomKeyFile`: a key set here is copied into the
+          world-readable Nix store.
+        '';
+      };
+
+      tomtomKeyFile = lib.mkOption {
+        type = types.nullOr types.str;
+        default = null;
+        description = ''
+          Path to a root-owned systemd EnvironmentFile containing
+          `TOMTOM_KEY=...`. Takes precedence over `tomtomKey`.
         '';
       };
 
@@ -96,14 +108,17 @@ in
       environment = {
         ADDR = cfg.addr;
         PORT = toString cfg.port;
+        DB_PORT = toString cfg.pocketBasePort;
+      } // lib.optionalAttrs (cfg.tomtomKeyFile == null && cfg.tomtomKey != "") {
         TOMTOM_KEY = cfg.tomtomKey;
-        DB_HOST = "http://127.0.0.1:${toString cfg.pocketBasePort}";
       };
       serviceConfig = {
         Type = "simple";
         User = "parkfuchs";
         Group = "parkfuchs";
         ExecStart = "${pkgs.nodejs_24}/bin/node ${cfg.package}/server/index.mjs";
+      } // lib.optionalAttrs (cfg.tomtomKeyFile != null) {
+        EnvironmentFile = cfg.tomtomKeyFile;
       };
     };
   };
