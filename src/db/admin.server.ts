@@ -43,6 +43,8 @@ const editableFields: Array<keyof TicketValues> = [
 ];
 
 function getStatus(record: PocketBaseTicketRecord): ModerationStatus {
+	// Empty status means a public submission that never had one written; the
+	// public API cannot write hidden fields and select fields have no default.
 	if (record.moderationStatus) {
 		return record.moderationStatus;
 	}
@@ -97,12 +99,15 @@ function getFilter(
 	const status = query.status ?? "pending";
 	const filters: Array<string> = [];
 
+	// Public submissions leave `moderationStatus` empty: the field is hidden
+	// (so unauthenticated clients cannot write it) and PocketBase ignores a
+	// `default` on select fields. Empty therefore means pending.
 	if (status === "pending") {
-		filters.push("moderationStatus = \"pending\"");
+		filters.push("(moderationStatus = \"pending\" || moderationStatus = \"\")");
 	} else if (status === "resolved") {
 		filters.push("reviewedAt != \"\"");
 	} else {
-		filters.push("(moderationStatus = \"pending\" || reviewedAt != \"\")");
+		filters.push("(moderationStatus = \"pending\" || moderationStatus = \"\" || reviewedAt != \"\")");
 	}
 
 	if (query.query?.trim()) {
@@ -181,7 +186,7 @@ async function fetchPendingRelatedRecords(
 	ticketId: string,
 ): Promise<Array<PocketBaseTicketRecord>> {
 	try {
-		return await fetchRelatedRecords(pocketBase, cityId, ticketId, "moderationStatus = \"pending\"");
+		return await fetchRelatedRecords(pocketBase, cityId, ticketId, "(moderationStatus = \"pending\" || moderationStatus = \"\")");
 	} catch {
 		// Fallback for databases without the moderation migration applied yet.
 		return fetchRelatedRecords(pocketBase, cityId, ticketId, "approved = false");
