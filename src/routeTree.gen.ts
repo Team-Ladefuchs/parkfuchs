@@ -11,7 +11,10 @@
 import { Route as rootRouteImport } from './app/__root'
 import { Route as IndexRouteImport } from './app/index'
 import { Route as ImpressumRouteImport } from './app/impressum'
+import { Route as AdminIndexRouteImport } from './app/admin/index'
+import { Route as AdminLoginRouteImport } from './app/admin/login'
 import { Route as ApiCityRouteImport } from './app/api/city'
+import { Route as AdminTicketsTicketIdRouteImport } from './app/admin/tickets/$ticketId'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -23,40 +26,86 @@ const ImpressumRoute = ImpressumRouteImport.update({
   path: '/impressum',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminIndexRoute = AdminIndexRouteImport.update({
+  id: '/admin/',
+  path: '/admin/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminLoginRoute = AdminLoginRouteImport.update({
+  id: '/admin/login',
+  path: '/admin/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiCityRoute = ApiCityRouteImport.update({
   id: '/api/city',
   path: '/api/city',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminTicketsTicketIdRoute = AdminTicketsTicketIdRouteImport.update({
+  id: '/admin/tickets/$ticketId',
+  path: '/admin/tickets/$ticketId',
   getParentRoute: () => rootRouteImport,
 } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/impressum': typeof ImpressumRoute
+  '/admin/login': typeof AdminLoginRoute
   '/api/city': typeof ApiCityRoute
+  '/admin/': typeof AdminIndexRoute
+  '/admin/tickets/$ticketId': typeof AdminTicketsTicketIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/impressum': typeof ImpressumRoute
+  '/admin/login': typeof AdminLoginRoute
   '/api/city': typeof ApiCityRoute
+  '/admin': typeof AdminIndexRoute
+  '/admin/tickets/$ticketId': typeof AdminTicketsTicketIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/impressum': typeof ImpressumRoute
+  '/admin/login': typeof AdminLoginRoute
   '/api/city': typeof ApiCityRoute
+  '/admin/': typeof AdminIndexRoute
+  '/admin/tickets/$ticketId': typeof AdminTicketsTicketIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/impressum' | '/api/city'
+  fullPaths:
+    | '/'
+    | '/impressum'
+    | '/admin/login'
+    | '/api/city'
+    | '/admin/'
+    | '/admin/tickets/$ticketId'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/impressum' | '/api/city'
-  id: '__root__' | '/' | '/impressum' | '/api/city'
+  to:
+    | '/'
+    | '/impressum'
+    | '/admin/login'
+    | '/api/city'
+    | '/admin'
+    | '/admin/tickets/$ticketId'
+  id:
+    | '__root__'
+    | '/'
+    | '/impressum'
+    | '/admin/login'
+    | '/api/city'
+    | '/admin/'
+    | '/admin/tickets/$ticketId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ImpressumRoute: typeof ImpressumRoute
+  AdminLoginRoute: typeof AdminLoginRoute
   ApiCityRoute: typeof ApiCityRoute
+  AdminIndexRoute: typeof AdminIndexRoute
+  AdminTicketsTicketIdRoute: typeof AdminTicketsTicketIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -75,11 +124,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ImpressumRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/': {
+      id: '/admin/'
+      path: '/admin'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AdminIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/login': {
+      id: '/admin/login'
+      path: '/admin/login'
+      fullPath: '/admin/login'
+      preLoaderRoute: typeof AdminLoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/city': {
       id: '/api/city'
       path: '/api/city'
       fullPath: '/api/city'
       preLoaderRoute: typeof ApiCityRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/tickets/$ticketId': {
+      id: '/admin/tickets/$ticketId'
+      path: '/admin/tickets/$ticketId'
+      fullPath: '/admin/tickets/$ticketId'
+      preLoaderRoute: typeof AdminTicketsTicketIdRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
@@ -88,7 +158,10 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ImpressumRoute: ImpressumRoute,
+  AdminLoginRoute: AdminLoginRoute,
   ApiCityRoute: ApiCityRoute,
+  AdminIndexRoute: AdminIndexRoute,
+  AdminTicketsTicketIdRoute: AdminTicketsTicketIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

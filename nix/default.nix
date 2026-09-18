@@ -53,7 +53,7 @@ in
 
       pocketBaseAddr = lib.mkOption {
         type = types.str;
-        default = "0.0.0.0";
+        default = "127.0.0.1";
         description = ''
           	Pokcetbase Addr to use.
         '';
@@ -82,7 +82,7 @@ in
         Group = "parkfuchs";
         StateDirectory = stateDir;
         # Starts the web server (default to 127.0.0.1:8090 if no domain is specified)
-        ExecStart = "${pkgs.pocketbase}/bin/pocketbase serve --http='${cfg.pocketBaseAddr}:${toString cfg.pocketBasePort}' --dir=/var/lib/${stateDir}";
+        ExecStart = "${pkgs.pocketbase}/bin/pocketbase serve --http='${cfg.pocketBaseAddr}:${toString cfg.pocketBasePort}' --dir=/var/lib/${stateDir} --migrationsDir='${cfg.package}/pb_migrations'";
       };
     };
 

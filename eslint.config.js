@@ -8,6 +8,7 @@ export default [
 			".nitro/**",
 			"node_modules/**",
 			"pocketbase-db/**",
+			"pb_migrations/**",
 			"public/**",
 			"android/**",
 			"nix/**",

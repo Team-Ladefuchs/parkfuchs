@@ -4,6 +4,7 @@ services:
   pocketbase:
     image: spectado/pocketbase:latest
     restart: unless-stopped
+    pull_policy: always
     ports:
       - 8090:80
     volumes:

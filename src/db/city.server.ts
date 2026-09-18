@@ -277,7 +277,11 @@ async function parseInput(newCity: NewCity): Promise<NewCity> {
 }
 
 export async function saveCity(newCity: NewCity): Promise<RawCity> {
-	const cityToSave = { ...(await parseInput(newCity)), approved: false };
+	const cityToSave = {
+		...(await parseInput(newCity)),
+		approved: false,
+		moderationStatus: "pending",
+	};
 	console.log("saveCity", cityToSave);
 
 	const pocketBase = await pocketBaseInstance();
