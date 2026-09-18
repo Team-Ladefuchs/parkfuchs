@@ -45,8 +45,7 @@ function AdminLogin() {
 			<div className="w-full max-w-md">
 				<Card>
 					<CardHeader className="text-center">
-						<CardDescription className="font-bold uppercase tracking-[0.2em] text-destructive">Parkfuchs Admin</CardDescription>
-						<CardTitle className="text-3xl font-black tracking-tight">Anmelden</CardTitle>
+						<CardTitle className="text-xl font-black tracking-tight sm:text-2xl">Parkfuchs Admin</CardTitle>
 					</CardHeader>
 					<CardContent>
 						<form onSubmit={submit}>
