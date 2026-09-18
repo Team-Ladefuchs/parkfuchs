@@ -1,18 +1,16 @@
-import PocketBase, { type RecordService } from "pocketbase";
 import h2p from "html2plaintext";
+import { type RecordService } from "pocketbase";
 
 import { type CityRepo, type CityStats, type InboxCity, type NewCity, type RawCity, type ResultCity } from "@/db/types";
+import { createPocketBaseClient } from "@/db/pocketbase.server";
 
-let pbInstance: PocketBase | null = null;
+let pbInstance: ReturnType<typeof createPocketBaseClient> | null = null;
 
 export async function pocketBaseInstance() {
 	if (pbInstance) {
 		return pbInstance;
 	}
-	const dbHost = process.env.DB_HOST ?? "http://127.0.0.1:8090";
-	console.log("Using (DB_HOST) for pocketbase:", dbHost);
-	pbInstance = new PocketBase(dbHost);
-	pbInstance.autoCancellation(true);
+	pbInstance = createPocketBaseClient({ autoCancellation: true });
 	return pbInstance;
 }
 
@@ -277,8 +275,12 @@ async function parseInput(newCity: NewCity): Promise<NewCity> {
 }
 
 export async function saveCity(newCity: NewCity): Promise<RawCity> {
-	const cityToSave = { ...(await parseInput(newCity)), approved: false };
-	console.log("saveCity", cityToSave);
+	// `moderationStatus` is a hidden, superuser-only field; the collection's
+	// field default ("pending") applies it on public creates.
+	const cityToSave = {
+		...(await parseInput(newCity)),
+		approved: false,
+	};
 
 	const pocketBase = await pocketBaseInstance();
 	const record = await pocketBase

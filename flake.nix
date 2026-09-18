@@ -77,6 +77,7 @@
             runHook preInstall
             mkdir -p $out
             cp -r .output/. $out/
+            cp -r pb_migrations $out/pb_migrations
             runHook postInstall
           '';
         });

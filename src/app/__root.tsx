@@ -3,6 +3,7 @@ import {
 	Outlet,
 	Scripts,
 	createRootRoute,
+	useRouterState,
 } from "@tanstack/react-router";
 import AppNav from "@/components/AppNav";
 import { AppContextProvider } from "@/context/appContext";
@@ -119,6 +120,10 @@ export const Route = createRootRoute({
 });
 
 function RootLayout() {
+	const isAdmin = useRouterState({
+		select: (state) => state.location.pathname.startsWith("/admin"),
+	});
+
 	return (
 		<html lang="de" suppressHydrationWarning>
 			<head>
@@ -126,8 +131,8 @@ function RootLayout() {
 			</head>
 			<body>
 				<AppContextProvider>
-					<AppNav />
-					<main className="w-full py-6 max-md:px-4 max-md:pt-5">
+					{!isAdmin ? <AppNav /> : null}
+					<main className={isAdmin ? "w-full" : "w-full py-6 max-md:px-4 max-md:pt-5"}>
 						<Outlet />
 					</main>
 				</AppContextProvider>
