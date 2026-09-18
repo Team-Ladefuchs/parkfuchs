@@ -1,4 +1,4 @@
-import PocketBase, { type AuthRecord } from "pocketbase";
+import PocketBase, { type AuthRecord, type RecordModel } from "pocketbase";
 import {
 	getRequestHeader,
 	getRequestUrl,
@@ -17,6 +17,14 @@ function createPocketBase() {
 }
 
 export function assertSameOrigin() {
+	// Browsers declare their request context with Sec-Fetch-Site; anything
+	// declared as cross-site/cross-origin is rejected. Header-less requests
+	// (SSR in-process calls, non-browsers) fall through to the Origin check.
+	const secFetchSite = getRequestHeader("sec-fetch-site");
+	if (secFetchSite && secFetchSite !== "same-origin" && secFetchSite !== "same-site") {
+		throw new Error("CSRF");
+	}
+
 	const origin = getRequestHeader("origin");
 	if (!origin) return;
 
@@ -93,7 +101,7 @@ export async function getAdminPocketBase(): Promise<PocketBase | null> {
 
 export async function requireAdminPocketBase(): Promise<{
 	pocketBase: PocketBase;
-	admin: AuthRecord;
+	admin: RecordModel;
 }> {
 	const pocketBase = await getAdminPocketBase();
 	const admin = pocketBase?.authStore.record;

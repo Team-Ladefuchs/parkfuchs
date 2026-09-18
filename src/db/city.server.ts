@@ -277,12 +277,12 @@ async function parseInput(newCity: NewCity): Promise<NewCity> {
 }
 
 export async function saveCity(newCity: NewCity): Promise<RawCity> {
+	// `moderationStatus` is a hidden, superuser-only field; the collection's
+	// field default ("pending") applies it on public creates.
 	const cityToSave = {
 		...(await parseInput(newCity)),
 		approved: false,
-		moderationStatus: "pending",
 	};
-	console.log("saveCity", cityToSave);
 
 	const pocketBase = await pocketBaseInstance();
 	const record = await pocketBase

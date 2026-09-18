@@ -108,6 +108,12 @@ All state-changing server functions should validate the request origin or use
 an equivalent CSRF check. Login failures should not reveal whether an email
 exists.
 
+Version checks for optimistic concurrency compare the record timestamp before
+writing, but the PocketBase SDK offers no conditional update, so the
+check-then-write sequence is not atomic. With few moderators working at once
+this race is acceptable; the conflict error from a stale version remains
+advisory, not a guarantee.
+
 ## Ticket model
 
 `cityInbox` will continue to contain both published records and submitted

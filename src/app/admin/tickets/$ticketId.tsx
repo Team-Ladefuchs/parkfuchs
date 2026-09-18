@@ -4,16 +4,6 @@ import { CheckIcon, ChevronRightIcon, Undo2Icon, XIcon } from "lucide-react";
 import AdminShell from "@/components/admin/AdminShell";
 import AdminValuesForm from "@/components/admin/AdminValuesForm";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import {
-	AlertDialog,
-	AlertDialogAction,
-	AlertDialogCancel,
-	AlertDialogContent,
-	AlertDialogDescription,
-	AlertDialogFooter,
-	AlertDialogHeader,
-	AlertDialogTitle,
-} from "@/components/ui/alert-dialog";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -55,7 +45,6 @@ function TicketReview() {
 	const [note, setNote] = useState(ticket.reviewNote ?? "");
 	const [busy, setBusy] = useState(false);
 	const [error, setError] = useState<string | null>(null);
-	const [confirmAction, setConfirmAction] = useState<ResolveAction | null>(null);
 
 	async function resolve(action: ResolveAction) {
 		setBusy(true);
@@ -87,7 +76,7 @@ function TicketReview() {
 				});
 			}
 
-			navigate({ to: "/admin", search: { query: "", status: "pending" } });
+			navigate({ to: "/admin", search: { query: "", status: "pending", page: 1 } });
 		} catch (cause) {
 			setError(getErrorMessage(cause));
 			setBusy(false);
@@ -112,17 +101,18 @@ function TicketReview() {
 		<AdminShell displayName={session.displayName}>
 			<div className="flex flex-col gap-6">
 				<div className="flex items-center justify-between gap-4">
-					<Link to="/admin" search={{ query: "", status: "pending" }} className="text-sm font-bold text-destructive hover:underline">
+					<Link to="/admin" search={{ query: "", status: "pending", page: 1 }} className="text-sm font-bold text-destructive hover:underline">
 						← Zurück zum Eingang
 					</Link>
-					<Badge variant={ticket.type === "new" ? "secondary" : "outline"}>
-						{ticket.type === "new" ? "Neue Stadt" : "Korrektur"}
-					</Badge>
 				</div>
 
 				<Card className="bg-primary text-primary-foreground [--card-spacing:--spacing(6)] sm:[--card-spacing:--spacing(7)]">
 					<CardHeader>
-						<CardDescription className="font-bold uppercase tracking-[0.2em] text-primary-foreground/75">Eingang</CardDescription>
+						<span className="flex items-center gap-3">
+							<span className="inline-flex items-center rounded-full bg-primary-foreground px-3 py-1 text-xs font-black uppercase tracking-widest text-foreground ring-1 ring-black/10">
+								{ticket.type === "new" ? "Neue Stadt" : "Korrektur"}
+							</span>
+						</span>
 						<CardTitle className="text-3xl font-black tracking-tight">{ticket.city?.name ?? "Unbekannte Stadt"}</CardTitle>
 						<CardDescription className="text-primary-foreground/75">
 							{ticket.city?.state ?? ""}{ticket.city?.postcodes?.length ? ` · ${ticket.city.postcodes.join(", ")}` : ""}
@@ -182,19 +172,19 @@ function TicketReview() {
 								variant="destructive"
 								size="lg"
 								className="w-full bg-destructive px-6 font-bold text-white hover:bg-destructive/85 sm:w-auto sm:min-w-36"
-								disabled={busy}
-								onClick={() => setConfirmAction("reject")}
-							>
-								{busy ? null : <XIcon data-icon="inline-start" />}
+							disabled={busy}
+							onClick={() => void resolve("reject")}
+						>
+							{busy ? null : <XIcon data-icon="inline-start" />}
 								Ablehnen
 							</Button>
 							<Button
 								type="button"
 								size="lg"
 								className="w-full px-6 font-bold shadow-sm sm:w-auto sm:min-w-44"
-								disabled={busy}
-								onClick={() => setConfirmAction(ticket.type === "new" ? "approve" : "merge")}
-							>
+							disabled={busy}
+							onClick={() => void resolve(ticket.type === "new" ? "approve" : "merge")}
+						>
 								{busy ? <Spinner data-icon="inline-start" /> : null}
 								{busy ? null : <CheckIcon data-icon="inline-start" />}
 								{busy ? "Wird gespeichert ..." : actionLabel}
@@ -240,33 +230,6 @@ function TicketReview() {
 				</CardContent>
 			</Card>
 
-			<AlertDialog open={confirmAction !== null} onOpenChange={(open) => !open && !busy && setConfirmAction(null)}>
-				<AlertDialogContent>
-					<AlertDialogHeader>
-						<AlertDialogTitle>{confirmAction === "reject" ? "Ticket ablehnen?" : `${actionLabel}?`}</AlertDialogTitle>
-						<AlertDialogDescription>
-							{confirmAction === "reject"
-								? "Das Ticket bleibt als abgelehnt in der Historie erhalten."
-								: "Bitte bestätige, dass die bearbeiteten Daten veröffentlicht werden sollen."}
-						</AlertDialogDescription>
-					</AlertDialogHeader>
-					<AlertDialogFooter>
-						<AlertDialogCancel disabled={busy}>Abbrechen</AlertDialogCancel>
-						<AlertDialogAction
-							variant={confirmAction === "reject" ? "destructive" : "default"}
-							disabled={busy}
-							onClick={() => {
-								if (confirmAction) {
-									void resolve(confirmAction);
-									setConfirmAction(null);
-								}
-							}}
-						>
-							Bestätigen
-						</AlertDialogAction>
-					</AlertDialogFooter>
-				</AlertDialogContent>
-			</AlertDialog>
 			</div>
 		</AdminShell>
 	);

@@ -11,13 +11,16 @@ import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { getAdminSessionFn, listTicketsFn } from "@/db/admin.functions";
 import { type AdminTicket } from "@/db/admin.types";
 
+const TICKETS_PER_PAGE = 50;
+
 type AdminStatus = "pending" | "resolved" | "all";
 
 export const Route = createFileRoute("/admin/")({
 	head: () => ({ meta: [{ title: "Parkfuchs Admin" }] }),
-	validateSearch: (search: Record<string, unknown>): { query: string; status: AdminStatus } => ({
+	validateSearch: (search: Record<string, unknown>): { query: string; status: AdminStatus; page: number } => ({
 		query: typeof search.query === "string" ? search.query : "",
 		status: search.status === "resolved" || search.status === "all" ? search.status : "pending",
+		page: typeof search.page === "number" && Number.isInteger(search.page) && search.page >= 1 ? search.page : 1,
 	}),
 	loaderDeps: ({ search }) => search,
 	loader: async ({ deps }) => {
@@ -27,7 +30,7 @@ export const Route = createFileRoute("/admin/")({
 		}
 
 		const tickets = await listTicketsFn({
-			data: { query: deps.query, status: deps.status, page: 1, perPage: 30 },
+			data: { query: deps.query, status: deps.status, page: deps.page, perPage: TICKETS_PER_PAGE },
 		});
 
 		return { session, tickets };
@@ -37,20 +40,25 @@ export const Route = createFileRoute("/admin/")({
 
 function AdminInbox() {
 	const { session, tickets } = Route.useLoaderData();
-	const { query, status } = Route.useSearch();
+	const { query, status, page } = Route.useSearch();
 	const navigate = useNavigate();
 	const [search, setSearch] = useState(query);
 	const queueLabel = status === "pending" ? "Offene Tickets" : status === "resolved" ? "Erledigte Tickets" : "Alle Tickets";
 	const ticketGroups = groupTickets(tickets.items, status === "pending");
 	const duplicateGroupKeys = ticketGroups.filter((group) => group.tickets.length > 1).map((group) => group.key);
+	const showPagination = tickets.totalPages > 1;
 
 	function submitSearch(event: FormEvent<HTMLFormElement>) {
 		event.preventDefault();
-		navigate({ to: "/admin", search: { query: search.trim(), status } });
+		navigate({ to: "/admin", search: { query: search.trim(), status, page: 1 } });
 	}
 
 	function changeStatus(nextStatus: AdminStatus) {
-		navigate({ to: "/admin", search: { query, status: nextStatus } });
+		navigate({ to: "/admin", search: { query, status: nextStatus, page: 1 } });
+	}
+
+	function changePage(nextPage: number) {
+		navigate({ to: "/admin", search: { query, status, page: nextPage } });
 	}
 
 	return (
@@ -63,12 +71,12 @@ function AdminInbox() {
 							const nextStatus = values[0] as AdminStatus | undefined;
 							if (nextStatus) changeStatus(nextStatus);
 						}}
-						className="bg-muted p-1"
+						className="bg-card ring-1 ring-border p-1"
 						aria-label="Ticketstatus"
 					>
-						<ToggleGroupItem className="px-4 aria-pressed:bg-primary aria-pressed:text-primary-foreground" value="pending">Offen</ToggleGroupItem>
-						<ToggleGroupItem className="px-4 aria-pressed:bg-primary aria-pressed:text-primary-foreground" value="resolved">Erledigt</ToggleGroupItem>
-						<ToggleGroupItem className="px-4 aria-pressed:bg-primary aria-pressed:text-primary-foreground" value="all">Alle</ToggleGroupItem>
+						<ToggleGroupItem className="px-4 font-bold text-foreground aria-pressed:bg-primary aria-pressed:text-primary-foreground" value="pending">Offen</ToggleGroupItem>
+						<ToggleGroupItem className="px-4 font-bold text-foreground aria-pressed:bg-primary aria-pressed:text-primary-foreground" value="resolved">Erledigt</ToggleGroupItem>
+						<ToggleGroupItem className="px-4 font-bold text-foreground aria-pressed:bg-primary aria-pressed:text-primary-foreground" value="all">Alle</ToggleGroupItem>
 					</ToggleGroup>
 
 					<form onSubmit={submitSearch} className="flex w-full max-w-md items-center gap-2 rounded-xl bg-card p-1.5 pl-3">
@@ -99,18 +107,42 @@ function AdminInbox() {
 								{tickets.totalItems} {tickets.totalItems === 1 ? "Eintrag" : "Einträge"}
 							</p>
 						</div>
-						<Accordion
-							key={`${status}:${duplicateGroupKeys.join(",")}`}
-							multiple
-							defaultValue={duplicateGroupKeys}
-							className="divide-y divide-border/70 overflow-hidden rounded-xl bg-card"
-						>
-							{ticketGroups.map((group) => group.tickets.length > 1 ? (
-								<DuplicateTicketGroup key={group.key} group={group} />
-							) : (
-								<TicketLink key={group.key} ticket={group.tickets[0]!} />
-							))}
-						</Accordion>
+					{/* Remount so newly appearing duplicate groups start expanded. */}
+					<Accordion
+						key={`${status}:${duplicateGroupKeys.join(",")}`}
+						multiple
+						defaultValue={duplicateGroupKeys}
+						className="divide-y divide-border/70 overflow-hidden rounded-xl bg-card"
+					>
+						{ticketGroups.map((group) => group.tickets.length > 1 ? (
+							<DuplicateTicketGroup key={group.key} group={group} />
+						) : (
+							<TicketLink key={group.key} ticket={group.tickets[0]} />
+						))}
+					</Accordion>
+					{showPagination ? (
+						<nav className="mt-3 flex items-center justify-between gap-4 px-1" aria-label="Seitenavigation">
+							<Button
+								variant="outline"
+								size="sm"
+								disabled={page <= 1}
+								onClick={() => changePage(page - 1)}
+							>
+								← Zurück
+							</Button>
+							<p className="text-sm text-muted-foreground">
+								Seite {page} von {tickets.totalPages}
+							</p>
+							<Button
+								variant="outline"
+								size="sm"
+								disabled={page >= tickets.totalPages}
+								onClick={() => changePage(page + 1)}
+							>
+								Weiter →
+							</Button>
+						</nav>
+					) : null}
 					</section>
 				)}
 			</div>
@@ -118,13 +150,15 @@ function AdminInbox() {
 	);
 }
 
+type GroupedTickets = [AdminTicket, ...Array<AdminTicket>];
+
 interface TicketGroup {
 	key: string;
-	tickets: Array<AdminTicket>;
+	tickets: GroupedTickets;
 }
 
 function groupTickets(tickets: Array<AdminTicket>, groupByCity: boolean): Array<TicketGroup> {
-	const groups = new Map<string, Array<AdminTicket>>();
+	const groups = new Map<string, GroupedTickets>();
 
 	for (const ticket of tickets) {
 		const key = groupByCity && ticket.city?.id ? `city:${ticket.city.id}` : `ticket:${ticket.id}`;
@@ -140,7 +174,7 @@ function groupTickets(tickets: Array<AdminTicket>, groupByCity: boolean): Array<
 }
 
 function DuplicateTicketGroup({ group }: { group: TicketGroup }) {
-	const city = group.tickets[0]!.city;
+	const city = group.tickets[0].city;
 
 	return (
 		<AccordionItem value={group.key}>
@@ -202,7 +236,10 @@ function TicketLink({ ticket }: { ticket: AdminTicket }) {
 
 function TicketTypeBadge({ ticket }: { ticket: AdminTicket }) {
 	return (
-		<Badge variant={ticket.type === "new" ? "secondary" : "default"} className="border-0">
+		<Badge
+			variant="secondary"
+			className="border-0 bg-accent font-bold text-accent-foreground"
+		>
 			{ticket.type === "new" ? "Neue Stadt" : "Korrektur"}
 		</Badge>
 	);

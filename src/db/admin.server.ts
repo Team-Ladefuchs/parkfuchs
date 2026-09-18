@@ -1,3 +1,5 @@
+import type PocketBase from "pocketbase";
+
 import { assertSameOrigin, requireAdminPocketBase } from "@/auth/admin.server";
 import {
 	type AdminTicket,
@@ -115,6 +117,29 @@ function getFilter(
 	return filters.join(" && ") || "id != \"\"";
 }
 
+async function fetchTicketList(
+	pocketBase: PocketBase,
+	page: number,
+	perPage: number,
+	filter: string,
+): Promise<TicketListResult> {
+	const result = await pocketBase
+		.collection("cityInbox")
+		.getList<PocketBaseTicketRecord>(page, perPage, {
+			filter,
+			expand: "city,currentCity,currentCity.city",
+			sort: "-created",
+		});
+
+	return {
+		items: result.items.map(toTicket),
+		page: result.page,
+		perPage: result.perPage,
+		totalItems: result.totalItems,
+		totalPages: result.totalPages,
+	};
+}
+
 async function getTicketsWithMigrationFallback(
 	query: TicketQuery,
 ): Promise<TicketListResult> {
@@ -123,42 +148,44 @@ async function getTicketsWithMigrationFallback(
 	const perPage = Math.min(50, Math.max(1, clampPage(query.perPage, 20)));
 
 	try {
-		const result = await pocketBase
-			.collection("cityInbox")
-			.getList<PocketBaseTicketRecord>(page, perPage, {
-				filter: getFilter(pocketBase, query),
-				expand: "city,currentCity,currentCity.city",
-				sort: "-created",
-			});
-
-		return {
-			items: result.items.map(toTicket),
-			page: result.page,
-			perPage: result.perPage,
-			totalItems: result.totalItems,
-			totalPages: result.totalPages,
-		};
-	} catch (error) {
-		const result = await pocketBase
-			.collection("cityInbox")
-			.getList<PocketBaseTicketRecord>(page, perPage, {
-			filter: "approved = false",
-				expand: "city,currentCity,currentCity.city",
-				sort: "-created",
-			});
-
-		return {
-			items: result.items.map(toTicket),
-			page: result.page,
-			perPage: result.perPage,
-			totalItems: result.totalItems,
-			totalPages: result.totalPages,
-		};
+		return await fetchTicketList(pocketBase, page, perPage, getFilter(pocketBase, query));
+	} catch {
+		// Fallback for databases without the moderation migration applied yet.
+		return fetchTicketList(pocketBase, page, perPage, "approved = false");
 	}
 }
 
 export async function listTickets(query: TicketQuery = {}) {
 	return getTicketsWithMigrationFallback(query);
+}
+
+async function fetchRelatedRecords(
+	pocketBase: PocketBase,
+	cityId: string,
+	ticketId: string,
+	statusCondition: string,
+): Promise<Array<PocketBaseTicketRecord>> {
+	const filter = pocketBase.filter(
+		`city = {:city} && id != {:ticket} && ${statusCondition}`,
+		{ city: cityId, ticket: ticketId },
+	);
+	const result = await pocketBase
+		.collection("cityInbox")
+		.getList<PocketBaseTicketRecord>(1, 10, { filter, sort: "-created" });
+	return result.items;
+}
+
+async function fetchPendingRelatedRecords(
+	pocketBase: PocketBase,
+	cityId: string,
+	ticketId: string,
+): Promise<Array<PocketBaseTicketRecord>> {
+	try {
+		return await fetchRelatedRecords(pocketBase, cityId, ticketId, "moderationStatus = \"pending\"");
+	} catch {
+		// Fallback for databases without the moderation migration applied yet.
+		return fetchRelatedRecords(pocketBase, cityId, ticketId, "approved = false");
+	}
 }
 
 export async function getTicket(ticketId: string) {
@@ -170,30 +197,11 @@ export async function getTicket(ticketId: string) {
 		});
 
 	const adminTicket = toTicket(ticket);
-	const cityId = ticket.city;
-	let relatedRecords: Array<PocketBaseTicketRecord> = [];
-
-	try {
-		relatedRecords = await pocketBase
-			.collection("cityInbox")
-			.getFullList<PocketBaseTicketRecord>({
-				filter: pocketBase.filter(
-					"city = {:city} && id != {:ticket} && moderationStatus = \"pending\"",
-					{ city: cityId, ticket: ticket.id },
-				),
-				sort: "-created",
-			});
-	} catch {
-		relatedRecords = await pocketBase
-			.collection("cityInbox")
-			.getFullList<PocketBaseTicketRecord>({
-				filter: pocketBase.filter(
-					"city = {:city} && id != {:ticket} && approved = false",
-					{ city: cityId, ticket: ticket.id },
-				),
-				sort: "-created",
-			});
-	}
+	const relatedRecords = await fetchPendingRelatedRecords(
+		pocketBase,
+		ticket.city,
+		ticket.id,
+	);
 
 	const relatedTickets: Array<RelatedTicket> = relatedRecords.map((record) => ({
 		id: record.id,
@@ -258,7 +266,7 @@ export async function approveNewTicket(input: {
 			approved: true,
 			moderationStatus: "approved",
 			reviewedAt: new Date().toISOString(),
-			reviewedBy: admin?.email ?? "unbekannt",
+			reviewedBy: admin.email,
 			reviewNote: input.note?.trim() || "",
 		},
 	);
@@ -282,7 +290,7 @@ export async function rejectTicket(input: {
 			approved: false,
 			moderationStatus: "rejected",
 			reviewedAt: new Date().toISOString(),
-			reviewedBy: admin?.email ?? "unbekannt",
+			reviewedBy: admin.email,
 			reviewNote: input.note?.trim() || "",
 		},
 	);
@@ -322,7 +330,7 @@ export async function mergeCorrection(input: {
 		approved: false,
 		moderationStatus: "merged",
 		reviewedAt: new Date().toISOString(),
-		reviewedBy: admin?.email ?? "unbekannt",
+		reviewedBy: admin.email,
 		reviewNote: input.note?.trim() || "",
 	});
 

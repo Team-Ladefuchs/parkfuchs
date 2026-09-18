@@ -13,7 +13,7 @@ export const Route = createFileRoute("/admin/login")({
 		loader: async () => {
 			const session = await getAdminSessionFn();
 			if (session.authenticated) {
-				throw redirect({ to: "/admin", search: { query: "", status: "pending" } });
+				throw redirect({ to: "/admin", search: { query: "", status: "pending", page: 1 } });
 			}
 			return session;
 		},
@@ -47,7 +47,6 @@ function AdminLogin() {
 					<CardHeader className="text-center">
 						<CardDescription className="font-bold uppercase tracking-[0.2em] text-destructive">Parkfuchs Admin</CardDescription>
 						<CardTitle className="text-3xl font-black tracking-tight">Anmelden</CardTitle>
-						<CardDescription>Nur für bestehende Backend-Nutzer.</CardDescription>
 					</CardHeader>
 					<CardContent>
 						<form onSubmit={submit}>
