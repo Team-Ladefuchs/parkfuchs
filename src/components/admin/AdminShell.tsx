@@ -17,7 +17,7 @@ export default function AdminShell({ children, displayName }: AdminShellProps) {
 
 	return (
 		<div className="admin-root min-h-screen bg-background font-sans text-foreground">
-			<header className="border-b bg-primary text-primary-foreground shadow-sm">
+			<header className="sticky top-0 z-30 border-b bg-primary text-primary-foreground shadow-md">
 				<div className="mx-auto flex max-w-295 items-center justify-between gap-4 px-4 py-2 sm:px-6">
 					<Link
 						to="/admin"
