@@ -339,51 +339,53 @@ function TicketReview() {
 				</CardContent>
 			</Card>
 
-			<Card className="border-destructive/40 [--card-spacing:--spacing(6)] sm:[--card-spacing:--spacing(7)]">
-				<CardHeader>
-					<CardDescription className="font-bold uppercase tracking-[0.18em] text-destructive">Löschen</CardDescription>
-					<CardTitle>Ticket endgültig entfernen</CardTitle>
-				</CardHeader>
-				<CardContent className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-					<p className="text-sm text-muted-foreground">
-						Das Ticket wird aus der Datenbank gelöscht. Bei einer freigegebenen Stadt verschwindet sie damit auch von der Webseite.
-					</p>
-					<AlertDialog open={deleteOpen} onOpenChange={setDeleteOpen}>
-						<AlertDialogTrigger
-							render={
-								<Button
-									type="button"
-									variant="destructive"
-									size="lg"
-									className="w-full shrink-0 px-6 font-bold text-white sm:w-auto"
-									disabled={busy}
-								/>
-							}
-						>
-							<Trash2Icon data-icon="inline-start" />
-							Ticket löschen
-						</AlertDialogTrigger>
-						<AlertDialogContent>
-							<AlertDialogHeader>
-								<AlertDialogTitle>Ticket endgültig löschen?</AlertDialogTitle>
-								<AlertDialogDescription>
-									„{cityName ?? "Unbekannte Stadt"}“ wird dauerhaft aus der Datenbank gelöscht. Das kann nicht rückgängig gemacht werden.
-								</AlertDialogDescription>
-							</AlertDialogHeader>
-							<AlertDialogFooter>
-								<AlertDialogCancel>Abbrechen</AlertDialogCancel>
-								<AlertDialogAction
-									className="bg-destructive text-white hover:bg-destructive/85"
-									disabled={busy}
-									onClick={() => void remove()}
-								>
-									Endgültig löschen
-								</AlertDialogAction>
-							</AlertDialogFooter>
-						</AlertDialogContent>
-					</AlertDialog>
-				</CardContent>
-			</Card>
+			{isResolved ? (
+				<Card className="border-destructive/40 [--card-spacing:--spacing(6)] sm:[--card-spacing:--spacing(7)]">
+					<CardHeader>
+						<CardDescription className="font-bold uppercase tracking-[0.18em] text-destructive">Löschen</CardDescription>
+						<CardTitle>Ticket endgültig entfernen</CardTitle>
+					</CardHeader>
+					<CardContent className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+						<p className="text-sm text-muted-foreground">
+							Das Ticket wird aus der Datenbank gelöscht. Bei einer freigegebenen Stadt verschwindet sie damit auch von der Webseite.
+						</p>
+						<AlertDialog open={deleteOpen} onOpenChange={setDeleteOpen}>
+							<AlertDialogTrigger
+								render={
+									<Button
+										type="button"
+										variant="destructive"
+										size="lg"
+										className="w-full shrink-0 bg-destructive px-6 font-bold text-white hover:bg-destructive/85 sm:w-auto"
+										disabled={busy}
+									/>
+								}
+							>
+								<Trash2Icon data-icon="inline-start" />
+								Ticket löschen
+							</AlertDialogTrigger>
+							<AlertDialogContent>
+								<AlertDialogHeader>
+									<AlertDialogTitle>Ticket endgültig löschen?</AlertDialogTitle>
+									<AlertDialogDescription>
+										„{cityName ?? "Unbekannte Stadt"}“ wird dauerhaft aus der Datenbank gelöscht. Das kann nicht rückgängig gemacht werden.
+									</AlertDialogDescription>
+								</AlertDialogHeader>
+								<AlertDialogFooter>
+									<AlertDialogCancel>Abbrechen</AlertDialogCancel>
+									<AlertDialogAction
+										className="bg-destructive text-white hover:bg-destructive/85"
+										disabled={busy}
+										onClick={() => void remove()}
+									>
+										Endgültig löschen
+									</AlertDialogAction>
+								</AlertDialogFooter>
+							</AlertDialogContent>
+						</AlertDialog>
+					</CardContent>
+				</Card>
+			) : null}
 
 			</div>
 		</AdminShell>
