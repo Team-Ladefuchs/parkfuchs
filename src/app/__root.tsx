@@ -19,13 +19,15 @@ export const Route = createRootRoute({
 			{ charSet: "utf-8" },
 			{
 				name: "viewport",
-				content: "width=device-width, initial-scale=1.0",
+				content:
+					"width=device-width, initial-scale=1.0, viewport-fit=cover",
 			},
 			{ name: "color-scheme", content: "light" },
 			{ name: "theme-color", content: "#D1D9C0B8" },
 			{ title: "Parkfuchs" },
 			{ name: "description", content: "Schlau elektrisch parken" },
 			{ name: "mobile-web-app-capable", content: "yes" },
+			{ name: "apple-mobile-web-app-capable", content: "yes" },
 			{
 				name: "apple-mobile-web-app-status-bar-style",
 				content: "default",
