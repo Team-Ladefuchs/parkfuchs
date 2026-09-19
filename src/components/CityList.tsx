@@ -231,7 +231,7 @@ export default function CityList({
 											</p>
 										</div>
 										<button
-											className="min-w-max underline flex relative bottom-1"
+											className="min-w-max underline font-bold flex relative bottom-1"
 											onClick={async () => {
 												const city = await getCityById(
 													{

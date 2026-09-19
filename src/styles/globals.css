@@ -47,7 +47,7 @@
 	}
 
 	--animate-fade: fadeIn 200ms ease-in-out;
-	--animate-show: show 380ms ease normal;
+	--animate-show: show 200ms ease normal;
 	--animate-bounceX: animation: bounceX 1.8s infinite;
 
 	@keyframes pop {

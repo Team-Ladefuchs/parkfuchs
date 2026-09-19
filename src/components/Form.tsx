@@ -1,4 +1,10 @@
-import { type JSX, useContext, useEffect, useState } from "react";
+import {
+	type JSX,
+	type ReactNode,
+	useContext,
+	useEffect,
+	useState,
+} from "react";
 import { useForm } from "react-hook-form";
 
 import { isValidUrl } from "@/functions/utils";
@@ -9,6 +15,7 @@ import { type SlimCity } from "@/components/Dialog";
 import { type NewCity } from "@/db/types";
 
 export interface Properties {
+	children?: ReactNode;
 	selectedCity: SlimCity | null;
 	onSubmit: (city: NewCity) => Promise<void>;
 	doReset: boolean;
@@ -22,6 +29,7 @@ const maxWebsiteLength = 4;
 const initWebsiteInputs = ["website"];
 
 export default function Form({
+	children,
 	selectedCity,
 	onSubmit,
 	doReset,
@@ -167,8 +175,10 @@ export default function Form({
 		<form
 			onSubmit={handleSubmit(submitHandler)}
 			onChange={validateForm}
-			className="space-y-6 flex flex-col"
+			className="min-h-0 flex flex-1 flex-col"
 		>
+			<div className="min-h-0 flex-1 space-y-6 overflow-y-auto p-6 pt-4 max-md:px-3">
+				{children}
 			{selectedCity && (
 				<>
 					<div>
@@ -401,7 +411,8 @@ export default function Form({
 					{submitError}
 				</p>
 			)}
-			<div className="flex gap-2 items-center space-x-2">
+			</div>
+			<div className="flex shrink-0 items-center gap-3 border-t border-gray-200 bg-white px-6 pt-3 pb-[calc(0.75rem+env(safe-area-inset-bottom))] max-md:px-3">
 				<button
 					disabled={!formValid || isSubmitting}
 					data-modal-toggle="defaultModal"

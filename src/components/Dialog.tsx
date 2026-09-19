@@ -1,10 +1,7 @@
 import { type JSX, useContext, useEffect, useState } from "react";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-	faCircleExclamation,
-	faXmark,
-} from "@fortawesome/free-solid-svg-icons";
+import { faCircleExclamation } from "@fortawesome/free-solid-svg-icons";
 import { AppContext } from "@/context/appContext";
 import { getCityById, saveCity } from "@/db/city.functions";
 import Form from "@/components/Form";
@@ -17,7 +14,6 @@ import { type NewCity, type Website } from "@/db/types";
 interface Properties {
 	isOpen: boolean;
 	initQuery: string;
-	hideXButton?: boolean;
 	onClose: () => void;
 }
 
@@ -159,7 +155,7 @@ export default function Dialog({
 		return <></>;
 	}
 	return (
-		<div className="w-full h-full inset-0 fixed bg-gray-600 bg-opacity-80 z-50">
+		<div className="fixed inset-0 bg-gray-600 bg-opacity-80 z-50">
 			<dialog
 				open={isOpen}
 				id="dialog"
@@ -168,10 +164,10 @@ export default function Dialog({
 						? "Bestätigung der Einsendung"
 						: "Formular zum Hinzufügen eines neuen Ortes"
 				}
-				className="mx-auto animate-show overflow-y-hidden backdrop:bg-red-300 relative top-16 bg-transparent max-w-2xl w-full px-4 md:px-0"
+				className="mx-auto animate-show overflow-hidden backdrop:bg-red-300 relative top-0 md:top-16 bg-transparent max-w-2xl w-full px-4 md:px-0"
 			>
-				<div className="rounded-lg shadow mt-1 bg-white mx-auto">
-					<header className="flex bg-green-normal rounded-t-lg items-start justify-between border-b align-start h-14">
+				<div className="rounded-lg shadow bg-white mx-auto flex max-h-dvh flex-col overflow-hidden md:mt-1 md:max-h-[calc(100dvh-5rem)]">
+					<header className="flex bg-green-normal rounded-t-lg items-start justify-between border-b align-start h-14 shrink-0">
 						<img
 							src="/parkfuchs.svg"
 							width={64}
@@ -190,17 +186,6 @@ export default function Dialog({
 										? "Falsche Info melden"
 										: "Ort hinzufügen"}
 							</h3>
-							{!submissionDone() && (
-								<button
-									type="button"
-									onClick={() => handleOnClose()}
-									disabled={isSubmitting}
-									aria-label="dialog schließen"
-									className="text-gray-600 bg-transparent hover:text-gray-900 rounded-lg text-md p-1.5 m-1 ml-auto absolute top-[-4px] right-0 disabled:cursor-not-allowed disabled:opacity-40"
-								>
-									<FontAwesomeIcon icon={faXmark} size="xl" />
-								</button>
-							)}
 						</div>
 					</header>
 
@@ -211,7 +196,14 @@ export default function Dialog({
 							onClose={handleOnClose}
 						/>
 					) : isOpen ? (
-						<div className="p-6 pt-4 max-md:px-3 overflow-y-auto space-y-6 max-h-[85vh]">
+						<Form
+							selectedCity={selectedCity}
+							doReset={isResetForm}
+							isSubmitting={isSubmitting}
+							submitError={submitError}
+							onSubmit={onSubmit}
+							onClose={handleOnClose}
+						>
 							{!editCity && (
 								<>
 									<AutoCompleteInput
@@ -232,7 +224,7 @@ export default function Dialog({
 												Parkfuchs-Verzeichnis existiert?
 												<br />
 												<div
-													className="underline cursor-pointer mt-2"
+													className="underline font-bold cursor-pointer mt-2"
 													onClick={async () => {
 														const city =
 															await getCityById({
@@ -255,15 +247,7 @@ export default function Dialog({
 								</>
 							)}
 
-							<Form
-								selectedCity={selectedCity}
-								doReset={isResetForm}
-								isSubmitting={isSubmitting}
-								submitError={submitError}
-								onSubmit={onSubmit}
-								onClose={handleOnClose}
-							/>
-						</div>
+						</Form>
 					) : null}
 				</div>
 			</dialog>

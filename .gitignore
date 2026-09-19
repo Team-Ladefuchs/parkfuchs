@@ -41,3 +41,7 @@ android
 result
 result-*
 /.direnv/
+
+# local browser and route-generation artifacts
+/.playwright-mcp/
+/.tanstack/
