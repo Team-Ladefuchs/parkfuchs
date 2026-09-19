@@ -275,3 +275,9 @@ nav {
 	--sidebar-border: oklch(1 0 0 / 10%);
 	--sidebar-ring: oklch(0.556 0 0);
 }
+
+/* lottie-web wraps the animation in a full-size clip path that only causes
+   repaint artifacts on mobile; the artwork never leaves the viewBox. */
+.lottie-display > svg > g {
+	clip-path: none;
+}

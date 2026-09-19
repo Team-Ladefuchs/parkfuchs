@@ -25,9 +25,7 @@ export default function AdminShell({ children, displayName }: AdminShellProps) {
 						search={{ query: "", status: "pending", page: 1 }}
 						className="flex items-center gap-3 text-xl font-black tracking-tight text-primary-foreground sm:gap-4 sm:text-2xl"
 					>
-						<span className="[&_img]:mt-0 [&_img]:w-13 [&_img]:h-13 sm:[&_img]:w-13">
-							<Logo />
-						</span>
+						<Logo className="w-13 h-13 mt-0" />
 						Parkfuchs Admin
 					</Link>
 					<div className="flex items-center gap-3 text-right">
