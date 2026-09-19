@@ -58,6 +58,7 @@
 	html {
 		scrollbar-color: var(--color-green-dark) transparent;
 		scrollbar-width: thin;
+		touch-action: pan-x pan-y;
 	}
 	input[type="number"]::-webkit-inner-spin-button,
 	input[type="number"]::-webkit-outer-spin-button {
@@ -72,6 +73,7 @@
 		background-color: var(--color-primary-bg);
 		overflow-x: hidden;
 		overflow-y: scroll;
+		touch-action: pan-x pan-y;
 	}
 	ul {
 		margin-block-start: 0;
