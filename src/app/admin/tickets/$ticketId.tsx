@@ -1,8 +1,19 @@
-import { Link, createFileRoute, redirect, useNavigate } from "@tanstack/react-router";
+import { Link, createFileRoute, redirect, useNavigate, useRouter } from "@tanstack/react-router";
 import { useState } from "react";
-import { CheckIcon, ChevronRightIcon, Undo2Icon, XIcon } from "lucide-react";
+import { CheckIcon, ChevronRightIcon, RotateCcwIcon, Trash2Icon, Undo2Icon, XIcon } from "lucide-react";
 import AdminShell from "@/components/admin/AdminShell";
 import AdminValuesForm from "@/components/admin/AdminValuesForm";
+import {
+	AlertDialog,
+	AlertDialogAction,
+	AlertDialogCancel,
+	AlertDialogContent,
+	AlertDialogDescription,
+	AlertDialogFooter,
+	AlertDialogHeader,
+	AlertDialogTitle,
+	AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -13,15 +24,24 @@ import { Textarea } from "@/components/ui/textarea";
 import { toast } from "@/components/ui/toast";
 import {
 	approveNewTicketFn,
+	deleteTicketFn,
 	getAdminSessionFn,
 	getTicketFn,
 	mergeCorrectionFn,
 	rejectTicketFn,
+	reopenTicketFn,
 } from "@/db/admin.functions";
-import { type TicketValues } from "@/db/admin.types";
+import { type ModerationStatus, type TicketValues } from "@/db/admin.types";
 
 type ResolveAction = "approve" | "merge" | "reject";
 type FieldDecision = "accepted" | "kept";
+
+const statusLabels: Record<ModerationStatus, string> = {
+	pending: "Offen",
+	approved: "Freigegeben",
+	merged: "Übernommen",
+	rejected: "Abgelehnt",
+};
 
 export const Route = createFileRoute("/admin/tickets/$ticketId")({
 	head: () => ({ meta: [{ title: "Parkfuchs Admin" }] }),
@@ -40,11 +60,15 @@ export const Route = createFileRoute("/admin/tickets/$ticketId")({
 function TicketReview() {
 	const { session, ticket } = Route.useLoaderData();
 	const navigate = useNavigate();
+	const router = useRouter();
 	const currentValues = ticket.currentCity?.values;
+	const isResolved = ticket.status !== "pending";
+	const cityName = ticket.city?.name ?? ticket.currentCity?.city?.name;
 	const [values, setValues] = useState<TicketValues>(() => cloneValues(currentValues ?? ticket.values));
 	const [decisions, setDecisions] = useState<Partial<Record<keyof TicketValues, FieldDecision>>>({});
 	const [note, setNote] = useState(ticket.reviewNote ?? "");
 	const [busy, setBusy] = useState(false);
+	const [deleteOpen, setDeleteOpen] = useState(false);
 	const [error, setError] = useState<string | null>(null);
 
 	async function resolve(action: ResolveAction) {
@@ -52,8 +76,6 @@ function TicketReview() {
 		setError(null);
 
 		try {
-			const cityName = ticket.city?.name ?? ticket.currentCity?.city?.name;
-
 			if (action === "approve") {
 				await approveNewTicketFn({
 					data: {
@@ -89,6 +111,38 @@ function TicketReview() {
 		}
 	}
 
+	async function reopen() {
+		setBusy(true);
+		setError(null);
+
+		try {
+			await reopenTicketFn({
+				data: { ticketId: ticket.id, expectedUpdated: ticket.updated },
+			});
+			toast.add({ title: "Ticket wieder geöffnet", description: cityName, type: "success" });
+			await router.invalidate();
+		} catch (cause) {
+			setError(getErrorMessage(cause));
+		} finally {
+			setBusy(false);
+		}
+	}
+
+	async function remove() {
+		setBusy(true);
+		setError(null);
+
+		try {
+			await deleteTicketFn({ data: { ticketId: ticket.id } });
+			toast.add({ title: "Ticket gelöscht", description: cityName, type: "success" });
+			navigate({ to: "/admin", search: { query: "", status: "pending", page: 1 } });
+		} catch (cause) {
+			setError(getErrorMessage(cause));
+			setBusy(false);
+			setDeleteOpen(false);
+		}
+	}
+
 	const changedFields = currentValues ? getChangedFields(currentValues, ticket.values) : [];
 	const reviewedFields = changedFields.filter((field) => decisions[field]).length;
 	const actionLabel = ticket.type === "new" ? "Stadt freigeben" : "Änderung übernehmen";
@@ -114,9 +168,12 @@ function TicketReview() {
 
 				<Card className="bg-primary text-primary-foreground [--card-spacing:--spacing(6)] sm:[--card-spacing:--spacing(7)]">
 					<CardHeader>
-						<span className="flex items-center gap-3">
+						<span className="flex flex-wrap items-center gap-3">
 							<span className="inline-flex items-center rounded-full bg-primary-foreground px-3 py-1 text-xs font-black uppercase tracking-widest text-foreground ring-1 ring-black/10">
 								{ticket.type === "new" ? "Neue Stadt" : "Korrektur"}
+							</span>
+							<span className="inline-flex items-center rounded-full bg-primary-foreground/15 px-3 py-1 text-xs font-black uppercase tracking-widest text-primary-foreground ring-1 ring-primary-foreground/25">
+								{statusLabels[ticket.status]}
 							</span>
 						</span>
 						<CardTitle className="text-3xl font-black tracking-tight">{ticket.city?.name ?? "Unbekannte Stadt"}</CardTitle>
@@ -155,6 +212,45 @@ function TicketReview() {
 					</CardContent>
 				</Card>
 
+				{error ? <Alert variant="destructive"><AlertDescription>{error}</AlertDescription></Alert> : null}
+
+			{isResolved ? (
+				<Card className="[--card-spacing:--spacing(6)] sm:[--card-spacing:--spacing(7)]">
+					<CardHeader>
+						<CardDescription className="font-bold uppercase tracking-[0.18em] text-destructive">Erledigt</CardDescription>
+						<CardTitle>
+							{statusLabels[ticket.status]}
+							{ticket.reviewedAt ? ` am ${formatDate(ticket.reviewedAt)}` : ""}
+							{ticket.reviewedBy ? ` von ${ticket.reviewedBy}` : ""}
+						</CardTitle>
+					</CardHeader>
+					<CardContent className="flex flex-col gap-4">
+						<p className="text-sm text-muted-foreground">
+							Dieses Ticket ist abgeschlossen. Öffne es wieder, um die Werte erneut zu prüfen
+							{ticket.type === "correction" ? " und mit dem Bestand zu vergleichen" : ""}.
+						</p>
+						{ticket.reviewNote ? (
+							<p className="whitespace-pre-wrap text-sm">
+								<span className="font-bold">Interne Notiz: </span>
+								{ticket.reviewNote}
+							</p>
+						) : null}
+						<div className="flex flex-col-reverse gap-3 pt-2 sm:flex-row sm:justify-end">
+							<Button
+								type="button"
+								variant="secondary"
+								size="lg"
+								className="w-full px-6 font-bold sm:w-auto sm:min-w-44"
+								disabled={busy}
+								onClick={() => void reopen()}
+							>
+								{busy ? <Spinner data-icon="inline-start" /> : <RotateCcwIcon data-icon="inline-start" />}
+								Ticket wieder öffnen
+							</Button>
+						</div>
+					</CardContent>
+				</Card>
+			) : (
 			<Card className="[--card-spacing:--spacing(6)] sm:[--card-spacing:--spacing(7)]">
 				<CardHeader>
 					<CardDescription className="font-bold uppercase tracking-[0.18em] text-destructive">Entscheidung</CardDescription>
@@ -171,7 +267,6 @@ function TicketReview() {
 								placeholder="Warum wurde die Entscheidung getroffen?"
 							/>
 						</Field>
-						{error ? <Alert variant="destructive"><AlertDescription>{error}</AlertDescription></Alert> : null}
 						<div className="flex flex-col-reverse gap-3 pt-2 sm:flex-row sm:justify-end">
 							<Button
 								type="button"
@@ -198,6 +293,7 @@ function TicketReview() {
 						</div>
 					</CardContent>
 				</Card>
+			)}
 
 				{ticket.type === "correction" && currentValues && ticket.currentCity ? (
 					<Card className="[--card-spacing:--spacing(6)] sm:[--card-spacing:--spacing(7)]">
@@ -206,9 +302,11 @@ function TicketReview() {
 								<CardDescription className="font-bold uppercase tracking-[0.18em] text-destructive">Änderungen</CardDescription>
 								<CardTitle>Vorschlag gegen Bestand</CardTitle>
 							</div>
-							<CardDescription>
-								{reviewedFields} von {changedFields.length} Feldern entschieden
-							</CardDescription>
+							{isResolved ? null : (
+								<CardDescription>
+									{reviewedFields} von {changedFields.length} Feldern entschieden
+								</CardDescription>
+							)}
 						</CardHeader>
 						<CardContent className="flex flex-col gap-3">
 							{changedFields.map((field) => (
@@ -219,6 +317,7 @@ function TicketReview() {
 									proposed={ticket.values[field]}
 									decision={decisions[field]}
 									onDecide={(decision) => decideField(field, decision)}
+									readOnly={isResolved}
 								/>
 							))}
 							{changedFields.length === 0 ? <p className="text-sm text-muted-foreground">Keine Unterschiede gefunden.</p> : null}
@@ -229,10 +328,60 @@ function TicketReview() {
 			<Card className="[--card-spacing:--spacing(6)] sm:[--card-spacing:--spacing(7)]">
 				<CardHeader>
 					<CardDescription className="font-bold uppercase tracking-[0.18em] text-destructive">Feinschliff</CardDescription>
-					<CardTitle>Passe die ausgewählten Werte hier noch an.</CardTitle>
+					<CardTitle>
+						{isResolved
+							? "Das Ticket ist erledigt. Öffne es wieder, um Werte zu ändern."
+							: "Passe die ausgewählten Werte hier noch an."}
+					</CardTitle>
 				</CardHeader>
 				<CardContent>
-					<AdminValuesForm values={values} onChange={setValues} />
+					<AdminValuesForm values={values} onChange={setValues} disabled={isResolved} />
+				</CardContent>
+			</Card>
+
+			<Card className="border-destructive/40 [--card-spacing:--spacing(6)] sm:[--card-spacing:--spacing(7)]">
+				<CardHeader>
+					<CardDescription className="font-bold uppercase tracking-[0.18em] text-destructive">Löschen</CardDescription>
+					<CardTitle>Ticket endgültig entfernen</CardTitle>
+				</CardHeader>
+				<CardContent className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+					<p className="text-sm text-muted-foreground">
+						Das Ticket wird aus der Datenbank gelöscht. Bei einer freigegebenen Stadt verschwindet sie damit auch von der Webseite.
+					</p>
+					<AlertDialog open={deleteOpen} onOpenChange={setDeleteOpen}>
+						<AlertDialogTrigger
+							render={
+								<Button
+									type="button"
+									variant="destructive"
+									size="lg"
+									className="w-full shrink-0 px-6 font-bold text-white sm:w-auto"
+									disabled={busy}
+								/>
+							}
+						>
+							<Trash2Icon data-icon="inline-start" />
+							Ticket löschen
+						</AlertDialogTrigger>
+						<AlertDialogContent>
+							<AlertDialogHeader>
+								<AlertDialogTitle>Ticket endgültig löschen?</AlertDialogTitle>
+								<AlertDialogDescription>
+									„{cityName ?? "Unbekannte Stadt"}“ wird dauerhaft aus der Datenbank gelöscht. Das kann nicht rückgängig gemacht werden.
+								</AlertDialogDescription>
+							</AlertDialogHeader>
+							<AlertDialogFooter>
+								<AlertDialogCancel>Abbrechen</AlertDialogCancel>
+								<AlertDialogAction
+									className="bg-destructive text-white hover:bg-destructive/85"
+									disabled={busy}
+									onClick={() => void remove()}
+								>
+									Endgültig löschen
+								</AlertDialogAction>
+							</AlertDialogFooter>
+						</AlertDialogContent>
+					</AlertDialog>
 				</CardContent>
 			</Card>
 
@@ -285,12 +434,14 @@ function DiffRow({
 	proposed,
 	decision,
 	onDecide,
+	readOnly = false,
 }: {
 	field: keyof TicketValues;
 	current: unknown;
 	proposed: unknown;
 	decision?: FieldDecision;
 	onDecide: (decision: FieldDecision) => void;
+	readOnly?: boolean;
 }) {
 	return (
 		<Card size="sm">
@@ -305,24 +456,26 @@ function DiffRow({
 					<ValuePanel label="Bestand" value={current} />
 					<ValuePanel label="Vorschlag" value={proposed} accent />
 				</div>
-				<div className="flex flex-col gap-2 border-t pt-3 sm:flex-row sm:justify-end">
-					<Button
-						type="button"
-						variant={decision === "kept" ? "secondary" : "outline"}
-						onClick={() => onDecide("kept")}
-					>
-						<Undo2Icon data-icon="inline-start" />
-						Bestand behalten
-					</Button>
-					<Button
-						type="button"
-						variant={decision === "accepted" ? "default" : "outline"}
-						onClick={() => onDecide("accepted")}
-					>
-						<CheckIcon data-icon="inline-start" />
-						Änderung übernehmen
-					</Button>
-				</div>
+				{readOnly ? null : (
+					<div className="flex flex-col gap-2 border-t pt-3 sm:flex-row sm:justify-end">
+						<Button
+							type="button"
+							variant={decision === "kept" ? "secondary" : "outline"}
+							onClick={() => onDecide("kept")}
+						>
+							<Undo2Icon data-icon="inline-start" />
+							Bestand behalten
+						</Button>
+						<Button
+							type="button"
+							variant={decision === "accepted" ? "default" : "outline"}
+							onClick={() => onDecide("accepted")}
+						>
+							<CheckIcon data-icon="inline-start" />
+							Änderung übernehmen
+						</Button>
+					</div>
+				)}
 			</CardContent>
 		</Card>
 	);
@@ -341,6 +494,7 @@ function getErrorMessage(cause: unknown) {
 	if (!(cause instanceof Error)) return "Speichern fehlgeschlagen.";
 	if (cause.message.includes("CONFLICT")) return "Die Daten wurden inzwischen geändert. Bitte Ticket neu laden.";
 	if (cause.message.includes("TICKET_RESOLVED")) return "Dieses Ticket wurde bereits bearbeitet.";
+	if (cause.message.includes("TICKET_PENDING")) return "Dieses Ticket ist bereits offen.";
 	if (cause.message.includes("UNAUTHORIZED")) return "Deine Sitzung ist abgelaufen. Bitte neu anmelden.";
 	return cause.message || "Speichern fehlgeschlagen.";
 }

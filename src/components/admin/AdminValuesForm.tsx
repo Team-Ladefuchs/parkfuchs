@@ -15,6 +15,7 @@ import { Textarea } from "@/components/ui/textarea";
 interface AdminValuesFormProps {
 	values: TicketValues;
 	onChange: (values: TicketValues) => void;
+	disabled?: boolean;
 }
 
 const booleanFields: Array<{ key: keyof TicketValues; label: string }> = [
@@ -30,6 +31,7 @@ const booleanFields: Array<{ key: keyof TicketValues; label: string }> = [
 export default function AdminValuesForm({
 	values,
 	onChange,
+	disabled = false,
 }: AdminValuesFormProps) {
 	function update<T extends keyof TicketValues>(
 		key: T,
@@ -51,7 +53,8 @@ export default function AdminValuesForm({
 	}
 
 	return (
-		<FieldGroup>
+		<fieldset className="min-w-0" disabled={disabled}>
+			<FieldGroup>
 			<Field>
 				<FieldLabel htmlFor="admin-information">Information</FieldLabel>
 				<Textarea
@@ -199,6 +202,7 @@ export default function AdminValuesForm({
 					))}
 				</FieldGroup>
 			</FieldSet>
-		</FieldGroup>
+			</FieldGroup>
+		</fieldset>
 	);
 }

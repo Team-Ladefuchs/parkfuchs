@@ -242,7 +242,7 @@ function assertCurrentVersion(actual: string, expected: string) {
 }
 
 function assertPending(ticket: PocketBaseTicketRecord) {
-	if (ticket.approved || getStatus(ticket) !== "pending") {
+	if (getStatus(ticket) !== "pending") {
 		throw new Error("TICKET_RESOLVED");
 	}
 }
@@ -301,8 +301,7 @@ export async function rejectTicket(input: {
 	);
 }
 
-export async function mergeCorrection(input: {
-	ticketId: string;
+export async function mergeCorrection(input: {	ticketId: string;
 	expectedTicketUpdated: string;
 	expectedCityUpdated: string;
 	values: TicketValues;
@@ -340,4 +339,36 @@ export async function mergeCorrection(input: {
 	});
 
 	await batch.send();
+}
+
+export async function reopenTicket(input: {
+	ticketId: string;
+	expectedUpdated: string;
+}) {
+	assertSameOrigin();
+	const { pocketBase } = await requireAdminPocketBase();
+	const ticket = await getMutableTicket(pocketBase, input.ticketId);
+
+	if (getStatus(ticket) === "pending") {
+		throw new Error("TICKET_PENDING");
+	}
+
+	assertCurrentVersion(ticket.updated, input.expectedUpdated);
+
+	// `approved` is left untouched so a published city stays live while it is
+	// reviewed again; rejecting it later takes it down.
+	return pocketBase.collection("cityInbox").update<PocketBaseTicketRecord>(
+		input.ticketId,
+		{
+			moderationStatus: "pending",
+			reviewedAt: "",
+			reviewedBy: "",
+		},
+	);
+}
+
+export async function deleteTicket(input: { ticketId: string }) {
+	assertSameOrigin();
+	const { pocketBase } = await requireAdminPocketBase();
+	await pocketBase.collection("cityInbox").delete(input.ticketId);
 }

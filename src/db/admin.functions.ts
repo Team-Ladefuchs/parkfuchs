@@ -7,10 +7,12 @@ import {
 } from "@/auth/admin.server";
 import {
 	approveNewTicket,
+	deleteTicket,
 	getTicket,
 	listTickets,
 	mergeCorrection,
 	rejectTicket,
+	reopenTicket,
 } from "@/db/admin.server";
 import { type TicketValues } from "@/db/admin.types";
 
@@ -99,3 +101,16 @@ export const mergeCorrectionFn = createServerFn({ method: "POST" })
 		}),
 	)
 	.handler(({ data }) => mergeCorrection(data));
+
+export const reopenTicketFn = createServerFn({ method: "POST" })
+	.validator(
+		z.object({
+			ticketId: ticketIdSchema,
+			expectedUpdated: z.string().min(1),
+		}),
+	)
+	.handler(({ data }) => reopenTicket(data));
+
+export const deleteTicketFn = createServerFn({ method: "POST" })
+	.validator(z.object({ ticketId: ticketIdSchema }))
+	.handler(({ data }) => deleteTicket(data));
