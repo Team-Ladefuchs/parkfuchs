@@ -136,6 +136,11 @@ export default function AdminValuesForm({
 						Quelle hinzufügen
 					</Button>
 				</div>
+				{values.websiteExtras.length === 0 ? (
+					<p className="text-sm text-muted-foreground">
+						Keine weiteren Quellen vorhanden.
+					</p>
+				) : null}
 				<FieldGroup className="gap-3">
 					{values.websiteExtras.map((website, index) => (
 						<Field

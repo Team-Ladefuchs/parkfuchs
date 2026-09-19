@@ -159,14 +159,14 @@ function TicketReview() {
 
 	return (
 		<AdminShell displayName={session.displayName}>
-			<div className="flex flex-col gap-6">
-				<div className="flex items-center justify-between gap-4">
+			<div className="flex flex-col gap-6 lg:grid lg:grid-cols-[minmax(0,1fr)_388px] lg:items-start">
+				<div className="flex items-center justify-between gap-4 lg:col-span-2">
 					<Link to="/admin" search={{ query: "", status: "pending", page: 1 }} className="text-sm font-bold text-destructive hover:underline">
 						← Zurück zum Eingang
 					</Link>
 				</div>
 
-				<Card className="bg-primary text-primary-foreground [--card-spacing:--spacing(6)] sm:[--card-spacing:--spacing(7)]">
+				<Card className="bg-primary text-primary-foreground [--card-spacing:--spacing(6)] sm:[--card-spacing:--spacing(7)] lg:col-start-1">
 					<CardHeader>
 						<span className="flex flex-wrap items-center gap-3">
 							<span className="inline-flex items-center rounded-full bg-primary-foreground px-3 py-1 text-xs font-black uppercase tracking-widest text-foreground ring-1 ring-black/10">
@@ -212,10 +212,10 @@ function TicketReview() {
 					</CardContent>
 				</Card>
 
-				{error ? <Alert variant="destructive"><AlertDescription>{error}</AlertDescription></Alert> : null}
+				{error ? <Alert variant="destructive" className="lg:col-start-1"><AlertDescription>{error}</AlertDescription></Alert> : null}
 
 			{isResolved ? (
-				<Card className="[--card-spacing:--spacing(6)] sm:[--card-spacing:--spacing(7)]">
+				<Card className="[--card-spacing:--spacing(6)] sm:[--card-spacing:--spacing(7)] lg:col-start-2 lg:row-start-2 lg:self-start">
 					<CardHeader>
 						<CardDescription className="font-bold uppercase tracking-[0.18em] text-destructive">Erledigt</CardDescription>
 						<CardTitle>
@@ -251,7 +251,7 @@ function TicketReview() {
 					</CardContent>
 				</Card>
 			) : (
-			<Card className="[--card-spacing:--spacing(6)] sm:[--card-spacing:--spacing(7)]">
+			<Card className="[--card-spacing:--spacing(6)] sm:[--card-spacing:--spacing(7)] lg:col-start-2 lg:row-span-2 lg:row-start-2 lg:self-start">
 				<CardHeader>
 					<CardDescription className="font-bold uppercase tracking-[0.18em] text-destructive">Entscheidung</CardDescription>
 					<CardTitle>Die Notiz bleibt intern und wird nicht öffentlich angezeigt.</CardTitle>
@@ -264,10 +264,11 @@ function TicketReview() {
 								value={note}
 								onChange={(event) => setNote(event.target.value)}
 								rows={3}
+								className="min-h-24 [field-sizing:fixed]"
 								placeholder="Warum wurde die Entscheidung getroffen?"
 							/>
 						</Field>
-						<div className="flex flex-col-reverse gap-3 pt-2 sm:flex-row sm:justify-end">
+						<div className="flex flex-col-reverse gap-3 pt-2 sm:flex-row sm:flex-wrap sm:justify-end">
 							<Button
 								type="button"
 								variant="destructive"
@@ -296,7 +297,7 @@ function TicketReview() {
 			)}
 
 				{ticket.type === "correction" && currentValues && ticket.currentCity ? (
-					<Card className="[--card-spacing:--spacing(6)] sm:[--card-spacing:--spacing(7)]">
+					<Card className="[--card-spacing:--spacing(6)] sm:[--card-spacing:--spacing(7)] lg:col-start-1">
 						<CardHeader className="flex flex-col justify-between gap-2 sm:flex-row sm:items-end">
 							<div>
 								<CardDescription className="font-bold uppercase tracking-[0.18em] text-destructive">Änderungen</CardDescription>
@@ -325,7 +326,7 @@ function TicketReview() {
 					</Card>
 				) : null}
 
-			<Card className="[--card-spacing:--spacing(6)] sm:[--card-spacing:--spacing(7)]">
+			<Card className="[--card-spacing:--spacing(6)] sm:[--card-spacing:--spacing(7)] lg:col-start-1">
 				<CardHeader>
 					<CardDescription className="font-bold uppercase tracking-[0.18em] text-destructive">Feinschliff</CardDescription>
 					<CardTitle>
@@ -340,15 +341,12 @@ function TicketReview() {
 			</Card>
 
 			{isResolved ? (
-				<Card className="border-destructive/40 [--card-spacing:--spacing(6)] sm:[--card-spacing:--spacing(7)]">
+				<Card className="border-destructive/40 [--card-spacing:--spacing(6)] sm:[--card-spacing:--spacing(7)] lg:col-start-2 lg:row-start-3 lg:self-start">
 					<CardHeader>
 						<CardDescription className="font-bold uppercase tracking-[0.18em] text-destructive">Löschen</CardDescription>
 						<CardTitle>Ticket endgültig entfernen</CardTitle>
 					</CardHeader>
-					<CardContent className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
-						<p className="text-sm text-muted-foreground">
-							Das Ticket wird aus der Datenbank gelöscht. Bei einer freigegebenen Stadt verschwindet sie damit auch von der Webseite.
-						</p>
+					<CardContent className="flex flex-col gap-3">
 						<AlertDialog open={deleteOpen} onOpenChange={setDeleteOpen}>
 							<AlertDialogTrigger
 								render={
@@ -356,7 +354,7 @@ function TicketReview() {
 										type="button"
 										variant="destructive"
 										size="lg"
-										className="w-full shrink-0 bg-destructive px-6 font-bold text-white hover:bg-destructive/85 sm:w-auto"
+										className="w-full shrink-0 bg-destructive px-6 font-bold text-white hover:bg-destructive/85"
 										disabled={busy}
 									/>
 								}
@@ -383,6 +381,9 @@ function TicketReview() {
 								</AlertDialogFooter>
 							</AlertDialogContent>
 						</AlertDialog>
+						<p className="text-sm text-muted-foreground">
+							Das Ticket wird aus der Datenbank gelöscht. Bei einer freigegebenen Stadt verschwindet sie damit auch von der Webseite.
+						</p>
 					</CardContent>
 				</Card>
 			) : null}

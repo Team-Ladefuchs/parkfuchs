@@ -19,7 +19,7 @@ export default function AdminShell({ children, displayName }: AdminShellProps) {
 	return (
 		<div className="admin-root min-h-screen bg-background font-sans text-foreground">
 			<header className="sticky top-0 z-30 border-b bg-primary text-primary-foreground shadow-md">
-				<div className="mx-auto flex max-w-295 items-center justify-between gap-4 px-4 py-2 sm:px-6">
+				<div className="mx-auto flex max-w-320 items-center justify-between gap-4 px-4 py-2 sm:px-6">
 					<Link
 						to="/admin"
 						search={{ query: "", status: "pending", page: 1 }}
@@ -40,7 +40,7 @@ export default function AdminShell({ children, displayName }: AdminShellProps) {
 					</div>
 				</div>
 			</header>
-			<main className="mx-auto w-full max-w-[1180px] px-4 py-6 sm:px-6 sm:py-8">
+			<main className="mx-auto w-full max-w-320 px-4 py-6 sm:px-6 sm:py-8">
 				{children}
 			</main>
 			<Toaster />
