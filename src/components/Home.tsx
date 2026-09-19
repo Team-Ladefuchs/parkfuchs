@@ -1,5 +1,4 @@
-import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { MapPinPlusIcon } from "lucide-react";
 import { useState } from "react";
 import { useDebounce } from "@/functions/debounce";
 import { search as searchCity } from "@/db/city.functions";
@@ -73,13 +72,11 @@ export default function Home({
 						Oder
 					</div>
 					<button
-						className="bg-green-normal max-md:w-full max-md:justify-center gap-2 flex items-center text-lg rounded-lg hover:bg-green-dark text-black w-max py-2 px-4 justify-self-start"
+						type="button"
+						className="inline-flex w-max translate-y-0.5 items-center justify-center gap-2 rounded-xl border-2 border-green-darker/50 bg-green-normal px-5 py-2.5 text-base font-semibold text-black shadow-sm transition-colors hover:bg-green-dark focus:outline-none focus:ring-2 focus:ring-green-darker focus:ring-offset-2 max-md:w-full max-md:translate-y-0"
 						onClick={(_e) => setOpenDialog(true)}
 					>
-						<FontAwesomeIcon
-							icon={faLocationDot}
-							className="w-5 h-5 max-md:h-4 max-md:w-4"
-						/>
+						<MapPinPlusIcon aria-hidden="true" className="size-5" />
 						Ort hinzufügen
 					</button>
 				</div>

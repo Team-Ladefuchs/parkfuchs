@@ -1,6 +1,7 @@
-import { faArrowRight, faLocationCrosshairs, faMagnifyingGlass, faXmark } from "@fortawesome/free-solid-svg-icons";
+import { faMagnifyingGlass, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { type JSX, useEffect, useRef } from "react";
+import { Loader2Icon, LocateFixedIcon } from "lucide-react";
+import { type JSX, useEffect, useRef, useState } from "react";
 import { geolocation } from "@/functions/geolocation.functions";
 
 export interface Properties {
@@ -17,6 +18,7 @@ export default function SearchInput({
 	id,
 }: Properties): JSX.Element {
 	const inputRef = useRef<HTMLInputElement | null>(null);
+	const [isLocating, setIsLocating] = useState(false);
 
 	const showClearButton = inputRef.current && inputRef.current.value.trim();
 
@@ -33,10 +35,11 @@ export default function SearchInput({
 	}, [initValue]);
 
 	const getLocation = () => {
-		if (!navigator.geolocation) {
+		if (!navigator.geolocation || isLocating) {
 			return;
 		}
 
+		setIsLocating(true);
 		navigator.geolocation.getCurrentPosition(async (position) => {
 			const { latitude, longitude } = position.coords;
 			try {
@@ -57,8 +60,10 @@ export default function SearchInput({
 				}
 			} catch (error) {
 				console.error("[geolocation]", error);
+			} finally {
+				setIsLocating(false);
 			}
-		});
+		}, () => setIsLocating(false));
 	};
 
 	return (
@@ -102,26 +107,26 @@ export default function SearchInput({
 				</button>
 			)}
 			{!showClearButton && (
-				<>
-					<FontAwesomeIcon
-						icon={faArrowRight}
-						size="lg"
-						bounce={true}
-						className="absolute right-[38px] w-5 h-5 top-[13px] text-[rgb(170,170,170)] animate-bounceX active:outline-none webkit-highlight-fix"
-					/>
-
-					<button
-						className="active:outline-none webkit-highlight-fix"
-						aria-label="Aktuelle Position verwenden"
-					>
-						<FontAwesomeIcon
-							onClick={() => getLocation()}
-							icon={faLocationCrosshairs}
-							size="lg"
-							className="absolute right-1 w-5 h-5 top-[5px] p-2 cursor-pointer"
+				<button
+					type="button"
+					disabled={isLocating}
+					onClick={getLocation}
+					className="webkit-highlight-fix absolute right-1 top-1/2 inline-flex size-10 -translate-y-1/2 items-center justify-center rounded-md text-gray-700 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-green-dark disabled:cursor-wait disabled:text-gray-500"
+					aria-label={
+						isLocating
+							? "Aktuelle Position wird ermittelt"
+							: "Aktuelle Position verwenden"
+					}
+				>
+					{isLocating ? (
+						<Loader2Icon
+							aria-hidden="true"
+							className="size-5 animate-spin"
 						/>
-					</button>
-				</>
+					) : (
+						<LocateFixedIcon aria-hidden="true" className="size-5" />
+					)}
+				</button>
 			)}
 		</div>
 	);

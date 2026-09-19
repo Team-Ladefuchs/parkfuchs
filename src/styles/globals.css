@@ -34,21 +34,8 @@
 		}
 	}
 
-	@keyframes bounceX {
-		0%,
-		100% {
-			transform: translateX(-25%);
-			animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
-		}
-		50% {
-			transform: translateY(0);
-			animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
-		}
-	}
-
 	--animate-fade: fadeIn 200ms ease-in-out;
 	--animate-show: show 200ms ease normal;
-	--animate-bounceX: animation: bounceX 1.8s infinite;
 
 	@keyframes pop {
 		0% {
@@ -68,6 +55,10 @@
 }
 
 @layer base {
+	html {
+		scrollbar-color: var(--color-green-dark) transparent;
+		scrollbar-width: thin;
+	}
 	input[type="number"]::-webkit-inner-spin-button,
 	input[type="number"]::-webkit-outer-spin-button {
 		opacity: 1;
