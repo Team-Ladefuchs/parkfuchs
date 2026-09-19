@@ -292,7 +292,7 @@ function TicketReview() {
 							</AlertDialogContent>
 						</AlertDialog>
 						<p className="text-sm text-muted-foreground">
-							Das Ticket wird endgültig gelöscht. Ist die Stadt freigegeben, verschwindet sie auch von der Webseite.
+							Löscht das Ticket und ggf. die freigegebene Stadt.
 						</p>
 					</CardContent>
 				</Card>
