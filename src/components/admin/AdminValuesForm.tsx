@@ -63,7 +63,8 @@ export default function AdminValuesForm({
 					onChange={(event) =>
 						update("information", event.target.value)
 					}
-					rows={7}
+					rows={3}
+					className="min-h-24 [field-sizing:fixed]"
 				/>
 			</Field>
 
