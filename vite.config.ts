@@ -25,6 +25,11 @@ export default defineConfig(({ mode }) => {
 			// cannot resolve when the package is externalized during SSR.
 			noExternal: ["react-timeago"],
 		},
+		// Bun is the runtime in the NixOS deployment; the default node-server
+		// output uses srvx/bun and must be started with bun.
+		nitro: {
+			preset: "bun",
+		},
 		plugins: [
 			tailwindcss(),
 			tanstackStart({

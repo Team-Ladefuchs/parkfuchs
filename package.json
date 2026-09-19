@@ -4,9 +4,9 @@
 	"private": true,
 	"type": "module",
 	"scripts": {
-		"dev": "vite dev",
+		"dev": "bun --bun ./node_modules/vite/bin/vite.js dev",
 		"build": "vite build",
-		"start": "node .output/server/index.mjs",
+		"start": "bun .output/server/index.mjs",
 		"lint": "eslint ."
 	},
 	"dependencies": {

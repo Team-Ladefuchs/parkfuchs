@@ -46,11 +46,9 @@
                 path: _type:
                 !(lib.hasPrefix "${root}/nix" path)
                 && !(lib.hasPrefix "${root}/.github" path)
-                && !(lib.hasPrefix "${root}/android" path)
                 && !(lib.hasPrefix "${root}/pocketbase-db" path)
                 && !(lib.hasPrefix "${root}/node_modules" path)
                 && !(lib.hasPrefix "${root}/.output" path)
-                && !(lib.hasPrefix "${root}/.next" path)
                 && !lib.elem (baseNameOf path) [
                   "flake.nix"
                   "flake.lock"
@@ -89,9 +87,10 @@
           packages = with pkgs; [
             nodejs_24
             pnpm
+            bun
           ];
           shellHook = ''
-            echo "parkfuchs dev ready ($(node --version), pnpm $(pnpm --version))"
+            echo "parkfuchs dev ready ($(node --version), pnpm $(pnpm --version), bun $(bun --version))"
           '';
         };
       }

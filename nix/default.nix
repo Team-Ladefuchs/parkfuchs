@@ -106,7 +106,7 @@ in
         "pocketbase.service"
       ];
       environment = {
-        ADDR = cfg.addr;
+        NITRO_HOST = cfg.addr;
         PORT = toString cfg.port;
         DB_PORT = toString cfg.pocketBasePort;
       } // lib.optionalAttrs (cfg.tomtomKeyFile == null && cfg.tomtomKey != "") {
@@ -116,7 +116,7 @@ in
         Type = "simple";
         User = "parkfuchs";
         Group = "parkfuchs";
-        ExecStart = "${pkgs.nodejs_24}/bin/node ${cfg.package}/server/index.mjs";
+        ExecStart = "${pkgs.bun}/bin/bun ${cfg.package}/server/index.mjs";
       } // lib.optionalAttrs (cfg.tomtomKeyFile != null) {
         EnvironmentFile = cfg.tomtomKeyFile;
       };
