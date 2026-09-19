@@ -166,7 +166,7 @@ export default function Dialog({
 				}
 				className="mx-auto animate-show overflow-hidden backdrop:bg-red-300 relative top-4 md:top-16 bg-transparent max-w-2xl w-full px-4 md:px-0"
 			>
-				<div className="rounded-lg shadow bg-white mx-auto flex max-h-[calc(100dvh-2rem)] flex-col overflow-hidden md:mt-1 md:max-h-[calc(100dvh-5rem)]">
+				<div className="rounded-lg shadow bg-white mx-auto flex max-h-[calc(100dvh-2rem-env(safe-area-inset-bottom))] flex-col overflow-hidden md:mt-1 md:max-h-[calc(100dvh-5rem)]">
 					<header className="flex bg-green-normal rounded-t-lg items-start justify-between border-b align-start h-14 shrink-0">
 						<img
 							src="/parkfuchs.svg"

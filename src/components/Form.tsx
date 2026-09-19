@@ -416,7 +416,7 @@ export default function Form({
 				</p>
 			)}
 			</div>
-			<div className="flex shrink-0 items-center gap-3 border-t border-gray-200 bg-white px-6 pt-3 pb-[calc(0.75rem+env(safe-area-inset-bottom))] max-md:px-3">
+			<div className="flex shrink-0 items-center gap-3 border-t border-gray-200 bg-white px-6 py-3 max-md:px-3">
 				<button
 					disabled={!formValid || isSubmitting}
 					data-modal-toggle="defaultModal"
