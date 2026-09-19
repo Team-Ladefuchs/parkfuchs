@@ -3,6 +3,7 @@ import { type ReactNode } from "react";
 import { logoutAdminFn } from "@/db/admin.functions";
 import Logo from "@/components/Logo";
 import { Button } from "@/components/ui/button";
+import { Toaster } from "@/components/ui/toast";
 
 interface AdminShellProps {
 	children: ReactNode;
@@ -42,6 +43,7 @@ export default function AdminShell({ children, displayName }: AdminShellProps) {
 			<main className="mx-auto w-full max-w-[1180px] px-4 py-6 sm:px-6 sm:py-8">
 				{children}
 			</main>
+			<Toaster />
 		</div>
 	);
 }

@@ -10,6 +10,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Field, FieldLabel } from "@/components/ui/field";
 import { Spinner } from "@/components/ui/spinner";
 import { Textarea } from "@/components/ui/textarea";
+import { toast } from "@/components/ui/toast";
 import {
 	approveNewTicketFn,
 	getAdminSessionFn,
@@ -51,6 +52,8 @@ function TicketReview() {
 		setError(null);
 
 		try {
+			const cityName = ticket.city?.name ?? ticket.currentCity?.city?.name;
+
 			if (action === "approve") {
 				await approveNewTicketFn({
 					data: {
@@ -60,6 +63,7 @@ function TicketReview() {
 						note,
 					},
 				});
+				toast.add({ title: "Stadt freigegeben", description: cityName, type: "success" });
 			} else if (action === "merge" && currentValues && ticket.currentCity) {
 				await mergeCorrectionFn({
 					data: {
@@ -70,10 +74,12 @@ function TicketReview() {
 						note,
 					},
 				});
+				toast.add({ title: "Änderung übernommen", description: cityName, type: "success" });
 			} else if (action === "reject") {
 				await rejectTicketFn({
 					data: { ticketId: ticket.id, expectedUpdated: ticket.updated, note },
 				});
+				toast.add({ title: "Ticket abgelehnt", description: cityName, type: "success" });
 			}
 
 			navigate({ to: "/admin", search: { query: "", status: "pending", page: 1 } });
