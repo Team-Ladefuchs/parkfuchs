@@ -34,14 +34,16 @@ export default function WebsiteAddField({
 			/>
 			{showPlus && (
 				<button
+					type="button"
+					aria-label="Weitere Quelle hinzufügen"
 					disabled={isDisabled}
-					className="p-2 rounded-md disabled:opacity-30 absolute top-2 bottom-2 right-[10px] bg-neutral-300 disabled:bg-neutral-200 flex items-center "
+					className="absolute top-2 right-[10px] bottom-2 inline-flex items-center justify-center rounded-md border border-gray-400 bg-white p-2 text-gray-700 transition-colors hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-green-darker disabled:cursor-not-allowed disabled:border-gray-300 disabled:bg-gray-100 disabled:text-gray-500"
 					onClick={(e) => {
 						e.preventDefault();
 						addMoreField();
 					}}
 				>
-					<FontAwesomeIcon icon={faPlus} />
+					<FontAwesomeIcon aria-hidden="true" icon={faPlus} />
 				</button>
 			)}
 		</div>
