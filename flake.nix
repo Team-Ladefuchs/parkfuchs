@@ -83,16 +83,6 @@
       {
         defaultPackage = parkfuchs;
         packages = { inherit parkfuchs; };
-        devShells.default = pkgs.mkShell {
-          packages = with pkgs; [
-            nodejs_24
-            pnpm
-            bun
-          ];
-          shellHook = ''
-            echo "parkfuchs dev ready ($(node --version), pnpm $(pnpm --version), bun $(bun --version))"
-          '';
-        };
       }
     );
 }

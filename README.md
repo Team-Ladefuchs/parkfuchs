@@ -6,7 +6,14 @@
 
 ## Getting Started
 
-Install dependencies and run the development server:
+Install [mise](https://mise.jdx.dev/), then install the development tools and dependencies:
+
+```bash
+mise trust
+mise install
+```
+
+With mise activated in your shell (or using direnv), run:
 
 ```bash
 pnpm install
@@ -42,12 +49,6 @@ The production output is generated in `.output/` and served with
 `node .output/server/index.mjs`.
 
 ## Nix
-
-A dev shell with Node.js and pnpm is available:
-
-```bash
-nix develop
-```
 
 Build the package:
 
