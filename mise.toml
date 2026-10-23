@@ -1,3 +1,7 @@
+[env]
+_.file = ".env"
+DB_PORT = "8090"
+
 [tools]
 node = "24"
 pnpm = "10"

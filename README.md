@@ -13,7 +13,7 @@ mise trust
 mise install
 ```
 
-With mise activated in your shell (or using direnv), run:
+With mise activated in your shell, run:
 
 ```bash
 pnpm install
