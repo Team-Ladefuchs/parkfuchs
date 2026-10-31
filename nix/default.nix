@@ -55,11 +55,21 @@ in
         '';
       };
 
+      pocketBaseImageTag = lib.mkOption {
+        type = types.str;
+        default = "latest";
+        example = "0.36.0";
+        description = ''
+          Tag of the docker.io/spectado/pocketbase container image.
+          The image is pulled whenever the service starts.
+        '';
+      };
+
       pocketBasePort = lib.mkOption {
         type = types.port;
         default = 8090;
         description = ''
-          	Pokcetbase Host Port.
+          PocketBase host port.
         '';
       };
 
@@ -67,7 +77,7 @@ in
         type = types.str;
         default = "127.0.0.1";
         description = ''
-          	Pokcetbase Addr to use.
+          Host address on which to expose PocketBase.
         '';
       };
 
@@ -81,30 +91,28 @@ in
     };
     users.groups.parkfuchs = { };
 
-    systemd.services.pocketbase = {
-      enable = true;
-      description = "Pocketbase: Open Source backend";
-      wantedBy = [ "multi-user.target" ];
-      serviceConfig = {
-        Type = "simple";
-        User = "parkfuchs";
-        LimitNOFILE = "4096";
-        Restart = "always";
-        RestartSec = "5s";
-        Group = "parkfuchs";
-        StateDirectory = stateDir;
-        # Starts the web server (default to 127.0.0.1:8090 if no domain is specified)
-        ExecStart = "${pkgs.pocketbase}/bin/pocketbase serve --http='${cfg.pocketBaseAddr}:${toString cfg.pocketBasePort}' --dir=/var/lib/${stateDir} --migrationsDir='${cfg.package}/pb_migrations'";
+    virtualisation.oci-containers = {
+      backend = "podman";
+      containers.pocketbase = {
+        image = "docker.io/spectado/pocketbase:${cfg.pocketBaseImageTag}";
+        ports = [ "${cfg.pocketBaseAddr}:${toString cfg.pocketBasePort}:80" ];
+        volumes = [
+          "/var/lib/${stateDir}:/pb_data"
+          "${cfg.package}/pb_migrations:/pb_migrations:ro"
+        ];
+        extraOptions = [ "--pull=always" ];
       };
     };
+
+    # Keep the existing path (including its spelling) to retain deployed data.
+    systemd.tmpfiles.rules = [ "d /var/lib/${stateDir} 0750 parkfuchs parkfuchs -" ];
 
     systemd.services.parkfuchs = {
       enable = true;
       description = "Parkfuchs Web App";
-      wantedBy = [
-        "multi-user.target"
-        "pocketbase.service"
-      ];
+      wantedBy = [ "multi-user.target" ];
+      requires = [ "podman-pocketbase.service" ];
+      after = [ "podman-pocketbase.service" ];
       environment = {
         NITRO_HOST = cfg.addr;
         PORT = toString cfg.port;

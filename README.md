@@ -57,3 +57,9 @@ nix build .#parkfuchs
 ```
 
 The NixOS module is exposed as `nixosModules.default` (`services.parkfuchs`).
+
+PocketBase runs through Podman using `docker.io/spectado/pocketbase:latest` by
+default. Set `services.parkfuchs.pocketBaseImageTag` to select a specific image
+tag. The image is pulled on each service start; restart `podman-pocketbase` to
+pick up an updated tag. Existing data stays in `/var/lib/pocktetbase-db`, and
+packaged migrations are mounted read-only into the container.
