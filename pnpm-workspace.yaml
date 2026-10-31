@@ -16,5 +16,6 @@ minimumReleaseAgeExclude:
   - '@tanstack/start-server-core@1.169.34'
   - '@tanstack/start-storage-context@1.167.31'
   - vite@8.3.0
+  - lucide-react@1.66.0
 onlyBuiltDependencies:
   - unrs-resolver

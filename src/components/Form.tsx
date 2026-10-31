@@ -6,7 +6,8 @@ import {
 	useState,
 } from "react";
 import { useForm } from "react-hook-form";
-import { SaveIcon, Undo2Icon } from "lucide-react";
+import SaveIcon from "lucide-react/icons/save";
+import Undo2Icon from "lucide-react/icons/undo-2";
 
 import { isValidUrl } from "@/functions/utils";
 import { AppContext } from "@/context/appContext";

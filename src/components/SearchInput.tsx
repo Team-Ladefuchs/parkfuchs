@@ -1,6 +1,7 @@
 import { faMagnifyingGlass, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Loader2Icon, LocateFixedIcon } from "lucide-react";
+import Loader2Icon from "lucide-react/icons/loader-2";
+import LocateFixedIcon from "lucide-react/icons/locate-fixed";
 import { type JSX, useEffect, useRef, useState } from "react";
 import { geolocation } from "@/functions/geolocation.functions";
 

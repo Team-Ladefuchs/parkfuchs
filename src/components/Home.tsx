@@ -1,4 +1,4 @@
-import { MapPinPlusIcon } from "lucide-react";
+import MapPinPlusIcon from "lucide-react/icons/map-pin-plus";
 import { useState } from "react";
 import { useDebounce } from "@/functions/debounce";
 import { search as searchCity } from "@/db/city.functions";

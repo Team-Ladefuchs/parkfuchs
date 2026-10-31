@@ -1,4 +1,4 @@
-import { PlusIcon } from "lucide-react";
+import PlusIcon from "lucide-react/icons/plus";
 import { type TicketValues } from "@/db/admin.types";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";

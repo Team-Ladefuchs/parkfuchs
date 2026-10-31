@@ -3,14 +3,12 @@
 import * as React from "react";
 import { Toast as ToastPrimitive } from "@base-ui/react/toast";
 import { cn } from "cn";
-import {
-	CircleCheckIcon,
-	InfoIcon,
-	Loader2Icon,
-	OctagonXIcon,
-	TriangleAlertIcon,
-	XIcon,
-} from "lucide-react";
+import CircleCheckIcon from "lucide-react/icons/circle-check";
+import InfoIcon from "lucide-react/icons/info";
+import Loader2Icon from "lucide-react/icons/loader-2";
+import OctagonXIcon from "lucide-react/icons/octagon-x";
+import TriangleAlertIcon from "lucide-react/icons/triangle-alert";
+import XIcon from "lucide-react/icons/x";
 
 import { Button } from "@/components/ui/button";
 

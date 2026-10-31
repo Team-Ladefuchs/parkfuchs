@@ -1,6 +1,11 @@
 import { Link, createFileRoute, redirect, useNavigate, useRouter } from "@tanstack/react-router";
 import { useState } from "react";
-import { CheckIcon, ChevronRightIcon, RotateCcwIcon, Trash2Icon, Undo2Icon, XIcon } from "lucide-react";
+import CheckIcon from "lucide-react/icons/check";
+import ChevronRightIcon from "lucide-react/icons/chevron-right";
+import RotateCcwIcon from "lucide-react/icons/rotate-ccw";
+import Trash2Icon from "lucide-react/icons/trash-2";
+import Undo2Icon from "lucide-react/icons/undo-2";
+import XIcon from "lucide-react/icons/x";
 import AdminShell from "@/components/admin/AdminShell";
 import AdminValuesForm from "@/components/admin/AdminValuesForm";
 import {

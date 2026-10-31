@@ -1,5 +1,6 @@
 import { Link, createFileRoute, redirect, useNavigate } from "@tanstack/react-router";
-import { ChevronRightIcon, SearchIcon } from "lucide-react";
+import ChevronRightIcon from "lucide-react/icons/chevron-right";
+import SearchIcon from "lucide-react/icons/search";
 import { type FormEvent, useState } from "react";
 import AdminShell from "@/components/admin/AdminShell";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
