@@ -58,8 +58,17 @@ nix build .#parkfuchs
 
 The NixOS module is exposed as `nixosModules.default` (`services.parkfuchs`).
 
-PocketBase runs through Podman using `docker.io/spectado/pocketbase:latest` by
-default. Set `services.parkfuchs.pocketBaseImageTag` to select a specific image
-tag. The image is pulled on each service start; restart `podman-pocketbase` to
-pick up an updated tag. Existing data stays in `/var/lib/pocktetbase-db`, and
-packaged migrations are mounted read-only into the container.
+PocketBase runs through Podman using a locally built image from official
+[PocketBase release binaries](https://github.com/pocketbase/pocketbase/releases).
+PocketBase does not publish an official container image. The Dockerfile is in
+`containers/pocketbase/` and supports x86_64 and aarch64.
+
+Set `services.parkfuchs.pocketBaseImageTag` to a release version without `v`
+(or `latest`, the default). The image is rebuilt on service start; `latest`
+resolves to the latest official release at that time. Existing data stays in
+`/var/lib/pocktetbase-db`, and packaged migrations are mounted read-only.
+
+Development uses the same Dockerfile. Run `podman compose up --build` to build
+and start PocketBase. Set `PB_VERSION` to select a release; it defaults to
+`latest`. To refresh a cached `latest` build, run
+`podman compose build --no-cache --pull` before starting it.

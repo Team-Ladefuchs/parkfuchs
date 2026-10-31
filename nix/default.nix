@@ -58,10 +58,11 @@ in
       pocketBaseImageTag = lib.mkOption {
         type = types.str;
         default = "latest";
-        example = "0.36.0";
+        example = "0.40.6";
         description = ''
-          Tag of the docker.io/spectado/pocketbase container image.
-          The image is pulled whenever the service starts.
+          Official PocketBase release version, without the leading v, or latest.
+          A local container image is built from the official release binary
+          whenever the service starts.
         '';
       };
 
@@ -94,15 +95,22 @@ in
     virtualisation.oci-containers = {
       backend = "podman";
       containers.pocketbase = {
-        image = "docker.io/spectado/pocketbase:${cfg.pocketBaseImageTag}";
-        ports = [ "${cfg.pocketBaseAddr}:${toString cfg.pocketBasePort}:80" ];
+        image = "localhost/parkfuchs-pocketbase:${cfg.pocketBaseImageTag}";
+        ports = [ "${cfg.pocketBaseAddr}:${toString cfg.pocketBasePort}:8080" ];
         volumes = [
           "/var/lib/${stateDir}:/pb_data"
           "${cfg.package}/pb_migrations:/pb_migrations:ro"
         ];
-        extraOptions = [ "--pull=always" ];
+        pull = "never";
       };
     };
+
+    systemd.services.podman-pocketbase.preStart = lib.mkBefore ''
+      ${pkgs.podman}/bin/podman build --pull=always --no-cache \
+        --build-arg ${lib.escapeShellArg "PB_VERSION=${cfg.pocketBaseImageTag}"} \
+        --tag ${lib.escapeShellArg "localhost/parkfuchs-pocketbase:${cfg.pocketBaseImageTag}"} \
+        ${builtins.path { path = ../containers/pocketbase; name = "parkfuchs-pocketbase-container"; }}
+    '';
 
     # Keep the existing path (including its spelling) to retain deployed data.
     systemd.tmpfiles.rules = [ "d /var/lib/${stateDir} 0750 parkfuchs parkfuchs -" ];
