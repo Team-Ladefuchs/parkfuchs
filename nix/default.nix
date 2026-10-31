@@ -58,7 +58,7 @@ in
       pocketBaseImageTag = lib.mkOption {
         type = types.str;
         default = "latest";
-        example = "0.40.6";
+        example = "0.41.1";
         description = ''
           Official PocketBase release version, without the leading v, or latest.
           A local container image is built from the official release binary

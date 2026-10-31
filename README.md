@@ -59,9 +59,10 @@ nix build .#parkfuchs
 The NixOS module is exposed as `nixosModules.default` (`services.parkfuchs`).
 
 PocketBase runs through Podman using a locally built image from official
-[PocketBase release binaries](https://github.com/pocketbase/pocketbase/releases).
+[PocketBase release binaries](https://ganigeorgiev.com/pocketbase/pocketbase/releases).
 PocketBase does not publish an official container image. The Dockerfile is in
-`containers/pocketbase/` and supports x86_64 and aarch64.
+`containers/pocketbase/` and supports x86_64 and aarch64. Downloads are verified
+against the release’s published SHA-256 checksums.
 
 Set `services.parkfuchs.pocketBaseImageTag` to a release version without `v`
 (or `latest`, the default). The image is rebuilt on service start; `latest`
