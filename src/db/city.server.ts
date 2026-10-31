@@ -10,7 +10,7 @@ export async function pocketBaseInstance() {
 	if (pbInstance) {
 		return pbInstance;
 	}
-	pbInstance = createPocketBaseClient({ autoCancellation: true });
+	pbInstance = createPocketBaseClient({ autoCancellation: false });
 	return pbInstance;
 }
 
