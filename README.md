@@ -65,8 +65,10 @@ PocketBase does not publish an official container image. The Dockerfile is in
 against the release’s published SHA-256 checksums.
 
 Set `services.parkfuchs.pocketBaseImageTag` to a release version without `v`
-(or `latest`, the default). The image is rebuilt on service start; `latest`
-resolves to the latest official release at that time. Existing data stays in
+(or `latest`, the default). A pinned version is built once and reused across
+restarts and reboots; it is rebuilt only when the Dockerfile changes. `latest`
+is rebuilt on every service start and resolves to the latest official release
+at that time. Existing data stays in
 `/var/lib/pocktetbase-db`, and packaged migrations are mounted read-only.
 
 Development uses the same Dockerfile. Run `podman compose up --build` to build

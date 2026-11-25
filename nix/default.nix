@@ -7,6 +7,12 @@
 let
   cfg = config.services.parkfuchs;
   stateDir = "pocktetbase-db";
+  podman = "${config.virtualisation.podman.package}/bin/podman";
+  image = "localhost/parkfuchs-pocketbase:${cfg.pocketBaseImageTag}";
+  context = builtins.path {
+    path = ../containers/pocketbase;
+    name = "parkfuchs-pocketbase-container";
+  };
 in
 {
   options = with lib; {
@@ -61,8 +67,9 @@ in
         example = "0.41.1";
         description = ''
           Official PocketBase release version, without the leading v, or latest.
-          A local container image is built from the official release binary
-          whenever the service starts.
+          A local container image is built from the official release binary.
+          A pinned version is built once and reused across restarts; latest is
+          rebuilt on every service start.
         '';
       };
 
@@ -95,7 +102,7 @@ in
     virtualisation.oci-containers = {
       backend = "podman";
       containers.pocketbase = {
-        image = "localhost/parkfuchs-pocketbase:${cfg.pocketBaseImageTag}";
+        inherit image;
         ports = [ "${cfg.pocketBaseAddr}:${toString cfg.pocketBasePort}:8080" ];
         volumes = [
           "/var/lib/${stateDir}:/pb_data"
@@ -105,11 +112,17 @@ in
       };
     };
 
+    # A pinned version is built only when no image exists for it and the current
+    # build context; `latest` is rebuilt on every start to pick up new releases.
     systemd.services.podman-pocketbase.preStart = lib.mkBefore ''
-      ${pkgs.podman}/bin/podman build --pull=always --no-cache \
-        --build-arg ${lib.escapeShellArg "PB_VERSION=${cfg.pocketBaseImageTag}"} \
-        --tag ${lib.escapeShellArg "localhost/parkfuchs-pocketbase:${cfg.pocketBaseImageTag}"} \
-        ${builtins.path { path = ../containers/pocketbase; name = "parkfuchs-pocketbase-container"; }}
+      current=$(${podman} image inspect --format '{{ index .Labels "parkfuchs.context" }}' ${lib.escapeShellArg image} 2>/dev/null || true)
+      if [ ${lib.escapeShellArg cfg.pocketBaseImageTag} = latest ] || [ "$current" != ${lib.escapeShellArg "${context}"} ]; then
+        ${podman} build --pull=always ${lib.optionalString (cfg.pocketBaseImageTag == "latest") "--no-cache"} \
+          --build-arg ${lib.escapeShellArg "PB_VERSION=${cfg.pocketBaseImageTag}"} \
+          --label ${lib.escapeShellArg "parkfuchs.context=${context}"} \
+          --tag ${lib.escapeShellArg image} \
+          ${context}
+      fi
     '';
 
     # Keep the existing path (including its spelling) to retain deployed data.
